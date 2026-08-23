@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ของต้องเก็บ Cinderia</title>
+<meta name="description" content="ตารางตัดสินใจว่าเครื่องประดับชิ้นไหนควรเก็บใน Cinderia แยกตามตัวละครและสาย อัปเดตตาม V0.6.11">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Noto+Serif+Thai:wght@600;800&display=swap">
+
+<style>
+:root{
+  color-scheme: light;
+  --bg:#E7E5EA;
+  --surface:#F6F5F8;
+  --surface-2:#DBD7E2;
+  --ink:#1B1822;
+  --ink-2:#575067;
+  --ink-3:#7D7691;
+  --rule:#C7C1D2;
+  --rule-soft:#D5D0DE;
+  --accent:#5B3FBF;
+  --grab:#0B6247;
+  --grab-soft:#D6EBE2;
+  --grab-edge:#3E9C7C;
+  --maybe:#845000;
+  --maybe-soft:#F0E5CD;
+  --maybe-edge:#C08A2A;
+  --skip:#95293F;
+  --skip-soft:#F2DBE0;
+  --skip-edge:#C0687C;
+  --shadow:0 1px 1px rgba(27,24,34,.05), 0 6px 20px rgba(27,24,34,.055);
+
+  --display:"Fraunces","Noto Serif Thai",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans Thai","IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#131017;
+    --surface:#1C1824;
+    --surface-2:#272031;
+    --ink:#EFEBF5;
+    --ink-2:#A79FB8;
+    --ink-3:#847C96;
+    --rule:#332B40;
+    --rule-soft:#2A2334;
+    --accent:#A78BFA;
+    --grab:#4FDCA6;
+    --grab-soft:#123227;
+    --grab-edge:#2F8A68;
+    --maybe:#E5A93E;
+    --maybe-soft:#33260D;
+    --maybe-edge:#8A6A22;
+    --skip:#F2778F;
+    --skip-soft:#341620;
+    --skip-edge:#8E4055;
+    --shadow:0 1px 1px rgba(0,0,0,.45), 0 8px 26px rgba(0,0,0,.35);
+  }
+}
+
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#131017;
+  --surface:#1C1824;
+  --surface-2:#272031;
+  --ink:#EFEBF5;
+  --ink-2:#A79FB8;
+  --ink-3:#847C96;
+  --rule:#332B40;
+  --rule-soft:#2A2334;
+  --accent:#A78BFA;
+  --grab:#4FDCA6;
+  --grab-soft:#123227;
+  --grab-edge:#2F8A68;
+  --maybe:#E5A93E;
+  --maybe-soft:#33260D;
+  --maybe-edge:#8A6A22;
+  --skip:#F2778F;
+  --skip-soft:#341620;
+  --skip-edge:#8E4055;
+  --shadow:0 1px 1px rgba(0,0,0,.45), 0 8px 26px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+.sheet{
+  max-width:1120px;
+  margin:0 auto;
+  padding:clamp(24px,5vw,64px) clamp(16px,4vw,40px) 72px;
+  display:flex;
+  flex-direction:column;
+  gap:clamp(40px,6vw,68px);
+}
+
+/* ── masthead ─────────────────────────── */
+.masthead{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  padding-bottom:clamp(24px,4vw,36px);
+  border-bottom:2px solid var(--ink);
+}
+.eyebrow{
+  margin:0;
+  font-family:var(--mono);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+.masthead h1{
+  margin:0;
+  font-family:var(--display);
+  font-weight:900;
+  font-size:clamp(38px,7vw,68px);
+  line-height:1.06;
+  letter-spacing:-.015em;
+  text-wrap:balance;
+}
+.lede{
+  margin:0;
+  max-width:56ch;
+  font-size:clamp(16px,1.6vw,18px);
+  color:var(--ink-2);
+}
+.stampline{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:4px;
+}
+.stamp{
+  font-family:var(--mono);
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:.05em;
+  padding:5px 10px;
+  border:1px solid var(--rule);
+  background:var(--surface);
+  color:var(--ink-2);
+  border-radius:2px;
+  font-variant-numeric:tabular-nums;
+}
+.stamp--live{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+a.stamp--link{
+  border-color:var(--accent);
+  background:var(--accent);
+  color:var(--bg);
+  text-decoration:none;
+  font-family:var(--body);
+  letter-spacing:0;
+}
+a.stamp--link:hover,a.stamp--link:focus-visible{filter:brightness(1.12)}
+
+/* ── tier bands ───────────────────────── */
+.band{
+  display:flex;
+  border:1px solid var(--rule);
+  border-radius:3px;
+  background:var(--surface);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.band__tab{
+  flex:0 0 52px;
+  position:relative;
+  border-right:1px solid var(--rule);
+}
+.band__tab span{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) rotate(-90deg);
+  white-space:nowrap;
+  font-family:var(--display);
+  font-weight:700;
+  font-size:19px;
+  letter-spacing:.02em;
+}
+.band__body{
+  flex:1 1 auto;
+  min-width:0;
+  padding:clamp(18px,3vw,28px);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+.band__head{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap:10px 14px;
+}
+.band__count{
+  font-family:var(--mono);
+  font-size:12px;
+  font-weight:600;
+  padding:3px 8px;
+  border-radius:2px;
+  font-variant-numeric:tabular-nums;
+}
+.band__note{
+  margin:0;
+  font-size:14.5px;
+  color:var(--ink-2);
+  max-width:64ch;
+}
+
+.band--grab .band__tab{background:var(--grab-soft)}
+.band--grab .band__tab span{color:var(--grab)}
+.band--grab .band__count{background:var(--grab-soft);color:var(--grab)}
+.band--maybe .band__tab{background:var(--maybe-soft)}
+.band--maybe .band__tab span{color:var(--maybe)}
+.band--maybe .band__count{background:var(--maybe-soft);color:var(--maybe)}
+.band--skip .band__tab{background:var(--skip-soft)}
+.band--skip .band__tab span{color:var(--skip)}
+.band--skip .band__count{background:var(--skip-soft);color:var(--skip)}
+
+/* ── item grid ────────────────────────── */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(238px,1fr));
+  gap:12px;
+}
+.item{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  padding:14px 15px 13px;
+  background:var(--bg);
+  border:1px solid var(--rule-soft);
+  border-left:3px solid var(--edge,var(--rule));
+  border-radius:2px;
+}
+.band--grab .item{--edge:var(--grab-edge)}
+.band--maybe .item{--edge:var(--maybe-edge)}
+.band--skip .item{--edge:var(--skip-edge)}
+
+.item__name{
+  margin:0;
+  font-family:var(--display);
+  font-weight:700;
+  font-size:17.5px;
+  line-height:1.25;
+  letter-spacing:-.005em;
+}
+.req{
+  display:inline-block;
+  margin-left:7px;
+  vertical-align:2px;
+  font-family:var(--body);
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.06em;
+  padding:2px 6px;
+  border-radius:2px;
+  background:var(--accent);
+  color:var(--bg);
+}
+.delta{
+  margin:0;
+  font-family:var(--mono);
+  font-size:12.5px;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  color:var(--ink-2);
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap:6px;
+}
+.delta .from{text-decoration:line-through;color:var(--ink-3);text-decoration-thickness:1px}
+.delta .arr{color:var(--ink-3)}
+.delta .to{color:var(--edge);font-size:14px}
+.band--skip .delta .to{color:var(--skip)}
+.delta .unit{font-family:var(--body);font-weight:500;font-size:12.5px;color:var(--ink-2)}
+.item__why{
+  margin:0;
+  font-size:13.5px;
+  line-height:1.55;
+  color:var(--ink-2);
+}
+.item__why b{color:var(--ink);font-weight:600}
+.tags{
+  margin:2px 0 0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
+.tags li{
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.01em;
+  padding:2px 7px;
+  border:1px solid var(--rule);
+  border-radius:99px;
+  color:var(--ink-3);
+  white-space:nowrap;
+}
+
+/* ── generic section ──────────────────── */
+.section{display:flex;flex-direction:column;gap:20px}
+.section__head{display:flex;flex-direction:column;gap:6px}
+.section h2{
+  margin:0;
+  font-family:var(--display);
+  font-weight:900;
+  font-size:clamp(26px,3.6vw,36px);
+  line-height:1.15;
+  letter-spacing:-.01em;
+}
+.section__sub{margin:0;font-size:15px;color:var(--ink-2);max-width:62ch}
+
+/* ── build shopping lists ─────────────── */
+.builds{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(292px,1fr));
+  gap:14px;
+}
+.build{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding:18px 19px 19px;
+  background:var(--surface);
+  border:1px solid var(--rule);
+  border-radius:3px;
+  box-shadow:var(--shadow);
+}
+.build__who{
+  margin:0;
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+.build__name{
+  margin:0;
+  font-family:var(--display);
+  font-weight:700;
+  font-size:21px;
+  line-height:1.2;
+}
+.build ol{
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  border-top:1px solid var(--rule-soft);
+}
+.build li{
+  display:flex;
+  align-items:baseline;
+  gap:9px;
+  padding:7px 0;
+  border-bottom:1px solid var(--rule-soft);
+  font-size:14px;
+}
+.build li .n{
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:600;
+  color:var(--ink-3);
+  flex:0 0 15px;
+  font-variant-numeric:tabular-nums;
+}
+.build li .nm{font-weight:500}
+.build li.is-req .nm{color:var(--accent);font-weight:700}
+.build li.is-req .n{color:var(--accent)}
+.statline{
+  margin:0;
+  padding:10px 12px;
+  background:var(--surface-2);
+  border-radius:2px;
+  font-size:13px;
+  color:var(--ink-2);
+}
+.statline b{
+  display:block;
+  font-family:var(--mono);
+  font-size:10.5px;
+  font-weight:600;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-bottom:2px;
+}
+
+/* ── gems ─────────────────────────────── */
+.gems{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+}
+.gem{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:18px 19px;
+  border:1px solid var(--rule);
+  border-radius:3px;
+  background:var(--surface);
+  border-top:4px solid var(--gem);
+}
+.gem--ruby{--gem:#C0334D}
+.gem--emerald{--gem:#1E8F63}
+.gem--sapphire{--gem:#2F5FC4}
+.gem h3{
+  margin:0;
+  font-family:var(--display);
+  font-weight:700;
+  font-size:19px;
+  color:var(--gem);
+}
+.gem p{margin:0;font-size:13.5px;color:var(--ink-2)}
+.gem .eff{
+  font-family:var(--mono);
+  font-size:12px;
+  font-weight:600;
+  color:var(--ink);
+}
+
+/* ── rule changes ─────────────────────── */
+.rules{
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+  border-radius:3px;
+  overflow:hidden;
+}
+.rules li{
+  display:grid;
+  grid-template-columns:minmax(150px,210px) 1fr;
+  gap:4px 22px;
+  padding:15px 18px;
+  background:var(--surface);
+}
+.rules .what{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:16px;
+  line-height:1.35;
+}
+.rules .so{margin:0;font-size:14px;color:var(--ink-2)}
+.rules .so b{color:var(--ink);font-weight:600}
+
+/* ── footer ───────────────────────────── */
+.foot{
+  border-top:1px solid var(--rule);
+  padding-top:22px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  font-size:13px;
+  color:var(--ink-3);
+}
+.foot a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+.foot a:focus-visible,.stamp:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.foot p{margin:0;max-width:70ch}
+
+@media (max-width:720px){
+  .band{flex-direction:column}
+  .band__tab{
+    flex:0 0 auto;
+    height:40px;
+    border-right:none;
+    border-bottom:1px solid var(--rule);
+  }
+  .band__tab span{transform:translate(-50%,-50%)}
+  .rules li{grid-template-columns:1fr;gap:4px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+}
+</style>
+
+</head>
+<body>
+<div class="sheet">
+
+  <header class="masthead">
+    <p class="eyebrow">Cinderia · Early Access</p>
+    <h1>เจอของชิ้นนี้ เก็บไหม?</h1>
+    <p class="lede">ตารางตัดสินใจเครื่องประดับ อ่านตอนกำลังเลือกของกลางรัน — เรียงตามสิ่งที่ V0.6.11 เพิ่งเปลี่ยน ไม่ใช่ตามที่เคยดีเมื่อเดือนก่อน</p>
+    <div class="stampline">
+      <span class="stamp stamp--live">V0.6.11 · 14 ส.ค. 2026</span>
+      <span class="stamp">ปรับเครื่องประดับ ~40 ชิ้น</span>
+      <span class="stamp">ไอเทมใหม่ 37 ชิ้น</span>
+      <a class="stamp stamp--link" href="./">← กลับไปแผ่น A4 สกิล · การ์ด · ไอเทม</a>
+    </div>
+  </header>
+
+  <!-- ════ TIER: GRAB ════ -->
+  <section class="band band--grab">
+    <div class="band__tab"><span>เก็บทันที</span></div>
+    <div class="band__body">
+      <div class="band__head">
+        <span class="band__count">13 ชิ้น</span>
+        <p class="band__note">ถูกบัฟแรงพอที่จะเปลี่ยนรันได้ทันที ไม่ต้องคิดว่าเข้าสายไหม — เจอแล้วหยิบ</p>
+      </div>
+      <div class="grid">
+
+        <article class="item">
+          <h3 class="item__name">Drum of Courage</h3>
+          <p class="delta"><span class="from">30%</span><span class="arr">→</span><span class="to">50%</span><span class="unit">ดาเมจซัมมอน</span></p>
+          <p class="item__why">ซัมมอนอยู่นานขึ้นอีก <b>3 วินาที</b> ชิ้นเบอร์หนึ่งของ Uma แบบไม่มีคู่แข่ง</p>
+          <ul class="tags"><li>Uma นกฮูก</li><li>Uma กรงเล็บ</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Heavy Shackles</h3>
+          <p class="delta"><span class="from">+9</span><span class="arr">→</span><span class="to">+16</span><span class="unit">Strength</span></p>
+          <p class="item__why">Melee Damage <b>+55%</b> และ Melee Crit <b>+10%</b> ได้ครบทั้งสองอย่างที่สายประชิดต้องการ</p>
+          <ul class="tags"><li>Rue สายตี</li><li>Uma กรงเล็บ</li><li>Isdra</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Ghostly Veil</h3>
+          <p class="delta"><span class="from">16%</span><span class="arr">→</span><span class="to">22%</span><span class="unit">Attack Speed</span></p>
+          <p class="item__why">สเตตัสที่สายพิษกับสายฟรีซล็อกแปลงเป็นดาเมจได้ตรงที่สุด</p>
+          <ul class="tags"><li>Rue สายตี</li><li>Uma กรงเล็บ</li><li>Isdra</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Fairy Wand</h3>
+          <p class="delta"><span class="from">12%</span><span class="arr">→</span><span class="to">100%</span><span class="unit">โอกาสแปลงร่างศัตรู</span></p>
+          <p class="item__why">จากของขยะกลายเป็นปุ่ม CC ฟรีทุกครั้งที่ตีติด (คูลดาวน์ 11 วิ)</p>
+          <ul class="tags"><li>ทุกสายประชิด</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Cast-Iron Gear</h3>
+          <p class="delta"><span class="from">6%</span><span class="arr">→</span><span class="to">15%</span><span class="unit">Magic Card Damage</span></p>
+          <p class="item__why">เงื่อนไขบูสต์ตอนเลือดต่ำขยับจาก 25% เป็น <b>50% HP</b> ทำให้ติดง่ายขึ้นมาก</p>
+          <ul class="tags"><li>Rue สายมีด</li><li>Rivet</li><li>Uma นกฮูก</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Little Girl's Matchbox</h3>
+          <p class="delta"><span class="from">10%</span><span class="arr">→</span><span class="to">30%</span><span class="unit">คริตของหมัดถัดไป</span></p>
+          <p class="item__why">ใช้การ์ดแล้วการโจมตีถัดไป <b>+300% ดาเมจ</b> — เข้ากับทุกสายที่หมุนการ์ด</p>
+          <ul class="tags"><li>สายใช้การ์ดทุกสาย</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Mushroom Umbrella</h3>
+          <p class="delta"><span class="to">โดนดาเมจ → ถูกโจมตี</span></p>
+          <p class="item__why">ตอนนี้ทริกเกอร์ตอน <b>บล็อกด้วยโล่หรือมีชีลด์</b> ได้แล้ว และเป็นแหล่งพิษที่หายากมากในเกม</p>
+          <ul class="tags"><li>Isdra</li><li>Rue สายตี</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Oak Cane</h3>
+          <p class="delta"><span class="from">50%</span><span class="arr">→</span><span class="to">75%</span><span class="unit">คริตของฮิตปิดคอมโบ</span></p>
+          <p class="item__why">คริตดาเมจอีก <b>+80%</b> ยิ่งคอมโบยาวยิ่งคุ้ม</p>
+          <ul class="tags"><li>Rue สายตี</li><li>Uma กรงเล็บ</li><li>Isdra</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Toy Cannon</h3>
+          <p class="delta"><span class="from">400</span><span class="arr">→</span><span class="to">999</span><span class="unit">ดาเมจถล่ม</span></p>
+          <p class="item__why">Strength <b>+20</b>, รัศมี 7→9, เล็งไวขึ้น — เปิดห้องฟรีทุกห้อง</p>
+          <ul class="tags"><li>ทุกตัวละคร</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Frost Core</h3>
+          <p class="delta"><span class="from">6%</span><span class="arr">→</span><span class="to">10%</span><span class="unit">Magic Card CDR</span></p>
+          <p class="item__why"><b>+12 Armor ต่อการ์ด 1 ใบที่ติดคูลดาวน์</b> และร่าย Frost Ring ให้เองทุก 3 วิ</p>
+          <ul class="tags"><li>Isdra</li><li>Uma นกฮูก</li><li>Rivet</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Knight's Windmill</h3>
+          <p class="delta"><span class="from">300%</span><span class="arr">→</span><span class="to">600%</span><span class="unit">หมัดหลังเดินครบ 16 ม.</span></p>
+          <p class="item__why">แถมสตัน 1.5 วิ — โรกไลก์เดินอยู่แล้ว เท่ากับได้ฟรี</p>
+          <ul class="tags"><li>ทุกสายประชิด</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Thorn Rose</h3>
+          <p class="delta"><span class="from">8</span><span class="arr">→</span><span class="to">18</span><span class="unit">Armor</span></p>
+          <p class="item__why">คูลดาวน์การสะท้อนหั่นครึ่ง <b>8 → 4 วิ</b> ยืนกลางวงแล้วสาด 324 ดาเมจเอง</p>
+          <ul class="tags"><li>ทุกสายประชิด</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Necronomicon</h3>
+          <p class="delta"><span class="from">80 วิ</span><span class="arr">→</span><span class="to">20 วิ</span><span class="unit">คูลดาวน์เรียก Reaper</span></p>
+          <p class="item__why">Reaper อยู่สั้นลง (20→6 วิ) แต่รอบถี่ขึ้น 4 เท่า — สรุปแล้วขึ้นชัด</p>
+          <ul class="tags"><li>Uma กรงเล็บ</li><li>Rue สายตี</li></ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ TIER: MAYBE ════ -->
+  <section class="band band--maybe">
+    <div class="band__tab"><span>เก็บถ้าเข้าสาย</span></div>
+    <div class="band__body">
+      <div class="band__head">
+        <span class="band__count">13 ชิ้น</span>
+        <p class="band__note">แรงเฉพาะกับบางสาย — เข้าสายคือชิ้นเอก ผิดสายคือช่องว่างเปล่า สองชิ้นแรกคือของที่สายนั้น <b>ขาดไม่ได้</b></p>
+      </div>
+      <div class="grid">
+
+        <article class="item">
+          <h3 class="item__name">Moonlight Branch<span class="req">บังคับ</span></h3>
+          <p class="delta"><span class="to">อัปแล้วเพิ่มสกิลสายนกฮูก</span></p>
+          <p class="item__why">ไม่มีชิ้นไหนแทนได้ ถ้าเล่นสายนกฮูกแล้วไม่ดรอป สายจะอ่อนลงชัดเจน</p>
+          <ul class="tags"><li>Uma นกฮูก</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Rotten Apple<span class="req">บังคับ</span></h3>
+          <p class="delta"><span class="to">แหล่งพิษ</span></p>
+          <p class="item__why">เป็นของไม่กี่ชิ้นในเกมที่เพิ่มพิษได้ หัวใจของสาย Poison Coating</p>
+          <ul class="tags"><li>Rue สายตี</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Drowsy Flower Crown</h3>
+          <p class="delta"><span class="from">+7</span><span class="arr">→</span><span class="to">+14</span><span class="unit">Spirit</span></p>
+          <p class="item__why">Spirit เท่าตัว — สเตตัสหลักของสายเรียกนกฮูก</p>
+          <ul class="tags"><li>Uma นกฮูก</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Gingerbread House</h3>
+          <p class="delta"><span class="from">7/6/5/4</span><span class="arr">→</span><span class="to">4 ศพ</span><span class="unit">ต่อการเรียก 1 ตัว</span></p>
+          <p class="item__why">ทุกเลเวลเรียกถี่เท่ากันหมดแล้ว และอยู่นานถึง <b>24 วิ</b> ที่ระดับ IV</p>
+          <ul class="tags"><li>Uma ทั้งสองสาย</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Little Tailor's Scissors</h3>
+          <p class="delta"><span class="from">12%</span><span class="arr">→</span><span class="to">20%</span><span class="unit">Magic Card Damage</span></p>
+          <p class="item__why">ประหารมอบต่ำกว่า 20% HP และสะสมเป็น Max HP ได้ถึง 60</p>
+          <ul class="tags"><li>Rue สายมีด</li><li>Rivet</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Bloodstained Scythe</h3>
+          <p class="delta"><span class="from">6.5 วิ</span><span class="arr">→</span><span class="to">2 วิ</span><span class="unit">รอบเสริมพลัง dash</span></p>
+          <p class="item__why">สเตตัสโดนหั่นลง แต่รอบเร็วขึ้น 3 เท่า — <b>เข้าทาง dash ทะลุตัวใหม่ของ Isdra เต็ม ๆ</b></p>
+          <ul class="tags"><li>Isdra</li><li>Rue</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Stonevein Gauntlet</h3>
+          <p class="delta"><span class="from">16 วิ</span><span class="arr">→</span><span class="to">9 วิ</span><span class="unit">คูลดาวน์ชีลด์</span></p>
+          <p class="item__why">ตีแล้วได้ชีลด์ 8 เกือบตลอดเวลา ตัวช่วยยืนของสายประชิด</p>
+          <ul class="tags"><li>Isdra</li><li>สายประชิด</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Iron Heart</h3>
+          <p class="delta"><span class="from">+6</span><span class="arr">→</span><span class="to">+15</span><span class="unit">Armor</span></p>
+          <p class="item__why">ระหว่างชีลด์ติดได้ <b>+20% ดาเมจ + ภูมิคุ้มกัน CC</b> (เดิม 8%)</p>
+          <ul class="tags"><li>Isdra</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Rolling Beer Barrel</h3>
+          <p class="delta"><span class="from">75</span><span class="arr">→</span><span class="to">100</span><span class="unit">ดาเมจตอน dash ชน</span></p>
+          <p class="item__why">หลบ +10%, โอกาสสตัน 33% — คู่กับ dash ทะลุของ Isdra</p>
+          <ul class="tags"><li>Isdra</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Medal of Valor</h3>
+          <p class="delta"><span class="to">บอสนับเป็น 20%</span></p>
+          <p class="item__why">ลดดาเมจ 2% ต่อศัตรู 1 ตัว และตอนนี้ <b>บอสตัวเดียวนับเท่ากับศัตรู 10 ตัว</b></p>
+          <ul class="tags"><li>สายประชิด</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Ring of Invisibility</h3>
+          <p class="delta"><span class="from">+5%</span><span class="arr">→</span><span class="to">+9%</span><span class="unit">Dodge</span></p>
+          <p class="item__why">โดนตีแล้วล่องหน+อมตะ 2 วิ ตามด้วยหลบ 30% — ตาข่ายกันตายของสายกระดาษ</p>
+          <ul class="tags"><li>Rue สายมีด</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Carrot Snowman</h3>
+          <p class="delta"><span class="from">1.5 วิ</span><span class="arr">→</span><span class="to">0 วิ</span><span class="unit">คูลดาวน์</span></p>
+          <p class="item__why">ทุกครั้งที่ใช้การ์ดยิงก้อนหิมะ 3 ลูกฟรี ไม่มีเงื่อนไขอีกต่อไป</p>
+          <ul class="tags"><li>สายสแปมการ์ด</li></ul>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Star Core</h3>
+          <p class="delta"><span class="to">แก้บั๊กแล้ว</span></p>
+          <p class="item__why">ดาเมจกระจายทั้งจอ 777 ที่เดิม<b>ไม่เคยออก</b> ตอนนี้ทำงานจริง และตกใส่ศัตรูแทนที่จะสุ่มจุด</p>
+          <ul class="tags"><li>สายสแปมการ์ด</li></ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ TIER: SKIP ════ -->
+  <section class="band band--skip">
+    <div class="band__tab"><span>อย่าเก็บ</span></div>
+    <div class="band__body">
+      <div class="band__head">
+        <span class="band__count">4 ชิ้น</span>
+        <p class="band__note">เคยดี — เวอร์ชันนี้ไม่ใช่แล้ว ถ้าจำมาจากไกด์เก่าให้ลืมทิ้ง</p>
+      </div>
+      <div class="grid">
+
+        <article class="item">
+          <h3 class="item__name">Magic Lamp</h3>
+          <p class="delta"><span class="from">+6</span><span class="arr">→</span><span class="to">0</span><span class="unit">Agility / Spirit</span></p>
+          <p class="item__why">สเตตัสถูกถอดเกลี้ยง และ Eternal Life ไม่ฟื้นเลือดให้แล้ว เหลือแค่ชุบชีวิตเพิ่ม 1 ครั้ง</p>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Echo Conch</h3>
+          <p class="delta"><span class="from">50%</span><span class="arr">→</span><span class="to">40%</span><span class="unit">โอกาสทริกเกอร์ซ้ำ</span></p>
+          <p class="item__why">โดนหั่นทุกเลเวล และไม่ทำงานกับ Lucky Rabbit's Foot อีกต่อไป</p>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Blessed Anvil</h3>
+          <p class="delta"><span class="from">+9</span><span class="arr">→</span><span class="to">+5</span><span class="unit">Strength</span></p>
+          <p class="item__why">สเตตัสหั่นทุกเลเวล และช่องโหว่รีโรล Demon Contract โดนอุดไปแล้ว</p>
+        </article>
+
+        <article class="item">
+          <h3 class="item__name">Loose Belt</h3>
+          <p class="delta"><span class="to">ช่องโหว่โดนอุด</span></p>
+          <p class="item__why">ไม่ได้โดนหั่นตัวเลข แต่ผู้เล่นที่ผ่าน Trial 8 เตือนว่า <b>เล่นแบบไม่เอาชิ้นนี้เสถียรกว่า</b></p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ BUILD LISTS ════ -->
+  <section class="section">
+    <div class="section__head">
+      <h2>รายการซื้อของ แยกตามสาย</h2>
+      <p class="section__sub">เรียงจากบนลงล่างตามลำดับที่ควรคว้า ชิ้นที่เป็นสีม่วงคือของที่สายนั้นขาดไม่ได้</p>
+    </div>
+    <div class="builds">
+
+      <div class="build">
+        <p class="build__who">Rue</p>
+        <h3 class="build__name">สายตี — Poison Coating</h3>
+        <ol>
+          <li class="is-req"><span class="n">1</span><span class="nm">Rotten Apple</span></li>
+          <li><span class="n">2</span><span class="nm">Mushroom Umbrella</span></li>
+          <li><span class="n">3</span><span class="nm">Heavy Shackles</span></li>
+          <li><span class="n">4</span><span class="nm">Ghostly Veil</span></li>
+          <li><span class="n">5</span><span class="nm">Oak Cane</span></li>
+          <li><span class="n">6</span><span class="nm">Knight's Windmill</span></li>
+        </ol>
+        <p class="statline"><b>สเตตัสที่ไล่</b>Attack Speed มาก่อนดาเมจก้อนใหญ่เสมอ</p>
+      </div>
+
+      <div class="build">
+        <p class="build__who">Rue</p>
+        <h3 class="build__name">สายมีด — Flying Dagger</h3>
+        <ol>
+          <li><span class="n">1</span><span class="nm">Little Girl's Matchbox</span></li>
+          <li><span class="n">2</span><span class="nm">Cast-Iron Gear</span></li>
+          <li><span class="n">3</span><span class="nm">Little Tailor's Scissors</span></li>
+          <li><span class="n">4</span><span class="nm">Frost Core</span></li>
+          <li><span class="n">5</span><span class="nm">Carrot Snowman</span></li>
+          <li><span class="n">6</span><span class="nm">Ring of Invisibility</span></li>
+        </ol>
+        <p class="statline"><b>สเตตัสที่ไล่</b>Magic Card Damage + Critical Damage</p>
+      </div>
+
+      <div class="build">
+        <p class="build__who">Uma</p>
+        <h3 class="build__name">สายนกฮูก</h3>
+        <ol>
+          <li class="is-req"><span class="n">1</span><span class="nm">Moonlight Branch</span></li>
+          <li><span class="n">2</span><span class="nm">Drum of Courage</span></li>
+          <li><span class="n">3</span><span class="nm">Drowsy Flower Crown</span></li>
+          <li><span class="n">4</span><span class="nm">Frost Core</span></li>
+          <li><span class="n">5</span><span class="nm">Cast-Iron Gear</span></li>
+          <li><span class="n">6</span><span class="nm">Gingerbread House</span></li>
+        </ol>
+        <p class="statline"><b>สเตตัสที่ไล่</b>Spirit + ลดคูลดาวน์ (แปลงเป็นนกฮูกต่อวินาที)</p>
+      </div>
+
+      <div class="build">
+        <p class="build__who">Uma</p>
+        <h3 class="build__name">สายกรงเล็บ — Wolf Claw</h3>
+        <ol>
+          <li><span class="n">1</span><span class="nm">Drum of Courage</span></li>
+          <li><span class="n">2</span><span class="nm">Heavy Shackles</span></li>
+          <li><span class="n">3</span><span class="nm">Ghostly Veil</span></li>
+          <li><span class="n">4</span><span class="nm">Necronomicon</span></li>
+          <li><span class="n">5</span><span class="nm">Oak Cane</span></li>
+          <li><span class="n">6</span><span class="nm">Fairy Wand</span></li>
+        </ol>
+        <p class="statline"><b>สเตตัสที่ไล่</b>Melee Damage + Attack Speed + ค่าป้องกัน</p>
+      </div>
+
+      <div class="build">
+        <p class="build__who">Isdra</p>
+        <h3 class="build__name">Melee + Ice Rush</h3>
+        <ol>
+          <li><span class="n">1</span><span class="nm">Mushroom Umbrella</span></li>
+          <li><span class="n">2</span><span class="nm">Ghostly Veil</span></li>
+          <li><span class="n">3</span><span class="nm">Heavy Shackles</span></li>
+          <li><span class="n">4</span><span class="nm">Frost Core</span></li>
+          <li><span class="n">5</span><span class="nm">Bloodstained Scythe</span></li>
+          <li><span class="n">6</span><span class="nm">Iron Heart</span></li>
+        </ol>
+        <p class="statline"><b>สเตตัสที่ไล่</b>Attack Speed → Critical Rate → ยืดเวลาฟรีซ</p>
+      </div>
+
+      <div class="build">
+        <p class="build__who">Rivet</p>
+        <h3 class="build__name">สายป้อม — Turret</h3>
+        <ol>
+          <li><span class="n">1</span><span class="nm">Cast-Iron Gear</span></li>
+          <li><span class="n">2</span><span class="nm">Frost Core</span></li>
+          <li><span class="n">3</span><span class="nm">Little Tailor's Scissors</span></li>
+          <li><span class="n">4</span><span class="nm">Little Girl's Matchbox</span></li>
+          <li><span class="n">5</span><span class="nm">Toy Cannon</span></li>
+          <li><span class="n">6</span><span class="nm">Holy Light Torch</span></li>
+        </ol>
+        <p class="statline"><b>สเตตัสที่ไล่</b>ลดคูลดาวน์ + Critical Rate</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════ GEMS ════ -->
+  <section class="section">
+    <div class="section__head">
+      <h2>เจมใหม่ ใส่ยังไงไม่ให้เสียเปล่า</h2>
+      <p class="section__sub">V0.6.11 เปิดให้ฝังเจมลงเครื่องประดับได้ กฎง่าย ๆ คือดูว่าของชิ้นนั้น <b>ตีเอง</b> / <b>รอทริกเกอร์</b> / <b>รอคูลดาวน์</b></p>
+    </div>
+    <div class="gems">
+      <div class="gem gem--ruby">
+        <h3>Ruby</h3>
+        <p class="eff">+ Accessory Damage</p>
+        <p>ใส่ในของที่ <b>ตีเอง</b> — Sunstone, Thorn Rose, Toy Cannon</p>
+      </div>
+      <div class="gem gem--emerald">
+        <h3>Emerald</h3>
+        <p class="eff">+ Accessory Trigger Chance</p>
+        <p>ใส่ในของที่ <b>รอเงื่อนไขทริกเกอร์</b> — Mushroom Umbrella, Fairy Wand, Matchbox</p>
+      </div>
+      <div class="gem gem--sapphire">
+        <h3>Sapphire</h3>
+        <p class="eff">+ Accessory Cooldown Rate</p>
+        <p>ใส่ในของที่ <b>รอคูลดาวน์</b> — Stonevein Gauntlet และทุกช่องของ Uma สายนกฮูก</p>
+      </div>
+    </div>
+    <p class="section__sub"><b>Wondrous Wand</b> (ไอเทมใหม่) ทำให้การทุบของกลายเป็นเจมแทน Fragment — ถ้าได้ชิ้นนี้ วิธีเก็บของจะเปลี่ยนไปทั้งรัน</p>
+  </section>
+
+  <!-- ════ RULE CHANGES ════ -->
+  <section class="section">
+    <div class="section__head">
+      <h2>กฎที่เปลี่ยน แล้วทำให้ต้องเลือกของใหม่</h2>
+      <p class="section__sub">สี่ข้อนี้เปลี่ยน "วิธีคิด" ไม่ใช่แค่ตัวเลข — เป็นสาเหตุที่ไกด์ก่อนเดือน ส.ค. ใช้ไม่ได้แล้ว</p>
+    </div>
+    <ul class="rules">
+      <li>
+        <span class="what">เรตดรอปม่วง/ส้มสูงขึ้น</span>
+        <p class="so">แต่ Fragment ที่ได้จากการทุบ <b>ลดลงตาม</b> — ทุบทิ้งไม่คุ้มเหมือนเดิม เก็บใส่ดีกว่า</p>
+      </li>
+      <li>
+        <span class="what">พ่อค้ามีชั้นวางแยก</span>
+        <p class="so">ขายเฉพาะเครื่องประดับที่ <b>ยังไม่ปลดล็อก</b> — เหตุผลใหม่ที่ต้องแวะร้านทุกครั้ง แม้เงินน้อย</p>
+      </li>
+      <li>
+        <span class="what">ภูมิ CC ของบอสคิดใหม่</span>
+        <p class="so">เดิมนับ "โดนคุมกี่ครั้ง" ตอนนี้นับ "<b>เพิ่งโดนคุมไปนานแค่ไหน</b>" — สตัน/ฟรีซ/น็อคอัพ รัวติดกันจะดื้อไวกว่าเดิม ต้องเว้นจังหวะ กระทบ Isdra สายฟรีซล็อกกับ Uma สาย Roll Up มากที่สุด</p>
+      </li>
+      <li>
+        <span class="what">ชำระคำสาปดูล่วงหน้าได้</span>
+        <p class="so">เห็นก่อนว่าคำสาปจะกลายเป็น Blessing อะไร — ตัดสินใจว่าจะแบกคำสาปต่อหรือล้างได้แม่นขึ้น</p>
+      </li>
+    </ul>
+  </section>
+
+  <footer class="foot">
+    <p><b>ข้อควรระวัง</b> — แพตช์ V0.6.11 ลงเมื่อ 14 ส.ค. 2026 ยังใหม่มาก ตัวเลขทั้งหมดในหน้านี้มาจาก patch notes ทางการโดยตรง แต่ <b>การจัดอันดับเป็นการอ่านผลจากตัวเลข ไม่ใช่ข้อสรุปของคอมมูนิตี้</b> ซึ่งยังไม่ตกผลึก</p>
+    <p>แหล่งข้อมูล: <a href="https://store.steampowered.com/news/app/3214610">Cinderia Patch Notes บน Steam</a> · <a href="https://note.com/pero_900666/n/n842a4187dac6?hl=en">CINDERIA Trial 8 Strategy Build Guide โดย ペロ</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
