@@ -498,6 +498,7 @@ a.stamp--link:hover,a.stamp--link:focus-visible{filter:brightness(1.12)}
 }
 .path__notes p{margin:0;font-size:14px;color:var(--ink-2);max-width:72ch}
 .path__notes b{color:var(--ink);font-weight:600}
+.nw{white-space:nowrap}
 
 /* ── gems ─────────────────────────────── */
 .gems{
@@ -1016,6 +1017,50 @@ a.stamp--link:hover,a.stamp--link:focus-visible{filter:brightness(1.12)}
       </div>
     </div>
     <p class="section__sub">ตัวเลขจากหน้าจออัปเกรดในเกม (ภาพในไกด์ของ ペロ ver0.6.10) — แพตช์ V0.6.11 ถึง V0.6.11b ไม่แตะการ์ดใบนี้ · ชื่อในเกมภาษาญี่ปุ่น 毒塗り</p>
+  </section>
+
+  <!-- ════ THROWING KNIFE BARRAGE PATH ════ -->
+  <section class="section">
+    <div class="section__head">
+      <h2>Throwing Knife Barrage อัปทางไหนถึง&nbsp;Lv.4</h2>
+      <p class="section__sub">การ์ดตีบอสของ Rue สายมีด แต่ละเลเวลเลือกได้ 1 จาก 2 ทาง ◆ คือทางที่คนผ่าน Trial 8 เลือก</p>
+    </div>
+    <div class="path">
+      <div class="path__base">
+        <span class="path__lv">Lv.1 · พื้นฐาน</span>
+        <p>ขว้างมีดรัวไปทางที่เล็ง <b>วิละ 12&nbsp;เล่ม</b> เล่มละ 32 <span class="nw">ดาเมจ</span> กิน Energy <b>วิละ 4</b> ขว้างจน Energy หมดหรือกดการ์ดใบอื่น · ระหว่างขว้างเดินได้แค่ 25%</p>
+        <span class="path__cd"><span class="nw">คูลดาวน์</span> 14&nbsp;วิ</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th scope="col">เลเวล</th><th scope="col">◆ ทางที่เลือก</th><th scope="col">อีกทาง</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Lv.2</th>
+            <td class="pick" data-label="ทางที่เลือก"><span class="opt">ขว้างวิละ 12 → 15&nbsp;เล่ม</span><span class="eff"><span class="nw">ดาเมจ</span>ต่อวิ 384 → 480 (+25%) กิน Energy เท่าเดิม</span></td>
+            <td class="alt" data-label="อีกทาง"><span class="opt">ฆ่าศัตรู 1&nbsp;ตัว คืน Energy 2</span><span class="eff">ใบนี้ไว้ตีบอส ไม่ค่อยมีตัวให้ฆ่า</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Lv.3</th>
+            <td class="pick" data-label="ทางที่เลือก"><span class="opt"><span class="nw">คริต</span>ของการ์ดนี้ +35%</span><span class="eff">แลกกับ: ระหว่างขว้าง เดินและ dash ไม่ได้เลย</span></td>
+            <td class="alt" data-label="อีกทาง"><span class="opt">ระหว่างขว้าง เดินได้ 75% (เดิม 25%)</span></td>
+          </tr>
+          <tr class="is-key">
+            <th scope="row">Lv.4</th>
+            <td class="pick" data-label="ทางที่เลือก"><span class="opt"><span class="nw">คูลดาวน์</span> 14 → 4&nbsp;วิ</span><span class="eff">กดได้ถี่ขึ้น 3.5 เท่า ตัวจำกัดเปลี่ยนจาก<span class="nw">คูลดาวน์</span>เป็น Energy</span></td>
+            <td class="alt" data-label="อีกทาง"><span class="opt">Energy หมดจนหยุดขว้าง → สาดมีดอีก 12&nbsp;เล่มเป็นรูปพัดไปข้างหน้า</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="path__notes">
+        <p><b>ทำไมต้องถึง Lv.4</b> — Lv.2–3 ทำให้ขว้างแต่ละรอบแรงขึ้น แต่ Lv.4 เปลี่ยนจังหวะทั้งการ์ด จากรอ 14&nbsp;วิ เหลือ 4&nbsp;วิ พอ<span class="nw">คูลดาวน์</span>ไม่ใช่ปัญหาแล้ว ตัวจำกัดจริงคือ Energy (ใช้วิละ 4) สายนี้จึงขาด<span class="nw">ทาเลนต์</span> <b>Agitation</b> (動揺) ไม่ได้ — <span class="nw">คริต</span>แล้วมีโอกาส 50% คืน Energy 1 (<span class="nw">คูลดาวน์</span> 0.4&nbsp;วิ) <span class="nw">คริต</span> +35% จาก Lv.3 จึงป้อน Energy กลับมาด้วย แต่คืนได้ไม่เกิน 2.5 ต่อวิ ยังน้อยกว่าที่ใช้ — ยืดรอบขว้างได้ ไม่ถึงขั้นขว้างไม่หยุด</p>
+        <p><b>จังหวะเล่น</b> — ยืนห่างบอส หลบทุกครั้งที่ท่าจะเข้า แล้วขว้างเฉพาะช่วงบอสเปิด ช่วงตีสั้นแต่<span class="nw">เบิร์สต์</span>แรงมาก (ตามไกด์) หลัง Lv.3 ระหว่างขว้าง dash หนีไม่ได้ ห้ามเริ่มขว้างตอนบอสกำลังง้างท่า</p>
+        <p><b>อย่าสับสนกับ Blade Fan</b> — ที่ไกด์บอกว่า Lv.3 ลด<span class="nw">คูลดาวน์</span>คุ้มสุด และมี Ricochet แล้วไม่ต้อง Lv.4 นั้นพูดถึง Blade Fan (ตีโดน 4&nbsp;ตัวขึ้นไป <span class="nw">คูลดาวน์</span> −3&nbsp;วิ) ไม่ใช่ใบนี้ — Barrage ไม่ถึง Lv.4 คือขาดตัวหลัก</p>
+        <p><b>ทางที่น่าลอง</b> (อ่านจากตัวเลข ยังไม่ได้ลองจริง) — ถ้ายังหลบไม่คล่อง Lv.3 ฝั่งเดินได้ 75% ปลอดภัยกว่า แต่เสีย<span class="nw">คริต</span> 35% ซึ่งกินไปถึง Energy ที่ Agitation คืนให้ด้วย</p>
+      </div>
+    </div>
+    <p class="section__sub">ตัวเลขจากหน้าจออัปเกรดในเกม (ภาพในไกด์ของ ペロ ver0.6.10) — ◆ Lv.2–3 ตามภาพ · ◆ Lv.4 ตามที่ไกด์เขียนว่าดัน<span class="nw">คริต</span>ก่อนแล้วลด<span class="nw">คูลดาวน์</span> (ในภาพยังไม่ได้เลือก Lv.4) — แพตช์ V0.6.11 ถึง V0.6.11b ไม่แตะการ์ดใบนี้ · ชื่อในเกมภาษาญี่ปุ่น 投げナイフ連投</p>
   </section>
 
   <!-- ════ GEMS ════ -->
