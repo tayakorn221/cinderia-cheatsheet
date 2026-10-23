@@ -558,10 +558,26 @@ body{background-image:none}
 .hero h1{font-weight:800;max-width:20ch}
 .hero h1 .hl{color:var(--owl)}
 
+/* hero แบ่งซ้ายขวา: ข้อความซ้าย ภาพขวา · ต่ำกว่า 860px เรียงแนวตั้ง */
+.hero{padding-block:36px 8px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:36px;align-items:center}
+.hero h1{font-size:clamp(1.9rem,3.6vw,2.75rem);line-height:1.3;max-width:none}
+.hero .lede{margin:14px 0 0;max-width:40ch}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr;gap:20px}}
+
+/* สรุป 1+2: ใจความแกนเต็มแถว แล้วสองสายคู่กัน · เส้นบนสีตามสัตว์แทนกล่องการ์ด */
+.take{grid-template-columns:1fr 1fr;gap:0 28px;margin:28px 0 8px}
+.take div{background:none;border:0;border-top:2px solid var(--ink);border-radius:0;padding:12px 0 14px;font-size:.95rem}
+.take div:first-child{grid-column:1/-1;font-size:1.02rem}
+.take div.t-owl{border-top-color:var(--owl)} .take div.t-wolf{border-top-color:var(--wolf)}
+@media (max-width:700px){.take{grid-template-columns:1fr}}
+
 /* ภาพหน้าจอ */
-/* ครอปกลางภาพ Steam ให้เหลือ Uma กับสัตว์ ตัดแถบ HUD ซ้าย-ขวา-ล่างออก (เห็นช่วงกว้าง 60% สูง ~53% ของภาพ) */
-.shot-hero{position:relative;margin:18px 0 0;aspect-ratio:2/1;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#0d0b10;box-shadow:var(--shadow)}
-.shot-hero img{position:absolute;left:-33.3%;top:-41%;width:166.7%;max-width:none;height:auto}
+/* ครอปกลางภาพ Steam เป็น 4:3 ให้เหลือ Uma กับสัตว์ ตัดแถบ HUD ออก (เห็นช่วงกว้าง 29-75% สูง 16-77% ของภาพ) */
+.shot-hero{margin:0}
+.shot-hero .crop{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#0d0b10;box-shadow:var(--shadow)}
+.shot-hero img{position:absolute;left:-63%;top:-26%;width:217.4%;max-width:none;height:auto}
+.shot-hero figcaption{font-size:.84rem;color:var(--ink-2);margin-top:8px}
 .shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 18px}
 .shots.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 .shots figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px;min-width:0;display:flex;flex-direction:column;gap:6px}
@@ -583,6 +599,16 @@ td.inf{background:var(--slack-soft);color:var(--slack);font-weight:600}
 td.boss{background:var(--crit-soft)}
 .tbl.wide table{min-width:620px}
 .jp{font-size:.78rem;color:var(--ink-3);white-space:nowrap}
+
+/* ตารางเบาลง: เส้นใต้แถวอย่างเดียว ไม่มีเส้นตั้ง ไม่มีพื้นหัวตาราง */
+table th,table td{border:0;border-bottom:1px solid var(--line-2)}
+table th{background:none;border-bottom:1.5px solid var(--ink-3);color:var(--ink-2)}
+table tbody tr:last-child td{border-bottom:0}
+tr.grp td{background:none;font-family:var(--f-display);font-weight:600;font-size:.95rem;color:var(--ink);padding-top:16px;border-bottom:1px solid var(--line)}
+tr.grp.must-grp td{color:var(--crit)}
+
+/* ประโยคใจความใช้ตัว sans หนา อ่านง่ายกว่า serif ทั้งย่อหน้า */
+.gist{font-family:var(--f-body);font-weight:600;font-size:1.06rem}
 
 /* SVG */
 .dg text{font-family:var(--f-body)}
@@ -615,14 +641,25 @@ td.boss{background:var(--crit-soft)}
 
 /* ไทม์ไลน์แพตช์ */
 .patches{list-style:none;margin:10px 0 16px;padding:0;border-left:2px solid var(--line)}
-.patches li{position:relative;padding:4px 0 12px 18px;font-size:.93rem}
-.patches li::before{content:"";position:absolute;left:-6px;top:11px;width:10px;height:10px;border-radius:50%;background:var(--card);border:2px solid var(--ink-3)}
-.patches li.big::before{background:var(--fwd);border-color:var(--fwd)}
-.patches li.now::before{background:var(--slack);border-color:var(--slack)}
+.patches > li{position:relative;padding:4px 0 14px 18px;font-size:.93rem}
+.patches > li::before{content:"";position:absolute;left:-6px;top:11px;width:10px;height:10px;border-radius:50%;background:var(--card);border:2px solid var(--ink-3)}
+.patches > li.now::before{background:var(--slack);border-color:var(--slack)}
 .patches .v{font-family:var(--f-mono);font-weight:600;font-size:.86rem}
 .patches .d{font-family:var(--f-mono);font-size:.8rem;color:var(--ink-3);margin-left:6px}
+.patches .chg{margin:4px 0 0;padding-left:18px;color:var(--ink-2)}
+.patches .chg li{padding:1px 0}
 footer.wrap{padding-block:26px 40px;color:var(--ink-2);font-size:.88rem;border-top:1px solid var(--line);margin-top:30px}
 footer.wrap p{max-width:none}
+.foot{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 20px;margin:0 0 14px}
+.foot dt{grid-column:1;font-weight:600;color:var(--ink)}
+.foot dd{grid-column:2;margin:0}
+@media (max-width:640px){.foot{grid-template-columns:1fr}.foot dt,.foot dd{grid-column:1}.foot dt{margin-top:8px}}
+.foot-nav a{margin-right:16px}
+/* แถบอ่านถึงไหน: ใช้ CSS scroll-driven animation แทน scroll listener ของ kit · เบราว์เซอร์ที่ไม่รองรับซ่อนแถบไป */
+#progress{width:100%;transform-origin:0 50%;transform:scaleX(0)}
+@keyframes uma-progress{to{transform:scaleX(1)}}
+@supports (animation-timeline: scroll()){#progress{animation:uma-progress linear both;animation-timeline:scroll(root)}}
+@supports not (animation-timeline: scroll()){#progress{display:none}}
 nav.top a.ext{color:var(--fwd)}
 
 /* แผนที่ 4 บท: 4 คอลัมน์บนจอกว้าง แนวตั้งบนจอแคบ (ตามกฎ .pipe ของ kit) */
@@ -647,25 +684,31 @@ nav.top a.ext{color:var(--fwd)}
 </nav>
 
 <header class="hero wrap">
-  <p class="eyebrow">Cinderia · Early Access · ตรวจถึง V0.6.11b (25 ส.ค. 2026)</p>
-  <h1>ทุกอย่างที่ Uma ทำ <span class="hl">คือการเติมเกจเรียกสัตว์</span></h1>
-  <p class="lede">หน้านี้แตก Uma ออกเป็นชิ้น: เกจเรียกสัตว์ทำงานยังไง สายนกฮูกกับสายกรงเล็บเอาเกจไปใช้ต่างกันตรงไหน และแต่ละสายต้องเก็บทาเลนต์ การ์ด ไอเทมอะไร อ่านจบแล้วเลือกของกลางรันได้เองโดยไม่ต้องเปิดไกด์</p>
-  <div class="take">
-    <div><b>ทุกการกระทำเติม <i class="term" data-t="sv">ค่าเรียก</i></b>ตีโดน +10 · ยิง Nature's Breath +30 เกจเต็มเมื่อไรได้สัตว์ 1 ตัว: หมาป่า 50% · เม่น 35% · นกฮูก 15% ตัวละ 7 วิ</div>
-    <div><b>สายนกฮูก ดันนกฮูกให้เกินผลสุ่ม 15%</b>ทาเลนต์บังคับ Wind Burial (ฆ่า → 50% ได้นกฮูก) กับ Response (ใช้การ์ด → นกฮูก 1 ตัว ทุก 7 วิ) แล้วกด Wind Guidance ทุก 4 วิ</div>
-    <div><b>สายกรงเล็บ ให้ Uma ลงไปตบเอง</b>Wild Howl เปลี่ยนหมัดเป็นกรงเล็บ 35 ดาเมจ 5 วิ ที่ Lv.4 กรงเล็บโดน 10 ครั้งได้เวลาคืน 1 วิ ตีกลุ่มมอบแล้วเปิดค้างได้ยาว แต่ตีบอสตัวเดียวยืดได้แค่ไม่กี่วินาที</div>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">ตรวจถึง V0.6.11b (25 ส.ค. 2026)</p>
+      <h1>ทุกอย่างที่ Uma ทำ <span class="hl">คือการเติมเกจเรียกสัตว์</span></h1>
+      <p class="lede">สองสายของเธอใช้เกจเดียวกันคนละแบบ หน้านี้แตกให้เห็นว่าแต่ละสายต้องเก็บทาเลนต์ การ์ด และของอะไร</p>
+    </div>
+    <figure class="shot-hero">
+      <div class="crop"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3214610/e63929fdbc88fe7a004cf9bef83d7fe3a29d2028/ss_e63929fdbc88fe7a004cf9bef83d7fe3a29d2028.1920x1080.jpg" alt="ภาพในเกม: Uma ผมเขียวสวมหน้ากากกะโหลก มีนกฮูกเกาะหัว เม่นอยู่ข้างตัว และลูกหมาป่าสองตัว ยืนในป่าข้าง Rivet" width="1920" height="1080" fetchpriority="high"></div>
+      <figcaption>Uma (กลาง ผมเขียว) กับ<span class="owl">นกฮูก</span>บนหัว <span class="hog">เม่น</span>ทางขวา และ<span class="wolf">ลูกหมาป่า</span>สองตัว ภาพจากหน้าร้าน Steam</figcaption>
+    </figure>
   </div>
-  <figure class="shot-hero"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3214610/e63929fdbc88fe7a004cf9bef83d7fe3a29d2028/ss_e63929fdbc88fe7a004cf9bef83d7fe3a29d2028.1920x1080.jpg" alt="ภาพในเกม: Uma ผมเขียวสวมหน้ากากกะโหลก มีนกฮูกเกาะหัว เม่นอยู่ข้างตัว และลูกหมาป่าสองตัว ยืนในป่าข้าง Rivet" width="1920" height="1080"></figure>
-  <p class="cap">Uma (กลาง ผมเขียว หน้ากากกะโหลก) กับสัตว์ทั้งสามชนิดของเธอ: <span class="owl">นกฮูก</span>บนหัว · <span class="hog">เม่น</span>ทางขวา · <span class="wolf">ลูกหมาป่า</span>สองตัวด้านล่าง · ภาพจากหน้าร้าน Steam</p>
+  <div class="take">
+    <div><b>ทุกการกระทำเติม <i class="term" data-t="sv">ค่าเรียก</i></b>ตีโดน +10 ยิง Nature's Breath +30 พอเกจเต็มได้สัตว์ 1 ตัว สุ่มเป็นหมาป่า 50% เม่น 35% หรือนกฮูก 15% อยู่ตัวละ 7 วิ</div>
+    <div class="t-owl"><b>สายนกฮูก ดันนกฮูกให้เกินผลสุ่ม 15%</b>ทาเลนต์บังคับ Wind Burial (ฆ่า → 50% ได้นกฮูก) กับ Response (ใช้การ์ด → นกฮูก 1 ตัว ทุก 7 วิ) แล้วกด Wind Guidance ทุก 4 วิ</div>
+    <div class="t-wolf"><b>สายกรงเล็บ ให้ Uma ลงไปตบเอง</b>Wild Howl เปลี่ยนหมัดเป็นกรงเล็บ 35 ดาเมจ 5 วิ ที่ Lv.4 กรงเล็บโดน 10 ครั้งได้เวลาคืน 1 วิ ตีกลุ่มมอบเปิดค้างได้ยาว ตีบอสตัวเดียวยืดได้แค่ไม่กี่วินาที</div>
+  </div>
 </header>
 
 <section class="block wrap" id="map">
   <h2 class="sec">แผนที่หน้านี้</h2>
   <ol class="pipe four">
-    <li><a href="#engine"><span class="pt">บท 1</span><strong>เกจเรียกสัตว์</strong><span class="pd">เติมจากอะไร เต็มแล้วได้อะไร</span><span class="po">ได้: เข้าใจว่าทำไมมีสองสาย</span></a></li>
-    <li><a href="#owl"><span class="pt">บท 2</span><strong>สายนกฮูก</strong><span class="pd">นกฮูกเกิดจาก 6 ทาง รอบหมุน 8 วิ</span><span class="po">ได้: ลำดับเก็บทาเลนต์ การ์ด ของ</span></a></li>
-    <li><a href="#claw"><span class="pt">บท 3</span><strong>สายกรงเล็บ</strong><span class="pd">Wild Howl ยืดได้นานแค่ไหน</span><span class="po">ได้: ลำดับกดการ์ด 3 ใบ</span></a></li>
-    <li><a href="#pick"><span class="pt">บท 4</span><strong>เลือกสาย · อัปเดต</strong><span class="pd">เทียบสองสาย แพตช์ที่แตะ Uma</span><span class="po">ได้: รู้ว่าข้อมูลสดแค่ไหน</span></a></li>
+    <li><a href="#engine"><strong>เกจเรียกสัตว์</strong><span class="pd">เติมจากอะไร เต็มแล้วได้อะไร</span><span class="po">ได้: เข้าใจว่าทำไมมีสองสาย</span></a></li>
+    <li><a href="#owl"><strong>สายนกฮูก</strong><span class="pd">นกฮูกเกิดจาก 6 ทาง รอบหมุน 8 วิ</span><span class="po">ได้: ลำดับเก็บทาเลนต์ การ์ด ของ</span></a></li>
+    <li><a href="#claw"><strong>สายกรงเล็บ</strong><span class="pd">Wild Howl ยืดได้นานแค่ไหน</span><span class="po">ได้: ลำดับกดการ์ด 3 ใบ</span></a></li>
+    <li><a href="#pick"><strong>เลือกสาย · อัปเดต</strong><span class="pd">เทียบสองสาย แพตช์ที่แตะ Uma</span><span class="po">ได้: รู้ว่าข้อมูลสดแค่ไหน</span></a></li>
   </ol>
   <div class="legend" role="note">
     <span class="lt">สีในหน้านี้มีความหมายเดียวเสมอ</span>
@@ -684,7 +727,7 @@ nav.top a.ext{color:var(--fwd)}
   <p class="ch-q">คำถามของบทนี้: ทำไมสายที่ยืนห่างกดการ์ด กับสายที่เข้าไปตบติดตัว ถึงใช้ตัวละครเดียวกันได้?</p>
 
   <h3 class="step"><span class="n">1.1</span>เกจเติมจากทุกอย่างที่ Uma ทำ</h3>
-  <p class="gist">ตีประชิดโดน 1 ครั้งได้ค่าเรียก 10 · ยิง Nature's Breath 1 นัดได้ 30 · การ์ดบางใบเติมก้อนใหญ่ และส่วนที่ล้นเกจไม่หาย ทบไปรอบถัดไป</p>
+  <p class="gist">ตีประชิดโดน 1 ครั้งได้ค่าเรียก 10 ยิง Nature's Breath 1 นัดได้ 30 การ์ดบางใบเติมก้อนใหญ่กว่านั้น และส่วนที่ล้นเกจไม่หาย ทบไปรอบถัดไป</p>
   <p>Nature's Breath คือท่ายิงลูกพลังงานของ Uma ยิง 1 นัดเท่ากับตีโดน 3 หมัด patch notes ไม่ได้บอกว่าเกจเต็มที่เท่าไร ตารางนี้จึงใช้เทียบกันเองว่าแหล่งไหนเติมเร็วกว่า</p>
   <div class="tbl"><table>
     <thead><tr><th>ทำอะไร</th><th class="num">ค่าเรียก</th><th>เงื่อนไข</th></tr></thead>
@@ -699,7 +742,7 @@ nav.top a.ext{color:var(--fwd)}
   </table></div>
 
   <h3 class="step"><span class="n">1.2</span>เกจเต็ม = สุ่มสัตว์ 1 ตัว</h3>
-  <p class="gist">ผลสุ่มได้หมาป่า 50% · เม่น 35% · นกฮูก 15% อยู่ตัวละ 7 วิ นกฮูกตีแรงสุด (25) แต่ออกน้อยสุด</p>
+  <p class="gist">ผลสุ่มได้หมาป่า 50% เม่น 35% นกฮูก 15% อยู่ตัวละ 7 วิ นกฮูกตีแรงสุด (25) แต่ออกน้อยสุด</p>
   <p>สัตว์ทุกตัวคริตตามค่าคริตของ Uma ตั้งแต่ V0.6.7 ของที่เพิ่มคริตให้ Uma จึงเพิ่มให้ทั้งฝูงไปด้วย</p>
   <div class="scroll-x"><svg class="dg" viewBox="0 0 760 244" style="min-width:600px" role="img" aria-label="แผนผัง: การกระทำของ Uma เติมเกจค่าเรียก เกจเต็มแล้วสุ่มหมาป่า 50 เปอร์เซ็นต์ เม่น 35 เปอร์เซ็นต์ นกฮูก 15 เปอร์เซ็นต์">
     <defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--ink-3)"/></marker></defs>
@@ -722,13 +765,13 @@ nav.top a.ext{color:var(--fwd)}
     <path class="ln" d="M478,117 C490,117 488,184 500,184" marker-end="url(#ar1)"/>
     <rect class="box" x="502" y="22" width="250" height="56" rx="8"/><rect class="f-wolf" x="502" y="22" width="6" height="56" rx="2"/>
     <text class="tb wolf" x="518" y="44" style="fill:var(--wolf)">หมาป่า</text><text class="tm" x="742" y="44" text-anchor="end">50%</text>
-    <text class="t2" x="518" y="66">ตี 16 · อยู่ 7 วิ</text><rect x="616" y="58" width="126" height="8" rx="4" fill="var(--card-2)"/><rect class="f-wolf" x="616" y="58" width="63" height="8" rx="4"/>
+    <text class="t2" x="518" y="66">ตี 16 · อยู่ 7 วิ</text><rect class="f-wolf" x="616" y="58" width="63" height="8" rx="4"/>
     <rect class="box" x="502" y="89" width="250" height="56" rx="8"/><rect class="f-hog" x="502" y="89" width="6" height="56" rx="2"/>
     <text class="tb" x="518" y="111" style="fill:var(--hog)">เม่น</text><text class="tm" x="742" y="111" text-anchor="end">35%</text>
-    <text class="t2" x="518" y="133">ตี 12 · อยู่ 7 วิ</text><rect x="616" y="125" width="126" height="8" rx="4" fill="var(--card-2)"/><rect class="f-hog" x="616" y="125" width="44.1" height="8" rx="4"/>
+    <text class="t2" x="518" y="133">ตี 12 · อยู่ 7 วิ</text><rect class="f-hog" x="616" y="125" width="44.1" height="8" rx="4"/>
     <rect class="box" x="502" y="156" width="250" height="56" rx="8"/><rect class="f-owl" x="502" y="156" width="6" height="56" rx="2"/>
     <text class="tb" x="518" y="178" style="fill:var(--owl)">นกฮูก</text><text class="tm" x="742" y="178" text-anchor="end">15%</text>
-    <text class="t2" x="518" y="200">ตี 25 · อยู่ 7 วิ</text><rect x="616" y="192" width="126" height="8" rx="4" fill="var(--card-2)"/><rect class="f-owl" x="616" y="192" width="18.9" height="8" rx="4"/>
+    <text class="t2" x="518" y="200">ตี 25 · อยู่ 7 วิ</text><rect class="f-owl" x="616" y="192" width="18.9" height="8" rx="4"/>
     <text class="t2" x="627" y="234" text-anchor="middle">ทุกตัวคริตตาม Uma (ตั้งแต่ V0.6.7)</text>
   </svg></div>
   <p class="hint-x">แถบสีในกล่องสัตว์ยาวตามโอกาสสุ่ม · ตัวเลข "ตี" คือพลังโจมตีพื้นฐานของสัตว์</p>
@@ -763,7 +806,7 @@ nav.top a.ext{color:var(--fwd)}
     <rect class="box must" x="8" y="128" width="372" height="50" rx="8"/><text class="tb" x="22" y="149">ใช้การ์ด · Response</text><text class="t" x="366" y="149" text-anchor="end" style="fill:var(--crit);font-weight:600">ต้องมี</text><text class="t2" x="22" y="168">นกฮูก 1 ตัว ทุก 7 วิ · ทำงานตอนสู้บอสด้วย</text>
     <rect class="box" x="8" y="188" width="372" height="50" rx="8"/><text class="tb" x="22" y="209">การ์ดที่เรียกนกฮูกเอง</text><text class="t2" x="22" y="228">Kingdom of Moonlight · Howling Hurricane</text>
     <rect class="box" x="8" y="248" width="372" height="50" rx="8"/><text class="tb" x="22" y="269">ผลไม้สุก · Steal Fruit</text><text class="t2" x="22" y="288">50% กลายเป็นนกฮูก · ตัวนี้อยู่ +7 วิ</text>
-    <rect class="box" x="8" y="308" width="372" height="50" rx="8"/><text class="tb" x="22" y="329">ไอเทม Moonlight Branch</text><text class="t2" x="22" y="348">ตีประชิด 5–10% · ใช้การ์ด 30% (รุ่นตำนาน)</text>
+    <rect class="box" x="8" y="308" width="372" height="50" rx="8"/><text class="tb" x="22" y="329">ไอเทม Moonlight Branch</text><text class="t2" x="22" y="348">ตีประชิด 5-10% · ใช้การ์ด 30% (รุ่นตำนาน)</text>
     <path class="ln owl" d="M380,33 C470,33 470,170 520,178" marker-end="url(#ar2)"/>
     <path class="ln owl" d="M380,93 C460,93 470,176 520,182" marker-end="url(#ar2)"/>
     <path class="ln owl" d="M380,153 C450,153 480,184 520,186" marker-end="url(#ar2)"/>
@@ -779,21 +822,24 @@ nav.top a.ext{color:var(--fwd)}
     <text class="t2" x="602" y="338" text-anchor="middle">Wind Guidance Lv.4: สัตว์ทุกตัว +35%</text>
   </svg></div>
 
-  <h3 class="step"><span class="n">2.2</span>ทาเลนต์: บังคับ 2 · เสริม 6 · ประกันเลือด 1</h3>
+  <h3 class="step"><span class="n">2.2</span>ทาเลนต์: บังคับ 2 ใบ เสริม 6 ใบ ประกันเลือด 2 ใบ</h3>
   <p class="gist">Wind Burial กับ Response คุมจำนวนนกฮูกตรง ๆ จึงขาดไม่ได้ แต่ Wind Burial ไม่ทำงานกับบอส ช่วงสู้บอสจึงต้องพึ่ง Response ซึ่งต้องมีการ์ดคูลดาวน์สั้นให้กดถี่</p>
-  <div class="tbl wide"><table>
-    <thead><tr><th>ทาเลนต์</th><th>ทำอะไร</th><th>ระดับ</th></tr></thead>
+  <div class="tbl wide"><table class="grouped">
+    <thead><tr><th>ทาเลนต์</th><th>ทำอะไร</th><th>หมายเหตุ</th></tr></thead>
     <tbody>
-      <tr class="must"><td>Wind Burial <span class="jp">風葬</span></td><td>ฆ่าศัตรู 1 ตัว มีโอกาส 50% เรียกนกฮูก</td><td><span class="pill crit">ต้องมี</span> ใช้กับมอบ</td></tr>
-      <tr class="must"><td>Response <span class="jp">応答</span></td><td>ใช้การ์ด 1 ครั้ง เรียกนกฮูก 1 ตัว (คูลดาวน์ 7 วิ)</td><td><span class="pill crit">ต้องมี</span> ตัวหลักตอนสู้บอส</td></tr>
-      <tr><td>Roll Up <span class="jp">ロールアップ</span></td><td>นกฮูกคริต +16% · คริตแล้วศัตรูกระเด็น <span class="src">patch notes เรียก Whirl</span></td><td>เสริม · ไกด์บอก "แรงมาก"</td></tr>
-      <tr><td>Nest Takeover <span class="jp">巣の乗っ取り</span></td><td>เรียกหมาป่าหรือเม่น มีโอกาส 30% ได้นกฮูกแทน และอยู่ +5 วิ <span class="src">patch notes เรียก Rogue's Nest</span></td><td>เสริม</td></tr>
-      <tr><td>Wind Resonance <span class="jp">風の共鳴</span></td><td>นกฮูกเกิดใหม่ตีเร็ว +200% นาน 2 วิ · ได้ <i class="term" data-t="wf">Wind Fury</i> เมื่อไร นกฮูกทุกตัวได้บัฟนี้อีกรอบ</td><td>เสริม · <b>เก็บก่อน Wind Infusion</b></td></tr>
+      <tr class="grp must-grp"><td colspan="3">ต้องมี ขาดแล้วสายพัง</td></tr>
+      <tr class="must"><td>Wind Burial <span class="jp">風葬</span></td><td>ฆ่าศัตรู 1 ตัว มีโอกาส 50% เรียกนกฮูก</td><td>ใช้ได้กับมอบเท่านั้น</td></tr>
+      <tr class="must"><td>Response <span class="jp">応答</span></td><td>ใช้การ์ด 1 ครั้ง เรียกนกฮูก 1 ตัว (คูลดาวน์ 7 วิ)</td><td>ตัวหลักตอนสู้บอส</td></tr>
+      <tr class="grp"><td colspan="3">เสริม เก็บตามที่ออก</td></tr>
+      <tr><td>Roll Up <span class="jp">ロールアップ</span></td><td>นกฮูกคริต +16% คริตแล้วศัตรูกระเด็น</td><td>ไกด์บอกว่าแรงมาก <span class="src">patch notes: Whirl</span></td></tr>
+      <tr><td>Nest Takeover <span class="jp">巣の乗っ取り</span></td><td>เรียกหมาป่าหรือเม่น มีโอกาส 30% ได้นกฮูกแทน และอยู่ +5 วิ</td><td><span class="src">patch notes: Rogue's Nest</span></td></tr>
+      <tr><td>Wind Resonance <span class="jp">風の共鳴</span></td><td>นกฮูกเกิดใหม่ตีเร็ว +200% นาน 2 วิ ได้ <i class="term" data-t="wf">Wind Fury</i> เมื่อไร นกฮูกทุกตัวได้บัฟนี้อีกรอบ</td><td><b>เก็บก่อน Wind Infusion</b></td></tr>
       <tr><td>Wind Infusion <span class="jp">風の注入</span></td><td>ใช้การ์ดแล้วได้ Wind Fury (คูลดาวน์ 2.5 วิ)</td><td>คู่ของ Wind Resonance</td></tr>
-      <tr><td>Storm Takeoff <span class="jp">嵐の羽ばたき</span></td><td>นกฮูกเกิดหรือหาย ปล่อยพายุ 45 ดาเมจ ผลักศัตรูออก</td><td>เสริม</td></tr>
-      <tr><td>Hunting Ground Expansion <span class="jp">狩猟領域の拡大</span></td><td>สัตว์ไล่ตีได้ไกลขึ้น 35% ตีเร็ว +8%</td><td>เสริม</td></tr>
-      <tr><td>Sprouting Cluster <span class="jp">萌芽の群生</span></td><td>ปลูกเมล็ดทุก ~12 วิ เก็บเมล็ดแล้วฟื้นเลือด</td><td>ประกัน เก็บ 1 ใบ</td></tr>
-      <tr><td>Steal Fruit <span class="jp">フルーツを盗む</span></td><td>ผลไม้สุก มีโอกาส 50% กลายเป็นนกฮูก อยู่ +7 วิ</td><td>คู่ของเมล็ด</td></tr>
+      <tr><td>Storm Takeoff <span class="jp">嵐の羽ばたき</span></td><td>นกฮูกเกิดหรือหาย ปล่อยพายุ 45 ดาเมจ ผลักศัตรูออก</td><td></td></tr>
+      <tr><td>Hunting Ground Expansion <span class="jp">狩猟領域の拡大</span></td><td>สัตว์ไล่ตีได้ไกลขึ้น 35% ตีเร็ว +8%</td><td></td></tr>
+      <tr class="grp"><td colspan="3">ประกันเลือด เก็บสายเมล็ดไว้ 1 ใบ</td></tr>
+      <tr><td>Sprouting Cluster <span class="jp">萌芽の群生</span></td><td>ปลูกเมล็ดทุก ~12 วิ เก็บเมล็ดแล้วฟื้นเลือด</td><td></td></tr>
+      <tr><td>Steal Fruit <span class="jp">フルーツを盗む</span></td><td>ผลไม้สุก มีโอกาส 50% กลายเป็นนกฮูก อยู่ +7 วิ</td><td>ต่อยอดจากเมล็ดในสายนกฮูก</td></tr>
     </tbody>
   </table></div>
   <p class="hint-x">ชื่ออังกฤษเป็นชื่อที่ใช้ในแผ่น A4 ชื่อในเกมภาษาอังกฤษอาจต่างกันเล็กน้อย ดูชื่อญี่ปุ่นเทียบกับภาพได้</p>
@@ -803,7 +849,7 @@ nav.top a.ext{color:var(--fwd)}
   </ul>
   <div class="shots">
     <figure><img loading="lazy" src="https://assets.st-note.com/img/1780918407-NpIH2GSVkDb14yjemiAscvWt.png" alt="ภาพหน้าจอทาเลนต์ 風葬 และ 応答" width="446" height="310"><figcaption><b>ทาเลนต์บังคับ 2 ใบ</b> ซ้าย Wind Burial: ฆ่าแล้ว 50% เรียกนกฮูก · ขวา Response: ใช้การ์ดแล้วเรียกนกฮูก 1 ตัว (คูลดาวน์ 7 วิ)</figcaption></figure>
-    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780919055-NSO2Hjc8s0zGVaq6R7AYTw5b.png" alt="ภาพหน้าจอทาเลนต์เสริม 6 ใบของสายนกฮูก" width="642" height="641"><figcaption><b>ทาเลนต์เสริม 6 ใบ</b> แถวบน Roll Up · Nest Takeover · Hunting Ground Expansion · แถวล่าง Wind Resonance · Wind Infusion · Storm Takeoff</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780919055-NSO2Hjc8s0zGVaq6R7AYTw5b.png" alt="ภาพหน้าจอทาเลนต์เสริม 6 ใบของสายนกฮูก" width="642" height="641"><figcaption><b>ทาเลนต์เสริม 6 ใบ</b> แถวบน Roll Up, Nest Takeover, Hunting Ground Expansion แถวล่าง Wind Resonance, Wind Infusion, Storm Takeoff</figcaption></figure>
   </div>
 
   <h3 class="step"><span class="n">2.3</span>รอบหมุน 8 วินาที: ทำไม Wind Guidance เป็นการ์ดคู่บุญ</h3>
@@ -825,7 +871,7 @@ nav.top a.ext{color:var(--fwd)}
     <text class="t" x="8" y="156">สัตว์ทุกตัว +35% (Lv.4)</text>
     <rect class="pets" x="190" y="144" width="86.25" height="18" rx="3"/><rect class="pets" x="328" y="144" width="86.25" height="18" rx="3"/><rect class="pets" x="466" y="144" width="86.25" height="18" rx="3"/><rect class="pets" x="604" y="144" width="86.25" height="18" rx="3"/>
   </svg></div>
-  <p class="cap">สมมติกดทันทีที่คูลดาวน์หมดและยิงโดนทุกนัด · นกฮูกตีเร็ว +200% ครอบ 50% ของเวลา · บัฟ +35% ของ Lv.4 ครอบ 62.5% · เกจได้อีก 40 ทุก 4 วิ จาก Lv.3</p>
+  <p class="cap">สมมติกดทันทีที่คูลดาวน์หมดและยิงโดนทุกนัด ช่วงนกฮูกตีเร็ว +200% กินเวลา 50% บัฟ +35% ของ Lv.4 กินเวลา 62.5% และเกจได้อีก 40 ทุก 4 วิ จาก Lv.3</p>
 
   <h3 class="step"><span class="n">2.4</span>การ์ด 4 ใบ เรียงตามที่ไกด์ให้ความสำคัญ</h3>
   <p class="gist">ได้ Kingdom of Moonlight ให้ปั้นก่อนใบอื่น ถ้าไม่ได้ Wind Guidance แบกคนเดียวจนผ่าน Trial 8 ได้ Howling Hurricane ไว้ล้างมอบ ส่วน Nature Flow เป็นแผนสำรองที่ใช้กับบอสไม่ได้</p>
@@ -833,10 +879,10 @@ nav.top a.ext{color:var(--fwd)}
   <div class="tbl wide"><table>
     <thead><tr><th>การ์ด</th><th>พื้นฐาน</th><th>Lv.2 ◆</th><th>Lv.3 ◆</th><th>Lv.4 ◆</th></tr></thead>
     <tbody>
-      <tr><td><b>Kingdom of Moonlight</b> <span class="jp">月光の王国</span><span class="alt">ปุ่ม Y · 12 วิ · ชาร์จ 3</span></td><td>เรียกนกฮูก + วงแสงจันทร์ 3 วิ สัตว์ในวง ดาเมจ +45%</td><td>สัตว์ ดาเมจ +30%<span class="alt">อีกทาง: ระเบิดกลางวง 45 + เกราะแตก 3 วิ</span></td><td>แสงจันทร์ +2.5 วิ<span class="alt">อีกทาง: นกฮูกจากการ์ดนี้อยู่นานขึ้น 75%</span></td><td>คูลดาวน์ −4 วิ (เหลือ 8)<span class="alt">อีกทาง: ในวงแสงจันทร์ เกจ +7 ต่อวิ</span></td></tr>
-      <tr><td><b>Wind Guidance</b> <span class="jp">風の導き</span><span class="alt">ปุ่ม RT · 6.5 วิ</span></td><td>กระสุนลม 110 ใส่ตัวแรก ติด<i class="term" data-t="mark">ตราล่า</i> แตกเป็นวง 55</td><td>คูลดาวน์ −2.5 วิ (เหลือ 4)<span class="alt">อีกทาง: ตัวแรก ดาเมจ +35</span></td><td>โดนแล้วเกจ +40<span class="alt">อีกทาง: วง +10 และน็อคอัพทุกตัว</span></td><td>สัตว์ทุกตัวตีเร็ว +35% นาน 2.5 วิ<span class="alt">อีกทาง: ตัวติดตราโดน 225%</span></td></tr>
-      <tr><td><b>Howling Hurricane</b> <span class="jp">吠えるハリケーン</span><span class="alt">ปุ่ม Y · 17 วิ · ล้างมอบ</span></td><td>นกฮูกชาร์จพายุ สูงสุด 240 น็อคอัพ 0.9 วิ ทุกตัวในทาง</td><td>นกฮูกอยู่ต่อหลังใช้การ์ด<span class="alt">อีกทาง: คูลดาวน์ −5 วิ</span></td><td>ดาเมจ +15 ชาร์จไว 2 เท่า<span class="alt">อีกทาง: ชาร์จเต็มแล้วคริต +50%</span></td><td>พายุ 1 → 3 ลูก<span class="alt">อีกทาง: ภาพโดนบัง อ่านไม่ได้</span></td></tr>
-      <tr><td><b>Nature Flow</b> <span class="jp">自然の循環</span><span class="alt">ปุ่ม RB · 5 วิ · แผนสำรอง</span></td><td>ร่าย 1.2 วิ เกจ +80 ใช้ได้เฉพาะ 3 วิหลังฆ่า</td><td>ชีลด์ระหว่างร่าย 5 ต่อวิ<span class="alt">อีกทาง: Nature's Breath คูลดาวน์เร็วขึ้น 150% ระหว่างร่าย</span></td><td>คูลดาวน์ −3 วิ (เหลือ 2)<span class="alt">อีกทาง: ร่ายนานขึ้น 50% เกจได้มากขึ้น 50%</span></td><td>ร่ายจบ 35% เรียกสัตว์ทันที<span class="alt">อีกทาง: ปลูกพุ่มหญ้าใต้เท้า 4 วิ</span></td></tr>
+      <tr><td><b>Kingdom of Moonlight</b> <span class="jp">月光の王国</span><span class="alt">ปุ่ม Y คูลดาวน์ 12 วิ ชาร์จ 3 ครั้ง</span></td><td>เรียกนกฮูก + วงแสงจันทร์ 3 วิ สัตว์ในวง ดาเมจ +45%</td><td>สัตว์ ดาเมจ +30%<span class="alt">อีกทาง: ระเบิดกลางวง 45 + เกราะแตก 3 วิ</span></td><td>แสงจันทร์ +2.5 วิ<span class="alt">อีกทาง: นกฮูกจากการ์ดนี้อยู่นานขึ้น 75%</span></td><td>คูลดาวน์ −4 วิ (เหลือ 8)<span class="alt">อีกทาง: ในวงแสงจันทร์ เกจ +7 ต่อวิ</span></td></tr>
+      <tr><td><b>Wind Guidance</b> <span class="jp">風の導き</span><span class="alt">ปุ่ม RT คูลดาวน์ 6.5 วิ</span></td><td>กระสุนลม 110 ใส่ตัวแรก ติด<i class="term" data-t="mark">ตราล่า</i> แตกเป็นวง 55</td><td>คูลดาวน์ −2.5 วิ (เหลือ 4)<span class="alt">อีกทาง: ตัวแรก ดาเมจ +35</span></td><td>โดนแล้วเกจ +40<span class="alt">อีกทาง: วง +10 และน็อคอัพทุกตัว</span></td><td>สัตว์ทุกตัวตีเร็ว +35% นาน 2.5 วิ<span class="alt">อีกทาง: ตัวติดตราโดน 225%</span></td></tr>
+      <tr><td><b>Howling Hurricane</b> <span class="jp">吠えるハリケーン</span><span class="alt">ปุ่ม Y คูลดาวน์ 17 วิ ไว้ล้างมอบ</span></td><td>นกฮูกชาร์จพายุ สูงสุด 240 น็อคอัพ 0.9 วิ ทุกตัวในทาง</td><td>นกฮูกอยู่ต่อหลังใช้การ์ด<span class="alt">อีกทาง: คูลดาวน์ −5 วิ</span></td><td>ดาเมจ +15 ชาร์จไว 2 เท่า<span class="alt">อีกทาง: ชาร์จเต็มแล้วคริต +50%</span></td><td>พายุ 1 → 3 ลูก<span class="alt">อีกทาง: ภาพโดนบัง อ่านไม่ได้</span></td></tr>
+      <tr><td><b>Nature Flow</b> <span class="jp">自然の循環</span><span class="alt">ปุ่ม RB คูลดาวน์ 5 วิ แผนสำรอง</span></td><td>ร่าย 1.2 วิ เกจ +80 ใช้ได้เฉพาะ 3 วิหลังฆ่า</td><td>ชีลด์ระหว่างร่าย 5 ต่อวิ<span class="alt">อีกทาง: Nature's Breath คูลดาวน์เร็วขึ้น 150% ระหว่างร่าย</span></td><td>คูลดาวน์ −3 วิ (เหลือ 2)<span class="alt">อีกทาง: ร่ายนานขึ้น 50% เกจได้มากขึ้น 50%</span></td><td>ร่ายจบ 35% เรียกสัตว์ทันที<span class="alt">อีกทาง: ปลูกพุ่มหญ้าใต้เท้า 4 วิ</span></td></tr>
     </tbody>
   </table></div>
   <p class="hint-x">เลื่อนตารางไปทางขวาได้ · ปุ่มเป็นของจอยตามภาพในไกด์ ตำแหน่งการ์ดสลับได้ในแต่ละรัน</p>
@@ -854,8 +900,8 @@ nav.top a.ext{color:var(--fwd)}
     <tbody>
       <tr><td>Agility / Spirit</td><td class="num">+2 / +4</td><td class="num">+4 / +6</td></tr>
       <tr><td>ตีประชิด → เรียกนกฮูก</td><td class="num">5%</td><td class="num">10%</td></tr>
-      <tr><td>ใช้การ์ด → เรียกนกฮูก</td><td class="num">–</td><td class="num">30%</td></tr>
-      <tr><td>นกฮูกบนสนาม 1 ตัว → คริต</td><td class="num">–</td><td class="num">+1.2%</td></tr>
+      <tr><td>ใช้การ์ด → เรียกนกฮูก</td><td class="num">ไม่มี</td><td class="num">30%</td></tr>
+      <tr><td>นกฮูกบนสนาม 1 ตัว → คริต</td><td class="num">ไม่มี</td><td class="num">+1.2%</td></tr>
     </tbody>
   </table></div>
   <p class="note">ถ้าไม่เคยเห็นชิ้นนี้ดรอป อาจยังไม่ได้ปลดล็อก patch notes V0.6.4 ระบุว่ามันปลดจากการเจอ Uma ในป่า และตั้งแต่ V0.6.11 พ่อค้ามีชั้นแยกที่ขายเฉพาะเครื่องประดับที่ยังไม่ปลดล็อก</p>
@@ -870,7 +916,7 @@ nav.top a.ext{color:var(--fwd)}
       <tr><td class="num">6</td><td>Gingerbread House</td><td>ฆ่า 4 ตัว เรียกทหารขนมปังขิง อยู่ได้ถึง 24 วิ</td></tr>
     </tbody>
   </table></div>
-  <p>เจมใส่ Sapphire (ลดคูลดาวน์) ทุกช่อง ของ Spirit ตัวอื่นที่ V0.6.11 บัฟคือ Witch's Perfume (IV: +11) ส่วนที่โดนหั่น Spirit คือ Magic Lamp (+6 → 0) · Infernal Jack-o'-Lantern (IV: +12 → +6) · Sunstone (IV: +6 → +3)</p>
+  <p>เจมใส่ Sapphire (ลดคูลดาวน์) ทุกช่อง ของ Spirit ตัวอื่นที่ V0.6.11 บัฟคือ Witch's Perfume (IV: +11) ส่วนที่โดนหั่น Spirit คือ Magic Lamp (+6 → 0), Infernal Jack-o'-Lantern (IV: +12 → +6) และ Sunstone (IV: +6 → +3)</p>
   <div class="shots">
     <figure><img loading="lazy" src="https://assets.st-note.com/img/1780924754-zevlxMH1rQyIBo6W7bpCZDqf.png" alt="Moonlight Branch รุ่นหายากและรุ่นตำนาน" width="449" height="250"><figcaption><b>Moonlight Branch</b> ซ้ายรุ่นหายาก ขวารุ่นตำนาน ที่เพิ่มการเรียกนกฮูกตอนใช้การ์ดและคริตต่อนกฮูก</figcaption></figure>
     <figure><img loading="lazy" src="https://assets.st-note.com/img/1778056418-jAuYoSsT9yhDJ6kZt2WF5BKP.png" alt="ตัวอย่างบิลด์นกฮูกของ ペロ" width="322" height="380"><figcaption><b>บิลด์จริงที่ผ่าน Trial 8</b> ไม่มี Kingdom of Moonlight แต่เรียกนกฮูกต่อเนื่องด้วย Wind Guidance จนทำดาเมจพอ</figcaption></figure>
@@ -890,7 +936,7 @@ nav.top a.ext{color:var(--fwd)}
   <div class="tbl wide"><table>
     <thead><tr><th>การ์ด</th><th>พื้นฐาน</th><th>Lv.2 ◆</th><th>Lv.3 ◆</th><th>Lv.4 ◆</th></tr></thead>
     <tbody>
-      <tr class="must"><td><b>Wild Howl</b> <span class="jp">ワイルドハウル</span><span class="alt">ปุ่ม RB · 28 วิ</span></td><td>5 วิ หมัดเป็นกรงเล็บ 35 · ระหว่างนั้นห้ามใช้การ์ดและ Nature's Breath</td><td>เดินและตีเร็ว +16%<span class="alt">อีกทาง: คูลดาวน์ −5 วิ</span></td><td>กรงเล็บ +10 (เป็น 45)<span class="alt">อีกทาง: สัตว์รอบตัว ดาเมจและความเร็ว +25%</span></td><td>กรงเล็บทำดาเมจ 1 ครั้ง เวลา +0.1 วิ<span class="alt">อีกทาง: เลิกปิดการ์ด ดาเมจรวม +8%</span></td></tr>
+      <tr class="must"><td><b>Wild Howl</b> <span class="jp">ワイルドハウル</span><span class="alt">ปุ่ม RB คูลดาวน์ 28 วิ</span></td><td>5 วิ หมัดเป็นกรงเล็บ 35 ระหว่างนั้นห้ามใช้การ์ดและ Nature's Breath</td><td>เดินและตีเร็ว +16%<span class="alt">อีกทาง: คูลดาวน์ −5 วิ</span></td><td>กรงเล็บ +10 (เป็น 45)<span class="alt">อีกทาง: สัตว์รอบตัว ดาเมจและความเร็ว +25%</span></td><td>กรงเล็บทำดาเมจ 1 ครั้ง เวลา +0.1 วิ<span class="alt">อีกทาง: เลิกปิดการ์ด ดาเมจรวม +8%</span></td></tr>
     </tbody>
   </table></div>
   <div class="shots">
@@ -898,7 +944,7 @@ nav.top a.ext{color:var(--fwd)}
   </div>
 
   <h3 class="step"><span class="n">3.2</span>Lv.4 ยืดเวลาได้นานแค่ไหน</h3>
-  <p class="gist">กรงเล็บโดน 10 ครั้งได้เวลาคืน 1 วิ ตีบอสตัวเดียว 3 หมัดต่อวิ Wild Howl อยู่ได้ราว 7 วิ แต่ตีกลุ่ม 3–4 ตัวพร้อมกัน เวลาเพิ่มเร็วกว่าที่ลด จนแทบไม่หมด</p>
+  <p class="gist">กรงเล็บโดน 10 ครั้งได้เวลาคืน 1 วิ ตีบอสตัวเดียว 3 หมัดต่อวิ Wild Howl อยู่ได้ราว 7 วิ แต่ตีกลุ่ม 3-4 ตัวพร้อมกัน เวลาเพิ่มเร็วกว่าที่ลด จนแทบไม่หมด</p>
   <p>การ์ดเขียนว่ายืดเวลา "ทุกครั้งที่กรงเล็บทำดาเมจ" ตารางนี้จึงนับหมัดเดียวที่โดนศัตรู 3 ตัวเป็น 3 ครั้ง สูตรคือ เวลาทั้งหมด = 5 ÷ (1 − 0.1 × หมัดต่อวิ × จำนวนศัตรูที่โดน) ถ้าผลคูณถึง 10 เวลาจะไม่ลดลงเลยตราบที่ยังตีโดน</p>
   <div class="tbl"><table>
     <thead><tr><th>ศัตรูที่โดนต่อหมัด</th><th class="num">2 หมัด/วิ</th><th class="num">3 หมัด/วิ</th><th class="num">4 หมัด/วิ</th></tr></thead>
@@ -911,36 +957,38 @@ nav.top a.ext{color:var(--fwd)}
   </table></div>
   <p class="hint-x">หน้านี้ไม่รู้ว่า Uma ตีได้กี่หมัดต่อวิจริง ตารางจึงวางไว้ 3 ค่าให้เทียบ · ช่องแดงคือกรณีบอส ช่องเขียวคือเปิดค้างได้</p>
 
-  <h3 class="step"><span class="n">3.3</span>ทาเลนต์: บังคับ 2 · ฝูงหมาป่า 4</h3>
+  <h3 class="step"><span class="n">3.3</span>ทาเลนต์: บังคับ 2 ใบ ฝูงหมาป่า 4 ใบ</h3>
   <p class="gist">Evasive Instinct กับ Feral Claws ขาดไม่ได้ เพราะสายนี้ยืนแลกหมัดตลอด ส่วนทาเลนต์ฝูงหมาป่าทำงานได้แม้ไม่มี Fighting Spirit เพราะกรงเล็บเติมเกจจนหมาป่าออกเองอยู่แล้ว</p>
-  <div class="tbl wide"><table>
-    <thead><tr><th>ทาเลนต์</th><th>ทำอะไร</th><th>ระดับ</th></tr></thead>
+  <div class="tbl wide"><table class="grouped">
+    <thead><tr><th>ทาเลนต์</th><th>ทำอะไร</th><th>หมายเหตุ</th></tr></thead>
     <tbody>
-      <tr class="must"><td>Evasive Instinct <span class="jp">回避本能</span></td><td>ตีประชิดโดน 1 ครั้ง หลบ +3.5% นาน 8 วิ ซ้อนได้ 10 ชั้น (สูงสุด 35%)</td><td><span class="pill crit">ต้องมี</span></td></tr>
-      <tr class="must"><td>Feral Claws <span class="jp">獰猛な爪</span></td><td>กรงเล็บและหมาป่าคริตแล้วศัตรูเกราะแตก · คริต +8%</td><td><span class="pill crit">ต้องมี</span></td></tr>
-      <tr><td>Fighting Spirit <span class="jp">闘争心</span></td><td>ตีประชิด 12% เรียกหมาป่า <span class="src">patch notes เรียก Battle Sense</span></td><td>ตัวเปิดฝูง</td></tr>
-      <tr><td>Pack Call <span class="jp">群れ呼び</span></td><td>เรียกหมาป่า 1 ตัว มีโอกาส 36% ได้อีกตัว</td><td>เสริม</td></tr>
-      <tr><td>Fang Bite <span class="jp">鋭い歯で噛む</span></td><td>หมาป่าตี 21% ทำ 40 ดาเมจและสตัน · ท่าหมาป่าทุกท่าสตัน</td><td>เสริม</td></tr>
-      <tr><td>Wolf Spirit <span class="jp">ウルフソウル</span></td><td>หมาป่าตีโดน 1 ครั้ง ดาเมจประชิด +8% นาน 2.5 วิ ซ้อน 8 ชั้น (สูงสุด +64%)</td><td>เสริม</td></tr>
+      <tr class="grp must-grp"><td colspan="3">ต้องมี ขาดแล้วสายพัง</td></tr>
+      <tr class="must"><td>Evasive Instinct <span class="jp">回避本能</span></td><td>ตีประชิดโดน 1 ครั้ง หลบ +3.5% นาน 8 วิ ซ้อนได้ 10 ชั้น (สูงสุด 35%)</td><td>ตัวกันตายของสายนี้</td></tr>
+      <tr class="must"><td>Feral Claws <span class="jp">獰猛な爪</span></td><td>กรงเล็บและหมาป่าคริตแล้วศัตรูเกราะแตก คริต +8%</td><td></td></tr>
+      <tr class="grp"><td colspan="3">ฝูงหมาป่า ทำงานได้แม้ไม่มี Fighting Spirit</td></tr>
+      <tr><td>Fighting Spirit <span class="jp">闘争心</span></td><td>ตีประชิด 12% เรียกหมาป่า</td><td>ตัวเปิดฝูง <span class="src">patch notes: Battle Sense</span></td></tr>
+      <tr><td>Pack Call <span class="jp">群れ呼び</span></td><td>เรียกหมาป่า 1 ตัว มีโอกาส 36% ได้อีกตัว</td><td></td></tr>
+      <tr><td>Fang Bite <span class="jp">鋭い歯で噛む</span></td><td>หมาป่าตี 21% ทำ 40 ดาเมจและสตัน ท่าหมาป่าทุกท่าสตัน</td><td>ทำบอสดื้อ CC เร็วขึ้น</td></tr>
+      <tr><td>Wolf Spirit <span class="jp">ウルフソウル</span></td><td>หมาป่าตีโดน 1 ครั้ง ดาเมจประชิด +8% นาน 2.5 วิ ซ้อน 8 ชั้น (สูงสุด +64%)</td><td></td></tr>
     </tbody>
   </table></div>
   <div class="shots">
     <figure><img loading="lazy" src="https://assets.st-note.com/img/1780919792-KZDMIdGbFYaEwQzmAp9tW3qy.png" alt="ทาเลนต์ 回避本能 และ 獰猛な爪" width="447" height="333"><figcaption><b>ทาเลนต์บังคับ</b> Evasive Instinct (หลบซ้อนชั้น) · Feral Claws (คริต + เกราะแตก)</figcaption></figure>
-    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780919993-FDLpcdyUE0vBQxbnN9TJRr1g.png" alt="ทาเลนต์ฝูงหมาป่า 4 ใบ" width="424" height="598"><figcaption><b>ฝูงหมาป่า 4 ใบ</b> Fighting Spirit · Fang Bite · Wolf Spirit · Pack Call</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780919993-FDLpcdyUE0vBQxbnN9TJRr1g.png" alt="ทาเลนต์ฝูงหมาป่า 4 ใบ" width="424" height="598"><figcaption><b>ฝูงหมาป่า 4 ใบ</b> Fighting Spirit, Fang Bite, Wolf Spirit, Pack Call</figcaption></figure>
   </div>
 
   <h3 class="step"><span class="n">3.4</span>ลำดับกด: การ์ดก่อน Howl ทีหลัง</h3>
   <p class="gist">Wild Howl ปิดการ์ดตอนเปิดอยู่ จึงต้องกดดูดมอบกับหลบ 100% ไว้ก่อน แล้วค่อยเปิด Howl ในช่วงที่ยังหลบได้ ลมดูดมอบมารวมยังทำให้กรงเล็บโดนหลายตัวและ Howl อยู่นานขึ้นด้วย</p>
   <ol class="seq">
-    <li><b>Strong Wind</b><span class="k">ปุ่ม Y · 11 วิ → 6.5 วิ เมื่ออัปครบ</span>ลมหมุน 70 ดาเมจ ดูดศัตรูเข้ากลาง Lv.4 ได้ <i class="term" data-t="wf">Wind Fury</i> 1</li>
-    <li><b>Ride the Wind</b><span class="k">ปุ่ม RT · 14 วิ</span>หลบการโจมตีได้ 100% นาน 2.1 วิ (3.3 วิ เมื่ออัป Lv.3) ตีเร็ว +30% จาก Lv.2</li>
-    <li class="hl"><b>Wild Howl</b><span class="k">ปุ่ม RB · 28 วิ</span>เปิดตอนยังหลบได้ แล้วตบกลุ่มที่ดูดมา</li>
+    <li><b>Strong Wind</b><span class="k">ปุ่ม Y คูลดาวน์ 11 วิ (6.5 วิ เมื่ออัปครบ)</span>ลมหมุน 70 ดาเมจ ดูดศัตรูเข้ากลาง Lv.4 ได้ <i class="term" data-t="wf">Wind Fury</i> 1</li>
+    <li><b>Ride the Wind</b><span class="k">ปุ่ม RT คูลดาวน์ 14 วิ</span>หลบการโจมตีได้ 100% นาน 2.1 วิ (3.3 วิ เมื่ออัป Lv.3) ตีเร็ว +30% จาก Lv.2</li>
+    <li class="hl"><b>Wild Howl</b><span class="k">ปุ่ม RB คูลดาวน์ 28 วิ</span>เปิดตอนยังหลบได้ แล้วตบกลุ่มที่ดูดมา</li>
   </ol>
   <div class="tbl wide"><table>
     <thead><tr><th>การ์ด</th><th>พื้นฐาน</th><th>Lv.2 ◆</th><th>Lv.3 ◆</th><th>Lv.4 ◆</th></tr></thead>
     <tbody>
-      <tr><td><b>Strong Wind</b> <span class="jp">強い風が吹き抜けた</span><span class="alt">ปุ่ม Y · 11 วิ</span></td><td>ลมหมุน 70 ดาเมจทุกตัวในวง ดูดเข้ากลาง</td><td>ดาเมจ +15 วงกว้าง +40%<span class="alt">อีกทาง: ดาเมจ +55</span></td><td>คูลดาวน์ −1 วิ ชาร์จ 2 ครั้ง<span class="alt">อีกทาง: ดูดแล้วศัตรูสลบ 1.8 วิ</span></td><td>คูลดาวน์ −3.5 วิ ใช้แล้วได้ Wind Fury 1<span class="alt">อีกทาง: ภาพโดนบัง อ่านไม่ได้</span></td></tr>
-      <tr><td><b>Ride the Wind</b> <span class="jp">風に乗って行こう</span><span class="alt">ปุ่ม RT · 14 วิ</span></td><td>2.1 วิ หลบได้ 100% เดินเร็ว +30%</td><td>ตีเร็ว +30%<span class="alt">อีกทาง: คูลดาวน์ −1.5 วิ ชาร์จ 2 ครั้ง</span></td><td>เวลา +1.2 วิ<span class="alt">อีกทาง: ระหว่างนั้นคูลดาวน์ทุกสกิลเร็วขึ้น 50%</span></td><td>สกิลลมทำดาเมจ → คูลดาวน์ใบนี้ −1 วิ<span class="alt">อีกทาง: เดินเร็วขึ้นอีก 45% วิ่งทะลุศัตรูได้ 40 ดาเมจ</span></td></tr>
+      <tr><td><b>Strong Wind</b> <span class="jp">強い風が吹き抜けた</span><span class="alt">ปุ่ม Y คูลดาวน์ 11 วิ</span></td><td>ลมหมุน 70 ดาเมจทุกตัวในวง ดูดเข้ากลาง</td><td>ดาเมจ +15 วงกว้าง +40%<span class="alt">อีกทาง: ดาเมจ +55</span></td><td>คูลดาวน์ −1 วิ ชาร์จ 2 ครั้ง<span class="alt">อีกทาง: ดูดแล้วศัตรูสลบ 1.8 วิ</span></td><td>คูลดาวน์ −3.5 วิ ใช้แล้วได้ Wind Fury 1<span class="alt">อีกทาง: ภาพโดนบัง อ่านไม่ได้</span></td></tr>
+      <tr><td><b>Ride the Wind</b> <span class="jp">風に乗って行こう</span><span class="alt">ปุ่ม RT คูลดาวน์ 14 วิ</span></td><td>2.1 วิ หลบได้ 100% เดินเร็ว +30%</td><td>ตีเร็ว +30%<span class="alt">อีกทาง: คูลดาวน์ −1.5 วิ ชาร์จ 2 ครั้ง</span></td><td>เวลา +1.2 วิ<span class="alt">อีกทาง: ระหว่างนั้นคูลดาวน์ทุกสกิลเร็วขึ้น 50%</span></td><td>สกิลลมทำดาเมจ → คูลดาวน์ใบนี้ −1 วิ<span class="alt">อีกทาง: เดินเร็วขึ้นอีก 45% วิ่งทะลุศัตรูได้ 40 ดาเมจ</span></td></tr>
     </tbody>
   </table></div>
   <div class="shots">
@@ -950,9 +998,10 @@ nav.top a.ext{color:var(--fwd)}
 
   <h3 class="step"><span class="n">3.5</span>ของที่ต้องเก็บ</h3>
   <p class="gist">ของชุดเดียวกับ Rue สายตี: เพิ่มดาเมจประชิด ตีเร็ว และกันตาย ไม่มีชิ้นไหนบังคับ สายนี้จึงทนดวงดรอปได้ดีกว่าสายนกฮูก</p>
-  <p>ลำดับคว้าจากแผ่น A4: Drum of Courage › Heavy Shackles › Ghostly Veil › Necronomicon › Oak Cane › Fairy Wand · ตัวอย่างบิลด์ของไกด์ใช้ของระดับกลางที่หาได้ระหว่างทาง เช่น Cursed Iron Nail (14% ทำเกราะแตก) · Frenzy Top (ตีเร็ว +1.5% ซ้อน 10 ชั้น) · Rotten Apple (12% ลงพิษ 2 สแต็ก)</p>
+  <p>ลำดับคว้าจากแผ่น A4: Drum of Courage › Heavy Shackles › Ghostly Veil › Necronomicon › Oak Cane › Fairy Wand</p>
+  <p>ตัวอย่างบิลด์ของไกด์ใช้ของระดับกลางที่หาได้ระหว่างทาง เช่น Cursed Iron Nail (14% ทำเกราะแตก), Frenzy Top (ตีเร็ว +1.5% ซ้อน 10 ชั้น) และ Rotten Apple (12% ลงพิษ 2 สแต็ก)</p>
   <div class="shots">
-    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780924088-KNPUJba7rAXfzMTZE3LudwB2.png" alt="ของสายกรงเล็บในไกด์" width="525" height="379"><figcaption><b>ของระดับกลางในตัวอย่าง</b> Cursed Iron Nail · Frenzy Top · Rotten Apple</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780924088-KNPUJba7rAXfzMTZE3LudwB2.png" alt="ของสายกรงเล็บในไกด์" width="525" height="379"><figcaption><b>ของระดับกลางในตัวอย่าง</b> Cursed Iron Nail, Frenzy Top, Rotten Apple</figcaption></figure>
     <figure><img loading="lazy" src="https://assets.st-note.com/img/1778075187-PhyK1COYpSlMwnJZGuWV2X49.png" alt="ตัวอย่างบิลด์กรงเล็บของ ペロ" width="322" height="379"><figcaption><b>บิลด์จริงที่ผ่าน Trial 8</b> ขาดทาเลนต์ Wind Traveler แต่ดันดาเมจขึ้นสุดแล้วตบผ่าน</figcaption></figure>
   </div>
 </div>
@@ -970,7 +1019,7 @@ nav.top a.ext{color:var(--fwd)}
     <thead><tr><th></th><th class="owl">สายนกฮูก</th><th class="wolf">สายกรงเล็บ</th></tr></thead>
     <tbody>
       <tr><td>ของที่ต้องดรอป</td><td>Moonlight Branch (แทนไม่ได้)</td><td>ไม่มี</td></tr>
-      <tr><td>ตอนสู้บอส</td><td>Response + Wind Guidance เรียกนกฮูกทุก 8 วิ</td><td>Wild Howl ยืดได้น้อย อยู่ราว 6–8 วิ แล้วรอคูลดาวน์ 28 วิ</td></tr>
+      <tr><td>ตอนสู้บอส</td><td>Response + Wind Guidance เรียกนกฮูกทุก 8 วิ</td><td>Wild Howl ยืดได้น้อย อยู่ราว 6-8 วิ แล้วรอคูลดาวน์ 28 วิ</td></tr>
       <tr><td>ตอนล้างมอบ</td><td>Wind Burial + Howling Hurricane</td><td>ดูดด้วย Strong Wind แล้วตบ Howl เปิดค้างได้</td></tr>
       <tr><td>จุดตาย</td><td>ไม่ได้ Response หรือการ์ดคูลดาวน์สั้น นกฮูกจะน้อยตอนสู้บอส</td><td>ก่อน Lv.4 กด Howl แล้วการ์ดถูกปิด 5 วิ</td></tr>
       <tr><td>กฎภูมิ CC ใหม่ของบอส (V0.6.11)</td><td>Roll Up ทำบอสกระเด็นบ่อย บอสจะดื้อ CC เร็วขึ้น</td><td>Fang Bite ทำให้ท่าหมาป่าทุกท่าสตัน บอสดื้อเร็วขึ้นเหมือนกัน</td></tr>
@@ -982,11 +1031,26 @@ nav.top a.ext{color:var(--fwd)}
   <p>ไกด์ของ ペロ เขียนตอน ver0.6.10 ตัวเลขการ์ดกับทาเลนต์ในหน้านี้ยังใช้ได้ เพราะ V0.6.11 ถึง V0.6.11b ไม่ได้แตะการ์ดหรือทาเลนต์ของ Uma นอกจากแก้บั๊ก</p>
   <ul class="patches">
     <li><span class="v">V0.6.6</span><span class="d">2 พ.ค. 2026</span><br>ผู้พัฒนาประกาศว่าจะรื้อ Uma ระดับเดียวกับที่เคยทำกับ Rue และ Rivet</li>
-    <li class="big"><span class="v">V0.6.7</span><span class="d">16 พ.ค. 2026</span><br>รื้อทั้งตัว: ตีประชิดเติมเกจ 3 → 10 · Nature's Breath 10 → 30 · เกจเต็มเรียก 2 → 1 ตัว ส่วนเกินไม่หาย · สัดส่วนหมาป่า/เม่น/นกฮูก 65/25/10 → 50/35/15 · สัตว์อยู่ 10 → 7 วิ · สัตว์คริตตาม Uma · ทาเลนต์นกฮูกใหม่ (Wind Resonance, Storm Takeoff, Roll Up, Nest Takeover) · Wind Fury ใหม่: หมัดถัดไปได้ฮิตเพิ่ม</li>
-    <li><span class="v">V0.6.9</span><span class="d">6 มิ.ย. 2026</span><br>Wild Pounce อมตะระหว่างลอยตัว · กรงเล็บทำลายกระสุนได้ตามที่ควร</li>
+    <li><span class="v">V0.6.7</span><span class="d">16 พ.ค. 2026</span> <b>รื้อทั้งตัว</b>
+      <ul class="chg">
+        <li>ตีประชิดเติมเกจ 3 → 10 และ Nature's Breath 10 → 30</li>
+        <li>เกจเต็มเรียก 2 → 1 ตัว ส่วนที่ล้นไม่หาย</li>
+        <li>สัดส่วนหมาป่า/เม่น/นกฮูก 65/25/10 → 50/35/15</li>
+        <li>สัตว์อยู่ 10 → 7 วิ และคริตตาม Uma</li>
+        <li>ทาเลนต์นกฮูกใหม่: Wind Resonance, Storm Takeoff, Roll Up, Nest Takeover</li>
+        <li>Wind Fury ใหม่: หมัดถัดไปได้ฮิตเพิ่ม</li>
+      </ul></li>
+    <li><span class="v">V0.6.9</span><span class="d">6 มิ.ย. 2026</span><br>Wild Pounce อมตะระหว่างลอยตัว และกรงเล็บทำลายกระสุนได้ตามที่ควร</li>
     <li><span class="v">V0.6.10b</span><span class="d">27 ก.ค. 2026</span><br>แก้เกมค้างจากเถาวัลย์ (Vine Growth) และเม่น (Tiny Spiny Ball)</li>
-    <li class="big"><span class="v">V0.6.11</span><span class="d">14 ส.ค. 2026</span><br>ของสาย Uma ถูกบัฟ: Drum of Courage IV ซัมมอนดาเมจ +30% → +50% · Drowsy Flower Crown IV Spirit +7 → +14 · Gingerbread House ฆ่า 4 ตัวทุกระดับ · แก้หมี ลูกหมาป่า และเมฆฟ้าร้องของ Uma ไม่ยอมกลับมาหาผู้เล่น · บอสคิดภูมิ CC ใหม่</li>
-    <li class="now"><span class="v">V0.6.11b</span><span class="d">25 ส.ค. 2026 · ล่าสุด</span><br>แก้บั๊กการ์ด Moonlight Domain ของ Uma ที่ใช้คู่ Shrinking Mirror แล้วยิงเลเซอร์ใส่หมีของตัวเอง · หลังจากนี้ไม่มีประกาศแพตช์ใหม่บน Steam จนถึง 23 ต.ค. 2026</li>
+    <li><span class="v">V0.6.11</span><span class="d">14 ส.ค. 2026</span> <b>บัฟของสาย Uma</b>
+      <ul class="chg">
+        <li>Drum of Courage IV ซัมมอนดาเมจ +30% → +50%</li>
+        <li>Drowsy Flower Crown IV Spirit +7 → +14</li>
+        <li>Gingerbread House ฆ่า 4 ตัวเรียกได้ทุกระดับ</li>
+        <li>แก้หมี ลูกหมาป่า และเมฆฟ้าร้องของ Uma ไม่ยอมกลับมาหาผู้เล่น</li>
+        <li>บอสคิดภูมิ CC ใหม่</li>
+      </ul></li>
+    <li class="now"><span class="v">V0.6.11b</span><span class="d">25 ส.ค. 2026</span> <span class="pill slack">ล่าสุด</span><br>แก้บั๊กการ์ด Moonlight Domain ของ Uma ที่ใช้คู่ Shrinking Mirror แล้วยิงเลเซอร์ใส่หมีของตัวเอง หลังจากนี้ยังไม่มีประกาศแพตช์ใหม่บน Steam จนถึง 23 ต.ค. 2026</li>
   </ul>
 
   <h3 class="step"><span class="n">4.3</span>ยังไม่มี Uma? ปลดล็อกในป่า</h3>
@@ -1004,9 +1068,17 @@ nav.top a.ext{color:var(--fwd)}
 </section>
 
 <footer class="wrap">
-  <p><b>แหล่งข้อมูล</b> · <a href="https://store.steampowered.com/news/app/3214610">Cinderia Patch Notes บน Steam</a> (V0.6.6 ถึง V0.6.11b ดึงผ่าน Steam Web API) · <a href="https://note.com/pero_900666/n/n842a4187dac6">CINDERIA 試練8攻略の為のビルド紹介 (ver0.6.10) โดย ペロ</a> · <a href="https://thegameslayer.com/guides/cinderia-how-to-unlock-uma/">How to unlock Uma · The Game Slayer</a></p>
-  <p><b>ภาพ</b> · ภาพหัวหน้าจากหน้าร้าน Steam ของ Cinderia · ภาพหน้าจอทาเลนต์ การ์ด และบิลด์ทั้งหมดเป็นของ ペロ ลิงก์ตรงจากบทความต้นทาง ลิขสิทธิ์เกมเป็นของผู้พัฒนา</p>
-  <p><b>ข้อจำกัด</b> · ตัวเลขทุกตัวมาจาก patch notes หรือภาพหน้าจอในเกม ตัวเลขที่คำนวณต่อ (40.5% · รอบ 8 วิ · ตาราง Wild Howl) มาจากสคริปต์ที่ใช้ตัวเลขเหล่านั้น ส่วนการเลือกสายเป็นการอ่านผลจากไกด์ ยังไม่ใช่ข้อสรุปของคอมมูนิตี้ · <a href="./">แผ่น A4</a> · <a href="read.html">ฉบับอ่านบนจอ</a></p>
+  <dl class="foot">
+    <dt>แหล่งข้อมูล</dt>
+    <dd><a href="https://store.steampowered.com/news/app/3214610">Cinderia Patch Notes บน Steam</a> ฉบับ V0.6.6 ถึง V0.6.11b ดึงผ่าน Steam Web API</dd>
+    <dd><a href="https://note.com/pero_900666/n/n842a4187dac6">CINDERIA 試練8攻略の為のビルド紹介 (ver0.6.10)</a> โดย ペロ</dd>
+    <dd><a href="https://thegameslayer.com/guides/cinderia-how-to-unlock-uma/">How to unlock Uma</a> จาก The Game Slayer</dd>
+    <dt>ภาพ</dt>
+    <dd>ภาพหัวหน้ามาจากหน้าร้าน Steam ของ Cinderia ภาพหน้าจอทาเลนต์ การ์ด และบิลด์ทั้งหมดเป็นของ ペロ ลิงก์ตรงจากบทความต้นทาง ลิขสิทธิ์เกมเป็นของผู้พัฒนา</dd>
+    <dt>ข้อจำกัด</dt>
+    <dd>ตัวเลขทุกตัวมาจาก patch notes หรือภาพหน้าจอในเกม ตัวเลขที่คำนวณต่อ (40.5%, รอบ 8 วิ, ตาราง Wild Howl) มาจากสคริปต์ที่ใช้ตัวเลขเหล่านั้น ส่วนการเลือกสายเป็นการอ่านผลจากไกด์ ยังไม่ใช่ข้อสรุปของคอมมูนิตี้</dd>
+  </dl>
+  <p class="foot-nav"><a href="./">แผ่น A4</a> <a href="read.html">ฉบับอ่านบนจอ</a></p>
 </footer>
 <div id="pop" role="tooltip" hidden></div>
 <script>
@@ -1484,7 +1556,14 @@ window.PM={cpm:cpm,evm:evm,quad:quad,f2:f2,critPaths:critPaths,allPaths:allPaths
 Kit.init({ns:'cinderia-uma'});
 Kit.run({
   theme:function(){Kit.theme('#themeBtn');},
-  nav:function(){Kit.nav();},
+  // ไม่เรียก Kit.nav() เพราะใช้ scroll listener · ไฮไลต์ลิงก์บทด้วย IntersectionObserver แทน ถ้า observer ไม่ทำงานก็แค่ไม่มีไฮไลต์
+  nav:function(){
+    var links=[].slice.call(document.querySelectorAll('nav.top a.nl[href^="#"]'));
+    if(!('IntersectionObserver' in window)||!links.length)return;
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;
+      links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);});});},{rootMargin:'-120px 0px -65% 0px'});
+    links.forEach(function(a){var el=document.getElementById(a.getAttribute('href').slice(1));if(el)io.observe(el);});
+  },
   glossary:function(){Kit.glossary({
     sv:['ค่าเรียก · summon value','ค่าที่สะสมจากการตีและยิงของ Uma เกจเต็มแล้วเรียกสัตว์ 1 ตัว ส่วนที่ล้นทบไปรอบหน้า'],
     wf:['Wind Fury','หมัดประชิดถัดไปของ Uma ได้ฮิตเพิ่ม 1 ครั้ง แรง 150% ของพลังโจมตีพื้นฐาน · มีทาเลนต์ Wind Resonance แล้ว ทุกครั้งที่ได้ Wind Fury นกฮูกทั้งฝูงตีเร็ว +200% 2 วิ'],
