@@ -1,0 +1,1577 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>เจาะลึก Uma · Cinderia</title>
+<meta name="description" content="Uma ใน Cinderia แตกเป็นโครงสร้าง: เกจเรียกสัตว์ สายนกฮูก สายกรงเล็บ ทาเลนต์ การ์ด ไอเทม และแพตช์ล่าสุด ตรวจถึง V0.6.11b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Noto+Serif+Thai:wght@600;800&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* visual-explainer kit.css — default identity: graph paper of a planner.
+   Swap the token VALUES per subject; keep the token NAMES (widgets depend on them).
+   --fwd = main process colour · --bwd = return/second pass · --crit = must-not-slip / wrong · --slack = free / correct */
+:root{
+  --paper:#f2f4f5; --grid:rgba(38,72,96,.07); --card:#ffffff; --card-2:#f5f7f8;
+  --ink:#17212b; --ink-2:#51606d; --ink-3:#8793a0; --line:#d3dbe0; --line-2:#e6ebee;
+  --bar:#5e6f7e;
+  --fwd:#1d62ad; --fwd-soft:#e0eaf6;
+  --bwd:#b25e0a; --bwd-soft:#f7e8d4;
+  --crit:#c22f1c; --crit-soft:#f9e0db;
+  --slack:#1f7f5b; --slack-soft:#d7eee3;
+  --f-display:"Chakra Petch","IBM Plex Sans Thai",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans Thai","Sarabun","Leelawadee UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",monospace;
+  --r:10px;
+  --shadow:0 1px 2px rgba(20,40,60,.06),0 6px 20px -8px rgba(20,40,60,.12);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#11161b; --grid:rgba(140,170,200,.06); --card:#182028; --card-2:#1d262f;
+    --ink:#e3e9ee; --ink-2:#a3b0bb; --ink-3:#6f7d8a; --line:#2d3842; --line-2:#232d36;
+    --bar:#8595a4;
+    --fwd:#6eaaf0; --fwd-soft:#1a2c40;
+    --bwd:#eba458; --bwd-soft:#3a2914;
+    --crit:#f27864; --crit-soft:#3d1f1a;
+    --slack:#58c797; --slack-soft:#15332a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -10px rgba(0,0,0,.5);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11161b; --grid:rgba(140,170,200,.06); --card:#182028; --card-2:#1d262f;
+  --ink:#e3e9ee; --ink-2:#a3b0bb; --ink-3:#6f7d8a; --line:#2d3842; --line-2:#232d36;
+  --bar:#8595a4;
+  --fwd:#6eaaf0; --fwd-soft:#1a2c40;
+  --bwd:#eba458; --bwd-soft:#3a2914;
+  --crit:#f27864; --crit-soft:#3d1f1a;
+  --slack:#58c797; --slack-soft:#15332a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -10px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0; color:var(--ink); background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  font-family:var(--f-body); font-size:16.5px; line-height:1.75;
+}
+.wrap{max-width:1000px;margin:0 auto;padding-inline:16px}
+a{color:inherit}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.3;text-wrap:balance;margin:0}
+p{margin:0 0 .9em;max-width:68ch}
+b,strong{font-weight:600}
+.mono,code{font-family:var(--f-mono);font-size:.9em}
+code{background:var(--card-2);border:1px solid var(--line-2);border-radius:4px;padding:0 5px}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+:focus-visible{outline:2.5px solid var(--fwd);outline-offset:2px;border-radius:4px}
+
+/* top progress + nav */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--crit);z-index:30}
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;gap:6px;padding-block:8px;overflow-x:auto;scrollbar-width:none}
+nav.top .brand{font-family:var(--f-display);font-weight:700;font-size:.95rem;margin-right:6px;white-space:nowrap}
+nav.top a.nl{text-decoration:none;font-size:.88rem;font-weight:500;color:var(--ink-2);padding:3px 11px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+nav.top a.nl:hover{color:var(--ink);border-color:var(--line)}
+nav.top a.nl.on{color:var(--card);background:var(--ink)}
+nav.top .sp{flex:1}
+.iconbtn{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:3px 12px;cursor:pointer;white-space:nowrap}
+
+/* hero */
+.hero{padding-block:44px 18px}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:0 0 10px}
+.hero h1{font-size:clamp(1.9rem,5.4vw,3.2rem);font-weight:700;letter-spacing:-.01em;max-width:18ch}
+.hero h1 .hl{color:var(--crit)}
+.lede{font-size:1.08rem;color:var(--ink-2);margin:14px 0 22px;max-width:60ch}
+.cap{font-size:.86rem;color:var(--ink-2);margin:8px 2px 0}
+
+/* sheets = interactive widgets */
+.sheet{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin:14px 0 26px;min-width:0}
+.sheet-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+.sheet-h .tag{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:0 6px}
+.sheet-h h4{font-size:1.02rem;font-weight:600}
+.sheet-h .pill{white-space:normal;min-width:0}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroll-x > svg{display:block}
+.hint-x{font-size:.78rem;color:var(--ink-3);margin:4px 0 0}
+@media (min-width:820px){.hint-x{display:none}}
+
+/* sections */
+section.block{padding-block:26px 8px}
+h2.sec{font-size:1.5rem;margin:0 0 12px}
+.chapter{padding-block:34px 10px;border-top:1px solid var(--line)}
+.ch-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:18px}
+.ch-no{font-family:var(--f-display);font-weight:700;font-size:1.5rem;line-height:1;border:2px solid var(--ink);border-radius:8px;padding:10px 12px 8px;background:var(--card);white-space:nowrap}
+.ch-head h2{font-size:clamp(1.5rem,3.6vw,2.05rem)}
+.ch-head .meta{color:var(--ink-2);font-size:.93rem;margin:4px 0 0}
+.ch-q{font-family:var(--f-display);font-size:1.12rem;font-weight:600;margin:0 0 16px;padding:10px 14px;border-left:4px solid var(--ink);background:var(--card)}
+h3.step{font-size:1.24rem;margin:34px 0 10px;display:flex;gap:10px;align-items:baseline}
+h3.step .n{font-family:var(--f-mono);font-size:.85rem;color:var(--ink-3);font-weight:500}
+
+/* pipeline */
+.pipe{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;counter-reset:p}
+.pipe li{min-width:0;position:relative}
+.pipe a{display:flex;flex-direction:column;gap:6px;height:100%;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 14px 12px;box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
+.pipe a:hover{transform:translateY(-2px);border-color:var(--ink-3)}
+.pipe .pt{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-2)}
+.pipe strong{font-family:var(--f-display);font-size:1.18rem;line-height:1.35}
+.pipe .pd{font-size:.9rem;color:var(--ink-2)}
+.pipe .po{margin-top:auto;font-size:.82rem;border-top:1px dashed var(--line);padding-top:8px;color:var(--ink)}
+.pipe svg.ic{width:44px;height:30px}
+.pipe li:not(:last-child)::after{content:"";position:absolute;right:-12px;top:50%;width:10px;height:10px;border-top:2px solid var(--ink-3);border-right:2px solid var(--ink-3);transform:translateY(-50%) rotate(45deg)}
+@media (max-width:760px){.pipe{grid-template-columns:1fr}.pipe li:not(:last-child)::after{right:50%;top:auto;bottom:-12px;transform:translateX(50%) rotate(135deg)}}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:18px 0 6px;padding:12px 14px;border:1px dashed var(--line);border-radius:var(--r);background:var(--card);font-size:.86rem}
+.legend .lt{font-weight:600;width:100%;font-size:.84rem;color:var(--ink-2)}
+.lg{display:inline-flex;align-items:center;gap:7px}
+.sw{width:22px;height:11px;border-radius:2px;display:inline-block;flex:none}
+.sw.fwd{background:var(--fwd)} .sw.bwd{background:var(--bwd)} .sw.crit{background:var(--crit)} .sw.bar{background:var(--bar)}
+.sw.own{background:var(--slack-soft);border:1.5px solid var(--slack)}
+.sw.shared{background:repeating-linear-gradient(45deg,var(--slack) 0 1.5px,var(--slack-soft) 1.5px 5px);border:1.5px solid var(--slack)}
+.sw.dia{width:11px;height:11px;background:var(--ink);transform:rotate(45deg);border-radius:1px;margin:0 5px}
+.howto{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 0;font-size:.88rem;color:var(--ink-2)}
+.howto div{display:flex;gap:8px;align-items:flex-start}
+.howto .k{font-family:var(--f-mono);font-size:.78rem;border:1px solid var(--line);background:var(--card);border-radius:4px;padding:0 6px;color:var(--ink);white-space:nowrap}
+@media (max-width:640px){.howto{grid-template-columns:1fr}}
+
+/* buttons, chips */
+.btn{font:inherit;font-size:.88rem;font-weight:500;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:7px;padding:5px 12px;cursor:pointer;line-height:1.4;white-space:nowrap}
+.btn:hover{border-color:var(--ink-3)}
+.btn.primary{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sm{font-size:.8rem;padding:3px 9px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{font:inherit;font-family:var(--f-mono);font-size:.85rem;min-width:34px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:7px;padding:3px 8px;cursor:pointer}
+.chip.crit{border-color:var(--crit);color:var(--crit)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--card)}
+.chip.crit[aria-pressed="true"]{background:var(--crit);border-color:var(--crit);color:#fff}
+.pill{display:inline-block;font-family:var(--f-mono);font-size:.74rem;border-radius:999px;padding:1px 9px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.pill.fwd{color:var(--fwd);border-color:var(--fwd);background:var(--fwd-soft)}
+.pill.bwd{color:var(--bwd);border-color:var(--bwd);background:var(--bwd-soft)}
+.pill.crit{color:var(--crit);border-color:var(--crit);background:var(--crit-soft)}
+.pill.slack{color:var(--slack);border-color:var(--slack);background:var(--slack-soft)}
+.c-fwd{color:var(--fwd)} .c-bwd{color:var(--bwd)} .c-crit{color:var(--crit)} .c-slack{color:var(--slack)} .c-mute{color:var(--ink-2)}
+
+/* notes */
+.note{border-left:3px solid var(--ink-3);padding:6px 0 6px 14px;margin:12px 0;color:var(--ink-2);font-size:.93rem;max-width:72ch}
+.note.warn{border-color:var(--bwd)}
+.take{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0 10px}
+.take div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:.92rem;min-width:0}
+.take b{display:block;font-family:var(--f-display);font-size:1rem;margin-bottom:2px}
+@media (max-width:700px){.take{grid-template-columns:1fr}}
+.src{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:0 5px;white-space:nowrap;vertical-align:1px}
+
+/* tables */
+.tbl{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+th{background:var(--card-2);font-weight:600;font-size:.84rem}
+td.c,th.c{text-align:center}
+td.num,th.num{text-align:center;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+tr.crit td{background:var(--crit-soft)}
+tr.grp td{background:var(--card-2);font-weight:600;font-family:var(--f-display)}
+.probtbl{table-layout:fixed;min-width:560px}.probtbl td,.probtbl th{text-align:center;font-family:var(--f-mono)}.probtbl th:first-child{width:118px}
+.probtbl th:first-child,.probtbl td:first-child{text-align:left;font-family:var(--f-body)}
+
+/* details */
+details.answer{border:1px solid var(--line);border-radius:var(--r);background:var(--card);margin:14px 0}
+details.answer>summary{cursor:pointer;padding:10px 14px;font-weight:600;list-style:none;display:flex;gap:10px;align-items:center}
+details.answer>summary::before{content:"+";font-family:var(--f-mono);width:18px;height:18px;border:1px solid var(--line);border-radius:4px;display:inline-grid;place-items:center;font-size:.85rem;flex:none}
+details.answer[open]>summary::before{content:"−"}
+details.answer>div{padding:0 14px 14px}
+.thinks{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:10px 0 18px}
+details.think{background:var(--card);border:1px solid var(--line);border-radius:var(--r);min-width:0}
+details.think>summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:500;display:flex;gap:10px;align-items:flex-start}
+details.think>summary .qk{font-family:var(--f-mono);font-size:.7rem;border:1px solid var(--ink-3);border-radius:4px;padding:0 5px;margin-top:4px;color:var(--ink-2);flex:none}
+details.think[open]>summary .qk{background:var(--ink);color:var(--card);border-color:var(--ink)}
+details.think>div{padding:0 14px 12px;font-size:.93rem;border-top:1px dashed var(--line);padding-top:10px}
+details.think>div p:last-child{margin-bottom:0}
+details summary::-webkit-details-marker{display:none}
+
+/* glossary term */
+.term{font-style:normal;font:inherit;color:inherit;background:none;border:0;padding:0;border-bottom:1.5px dotted var(--ink-3);cursor:help}
+.term:hover{border-bottom-color:var(--ink)}
+#pop{position:absolute;z-index:40;max-width:300px;background:var(--ink);color:var(--card);font-size:.86rem;line-height:1.55;padding:9px 12px;border-radius:8px;box-shadow:var(--shadow)}
+#pop b{display:block;font-family:var(--f-mono);font-size:.8rem;opacity:.8}
+
+/* ---------- SVG vocabulary (all colours via tokens) ---------- */
+svg text{font-family:var(--f-body)}
+.g-minor{stroke:var(--line-2);stroke-width:1}
+.g-major{stroke:var(--line);stroke-width:1}
+.g-shade{fill:var(--card-2)}
+.g-zebra{fill:var(--card-2);opacity:.55}
+.g-tick{fill:var(--ink-3);font-family:var(--f-mono)!important;font-size:10.5px}
+.g-week{fill:var(--ink-2);font-size:11px;font-weight:600}
+.g-label{fill:var(--ink);font-size:12.5px}
+.g-label.sum{font-weight:700}
+.g-label.crit{fill:var(--crit)}
+.g-label.mute{fill:var(--ink-2)}
+.g-code{fill:var(--ink-3);font-family:var(--f-mono)!important;font-size:10.5px}
+.bar{fill:var(--bar)}
+.bar.crit{fill:var(--crit)}
+.bar.pre{fill:var(--line)}
+.bar.moved{stroke:var(--ink);stroke-width:1.5}
+.bar-sum{fill:var(--ink)}
+.bar-txt{fill:#fff;font-family:var(--f-mono)!important;font-size:10.5px;font-weight:600}
+.base{fill:none;stroke:var(--ink-3);stroke-width:1.2;stroke-dasharray:3 2.5}
+.slack-own{fill:var(--slack-soft);stroke:var(--slack);stroke-width:1.2}
+.slack-shared{stroke:var(--slack);stroke-width:1.2}
+.hatch-bg{fill:var(--slack-soft)}
+.hatch-ln{stroke:var(--slack);stroke-width:1.6}
+.dia{fill:var(--ink)}
+.dia.crit{fill:var(--crit)}
+.finish{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 3}
+.finish.late{stroke:var(--crit)}
+.finish.was{stroke:var(--ink-3);stroke-dasharray:2 3}
+.finish-t{fill:var(--ink);font-size:11.5px;font-weight:600}
+.finish-t.late{fill:var(--crit)}
+.link{fill:none;stroke:var(--ink-3);stroke-width:1;opacity:.7}
+.lagmark{fill:none;stroke:var(--bwd);stroke-width:1.5;stroke-dasharray:3 2}
+/* network */
+.nd-frame{fill:var(--card);stroke:var(--ink-2);stroke-width:1.4}
+.nd-div{stroke:var(--line);stroke-width:1}
+.nd.crit .nd-frame{stroke:var(--crit);stroke-width:2.6}
+.nd.focus .nd-frame{stroke:var(--ink);stroke-width:3}
+.nd.focus.crit .nd-frame{stroke:var(--crit)}
+.nd.src .nd-frame{stroke:var(--fwd);stroke-width:2.2}
+.nd.src.b .nd-frame{stroke:var(--bwd)}
+.nd-name{fill:var(--ink);font-family:var(--f-display)!important;font-weight:700;font-size:15px}
+.nd.crit .nd-name{fill:var(--crit)}
+.nd-v{font-family:var(--f-mono)!important;font-size:13px;font-weight:600}
+.nd-v.dur{fill:var(--ink-2);font-weight:500}
+.nd-v.f{fill:var(--fwd)} .nd-v.b{fill:var(--bwd)} .nd-v.s{fill:var(--slack)} .nd-v.q{fill:var(--line)}
+.nd-cell-hl.f{fill:var(--fwd-soft)} .nd-cell-hl.b{fill:var(--bwd-soft)}
+.edge{fill:none;stroke:var(--ink-3);stroke-width:1.5}
+.edge.f{stroke:var(--fwd);stroke-width:2.6}
+.edge.b{stroke:var(--bwd);stroke-width:2.6}
+.edge.crit{stroke:var(--crit);stroke-width:2.6}
+.ah{fill:var(--ink-3)} .ah.f{fill:var(--fwd)} .ah.b{fill:var(--bwd)} .ah.crit{fill:var(--crit)}
+.fx-box{fill:var(--card);stroke:var(--ink-2);stroke-width:1.3}
+.fx-box.f{stroke:var(--fwd);stroke-width:2} .fx-box.b{stroke:var(--bwd);stroke-width:2}
+.fx-t{fill:var(--ink);font-size:13px}
+.fx-m{fill:var(--ink);font-family:var(--f-mono)!important;font-size:12.5px;font-weight:600}
+.fx-m.f{fill:var(--fwd)} .fx-m.b{fill:var(--bwd)} .fx-m.s{fill:var(--slack)}
+.fx-l{stroke:var(--ink-3);stroke-width:1.4;fill:none}
+.fx-l.f{stroke:var(--fwd)} .fx-l.b{stroke:var(--bwd)} .fx-l.s{stroke:var(--slack)}
+
+/* ---------- widgets ---------- */
+/* stepper */
+.stp-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 8px}
+.stp-count{font-family:var(--f-mono);font-size:.82rem;color:var(--ink-2);margin-left:auto}
+.stp-track{height:4px;background:var(--line-2);border-radius:2px;overflow:hidden;margin:0 0 10px;display:flex}
+.stp-track i{display:block;height:100%}
+.stp-say{min-height:4.4em;background:var(--card-2);border:1px solid var(--line-2);border-radius:8px;padding:10px 12px;font-size:.95rem}
+.stp-say b{font-weight:700}
+.stp-say .mono{font-size:.88em}
+
+/* formula cards */
+.fx{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:12px 0 8px}
+.fx figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px;min-width:0}
+.fx figcaption{font-size:.9rem;margin-top:6px}
+.fx figcaption b{font-family:var(--f-display);font-size:1.02rem;display:block}
+.fx svg{width:100%;height:auto;display:block}
+@media (max-width:760px){.fx{grid-template-columns:1fr}}
+.truths{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--card);margin:10px 0}
+.truths div{padding:10px 12px;font-size:.92rem;border-right:1px solid var(--line);min-width:0}
+.truths div:last-child{border-right:0}
+.truths .tn{font-family:var(--f-mono);font-size:.75rem;color:var(--ink-3);display:block}
+@media (max-width:700px){.truths{grid-template-columns:1fr}.truths div{border-right:0;border-bottom:1px solid var(--line)}.truths div:last-child{border-bottom:0}}
+
+/* node anatomy */
+.anat{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px;align-items:center}
+.anat-node{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink);border-radius:8px;overflow:hidden;background:var(--card)}
+.anat-node button{font:inherit;font-family:var(--f-mono);font-weight:600;font-size:1rem;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:none;color:var(--ink);padding:12px 4px;cursor:pointer}
+.anat-node button:nth-child(3n){border-right:0}
+.anat-node button.name{grid-column:1/4;font-family:var(--f-display);font-size:1.15rem;border-right:0}
+.anat-node button.f{color:var(--fwd)} .anat-node button.b{color:var(--bwd)} .anat-node button.s{color:var(--slack)}
+.anat-node button[aria-pressed="true"]{background:var(--card-2);box-shadow:inset 0 0 0 2px var(--ink)}
+.anat-rows{font-size:.84rem;color:var(--ink-2);display:grid;gap:4px;margin-top:8px}
+.anat-say{background:var(--card-2);border-radius:8px;padding:12px 14px;min-height:6.5em}
+.anat-say b{font-family:var(--f-display);font-size:1.05rem;display:block}
+@media (max-width:640px){.anat{grid-template-columns:1fr}}
+
+/* simulator */
+.sim-ctl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px 18px;margin:10px 0}
+.sim-ctl label{font-size:.86rem;color:var(--ink-2);display:flex;justify-content:space-between;gap:8px}
+.sim-ctl label output{font-family:var(--f-mono);color:var(--ink);font-weight:600}
+input[type=range]{width:100%;accent-color:var(--ink)}
+@media (max-width:640px){.sim-ctl{grid-template-columns:1fr}}
+.sim-out{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;align-items:center;background:var(--card-2);border-radius:8px;padding:10px 14px;margin:8px 0 10px}
+.sim-big{font-family:var(--f-display);font-size:1.7rem;font-weight:700;line-height:1.1;grid-row:span 3}
+.sim-big small{display:block;font-family:var(--f-body);font-size:.75rem;font-weight:500;color:var(--ink-2)}
+.sim-big.late{color:var(--crit)}
+.sim-line{font-size:.88rem;min-width:0}
+.sim-cons{display:flex;flex-wrap:wrap;gap:6px;min-height:0}
+.sim-cons button{font:inherit;font-family:var(--f-mono);font-size:.78rem;border:1px dashed var(--ink-3);background:var(--card);color:var(--ink);border-radius:999px;padding:1px 10px;cursor:pointer}
+.sim-presets{border-top:1px dashed var(--line);margin-top:12px;padding-top:12px}
+.sim-ans{margin-top:10px;background:var(--card-2);border-radius:8px;padding:10px 14px;font-size:.93rem}
+.sim-ans .tick{font-weight:600}
+@media (max-width:560px){.sim-out{grid-template-columns:1fr}.sim-big{grid-row:auto}}
+
+/* race */
+.race{display:grid;gap:8px;margin:8px 0}
+.race-row{display:grid;grid-template-columns:130px minmax(0,1fr) 44px;gap:10px;align-items:center;transition:opacity .2s}
+.race-row.dim{opacity:.28}
+.race-name{font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+.race-track{position:relative;height:26px;background:var(--card-2);border-radius:5px;overflow:hidden}
+.race-fill{position:absolute;inset:0 auto 0 0;display:flex;transition:width 1.6s cubic-bezier(.3,.7,.3,1)}
+.race-seg{height:100%;border-right:2px solid var(--card);display:grid;place-items:center;font-family:var(--f-mono);font-size:.74rem;font-weight:600;color:#fff;background:var(--bar);min-width:0;overflow:hidden;white-space:nowrap}
+.race-row.crit .race-seg{background:var(--crit)}
+.race-gap{position:absolute;top:0;bottom:0;right:0;background:repeating-linear-gradient(45deg,var(--slack) 0 1.5px,var(--slack-soft) 1.5px 6px);display:grid;place-items:center;font-size:.72rem;font-weight:600;color:var(--slack)}
+.race-gap span{background:var(--card);padding:0 5px;border-radius:3px}
+.race-len{font-family:var(--f-mono);font-weight:600;text-align:right}
+.race-row.crit .race-len{color:var(--crit)}
+.race-row.best .race-track{box-shadow:0 0 0 2px var(--ink)}
+.race-say{background:var(--card-2);border-radius:8px;padding:10px 14px;font-size:.93rem;margin-top:8px;min-height:3em}
+@media (max-width:560px){.race-row{grid-template-columns:1fr 38px}.race-name{grid-column:1/3}}
+
+/* fill-in */
+.fill td{padding:3px 4px;text-align:center}
+.fill td:first-child{font-family:var(--f-display);font-weight:700}
+.fill input{width:3.2em;font:inherit;font-family:var(--f-mono);text-align:center;border:1px solid var(--line);border-radius:5px;background:var(--card);color:var(--ink);padding:3px 2px}
+.fill input.given{background:var(--card-2);color:var(--ink-2);border-style:dashed}
+.fill input.ok{border-color:var(--slack);background:var(--slack-soft)}
+.fill input.bad{border-color:var(--crit);background:var(--crit-soft)}
+.fill th.f{color:var(--fwd)} .fill th.b{color:var(--bwd)} .fill th.s{color:var(--slack)}
+.fill-msg{font-size:.92rem;margin-top:10px;background:var(--card-2);border-radius:8px;padding:10px 14px}
+.fill-msg ul{margin:.3em 0 0;padding-left:1.2em}
+
+/* sorter */
+.sort-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.card{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--card);display:flex;flex-direction:column;gap:8px;min-width:0}
+.card .w{font-family:var(--f-mono);font-weight:600;font-size:.92rem}
+.card .opts{display:flex;gap:5px;flex-wrap:wrap}
+.card.ok{border-color:var(--slack);background:var(--slack-soft)}
+.card.bad{border-color:var(--crit);background:var(--crit-soft)}
+.card .why{font-size:.82rem;color:var(--ink-2)}
+.sort-score{font-family:var(--f-mono);font-size:.9rem}
+
+.cycle{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0 10px;font-size:.86rem}
+.cycle span{border:1px solid var(--line);background:var(--card);border-radius:6px;padding:2px 9px}
+.cycle i{font-style:normal;color:var(--ink-3)}
+.mist{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin:8px 0 14px;padding:0;list-style:none}
+.mist li{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:.9rem;display:grid;gap:3px}
+.mist .x{color:var(--crit)} .mist .o{color:var(--slack)}
+.mist .x::before{content:"✗ ";font-weight:700} .mist .o::before{content:"✓ ";font-weight:700}
+/* calendar */
+.cal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.cal-m h5{font-family:var(--f-display);font-size:.95rem;margin:0 0 6px}
+.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-g .dh{font-size:.72rem;text-align:center;color:var(--ink-3)}
+.cal-d{aspect-ratio:1.25;border-radius:5px;border:1px solid var(--line-2);font-size:.72rem;padding:2px 4px;display:flex;flex-direction:column;justify-content:space-between;background:var(--card);min-width:0;position:relative}
+.cal-d .dn{color:var(--ink-3)}
+.cal-d .wn{font-family:var(--f-mono);font-weight:600;font-size:.8rem;text-align:right;color:var(--ink)}
+.cal-d.we{background:var(--card-2);border-style:dashed}
+.cal-d.we .wn{display:none}
+.cal-d.out{visibility:hidden}
+.cal-d.ms{border-color:var(--ink);border-width:1.5px}
+.cal-d.ms::after{content:"";position:absolute;top:4px;right:5px;width:7px;height:7px;background:var(--ink);transform:rotate(45deg)}
+.cal-d.cal13{box-shadow:inset 0 0 0 1.5px var(--ink-3);border-style:dotted}
+.cal-d.sel{background:var(--ink);border-color:var(--ink)}
+.cal-d.sel .dn,.cal-d.sel .wn{color:var(--card)}
+.cal-d.span{background:var(--fwd-soft);border-color:var(--fwd)}
+.cal-say{font-size:.93rem;background:var(--card-2);border-radius:8px;padding:10px 14px;margin-top:10px}
+@media (max-width:640px){.cal{grid-template-columns:1fr}}
+
+/* dependency matrix */
+.dep{display:grid;grid-template-columns:minmax(0,270px) minmax(0,1fr);gap:18px;align-items:start}
+.dep-mx{display:grid;grid-template-columns:auto 1fr 1fr;gap:4px;font-size:.8rem;align-items:stretch}
+.dep-mx .hd{color:var(--ink-2);text-align:center;padding:4px;font-size:.76rem}
+.dep-mx .rh{color:var(--ink-2);display:flex;align-items:center;font-size:.76rem;padding-right:4px}
+.dep-mx button{font:inherit;font-family:var(--f-display);font-weight:700;font-size:1.1rem;border:1.5px solid var(--line);background:var(--card);border-radius:8px;padding:12px 4px;cursor:pointer;color:var(--ink)}
+.dep-mx button small{display:block;font-family:var(--f-body);font-weight:400;font-size:.7rem;color:var(--ink-2)}
+.dep-mx button[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.dep-mx button[aria-pressed="true"] small{color:inherit;opacity:.8}
+.dep-code{font-family:var(--f-mono);font-size:1.4rem;font-weight:600}
+.dep-ex{font-size:.93rem;margin:4px 0 8px}
+@media (max-width:680px){.dep{grid-template-columns:1fr}}
+
+/* mock app grid (.pl) + Kit.typeDemo */
+.pl{border:1px solid var(--line);border-radius:6px;overflow:hidden;font-size:.82rem}
+.pl-bar{display:flex;gap:14px;background:var(--card-2);padding:5px 10px;border-bottom:1px solid var(--line);font-size:.78rem;color:var(--ink-2)}
+.pl table{font-size:.8rem}
+.pl td,.pl th{padding:3px 7px;border-color:var(--line-2)}
+.pl td.pred{font-family:var(--f-mono);min-width:7.5em}
+.pl td.pred.hot{background:var(--bwd-soft)}
+.pl .caret{display:inline-block;width:1px;height:1em;background:var(--ink);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.pl tr.sum td{font-weight:700}
+.chk{list-style:none;padding:0;margin:8px 0;display:grid;gap:4px}
+.chk label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;padding:4px 6px;border-radius:6px;font-size:.93rem}
+.chk label:hover{background:var(--card-2)}
+.chk input{margin-top:6px;accent-color:var(--slack);width:16px;height:16px;flex:none}
+.chk input:checked + span{color:var(--ink-3);text-decoration:line-through}
+
+/* fast tracking */
+.ft-read{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:8px 0}
+.ft-read div{background:var(--card-2);border-radius:8px;padding:8px 10px;min-width:0}
+.ft-read small{display:block;font-size:.74rem;color:var(--ink-2)}
+.ft-read b{font-family:var(--f-mono);font-size:1.1rem}
+.ft-risk{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--slack),var(--bwd),var(--crit));position:relative;margin:4px 0 2px}
+.ft-risk i{position:absolute;top:-4px;width:3px;height:16px;background:var(--ink);border-radius:2px;transition:left .3s}
+@media (max-width:640px){.ft-read{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* checklist chapter */
+.cl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.cl .sheet{margin:0}
+.cl h4{font-size:1rem;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.cl h4 .num{font-size:.8rem;color:var(--ink-2)}
+.clbar{height:5px;background:var(--line-2);border-radius:3px;overflow:hidden;margin:6px 0 4px}
+.clbar i{display:block;height:100%;background:var(--slack);width:0;transition:width .3s}
+@media (max-width:820px){.cl{grid-template-columns:1fr}}
+
+footer{padding-block:30px 50px;color:var(--ink-2);font-size:.85rem;border-top:1px solid var(--line);margin-top:30px}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+
+/* ---------- charts (Kit.lineChart, PM.quad, metric tiles) ---------- */
+/* Ch.7 — chart series colours (validated with dataviz validate_palette.js: light + dark pass) */
+:root{ --pv:#8793a0; --ev:#1d62ad; --ac:#b25e0a; --good:var(--slack); --bad:var(--crit); }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --pv:#7d8b98; --ev:#5596de; --ac:#c77d2f; } }
+:root[data-theme="dark"]{ --pv:#7d8b98; --ev:#5596de; --ac:#c77d2f; }
+
+.sw.pv{background:var(--pv)} .sw.ev{background:var(--ev)} .sw.ac{background:var(--ac)}
+.sw.fc{background:repeating-linear-gradient(90deg,var(--ac) 0 5px,transparent 5px 8px)}
+.sw.good{background:var(--good)} .sw.badc{background:var(--bad)}
+.c-ev{color:var(--ev)} .c-ac{color:var(--ac)} .c-pv{color:var(--ink-2)}
+
+/* line chart */
+.lc{position:relative}
+.lc svg{display:block}
+.lc-grid{stroke:var(--line-2);stroke-width:1}
+.lc-axis{stroke:var(--line);stroke-width:1}
+.lc-tick{fill:var(--ink-3);font-family:var(--f-mono)!important;font-size:10.5px}
+.lc-line{fill:none;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.lc-line.pv{stroke:var(--pv)} .lc-line.ev{stroke:var(--ev)} .lc-line.ac{stroke:var(--ac)}
+.lc-line.fc{stroke:var(--ac);stroke-dasharray:6 4}
+.lc-line.ink{stroke:var(--ink)} .lc-line.ink3{stroke:var(--ink-3)}
+.lc-dot{stroke:var(--card);stroke-width:2}
+.lc-dot.pv{fill:var(--pv)} .lc-dot.ev{fill:var(--ev)} .lc-dot.ac{fill:var(--ac)} .lc-dot.ink{fill:var(--ink)} .lc-dot.ink3{fill:var(--ink-3)}
+.lc-end{fill:var(--ink);font-size:12px;font-weight:600}
+.lc-end.sub{fill:var(--ink-2);font-weight:500}
+.lc-v{stroke:var(--ink-2);stroke-width:1.2;stroke-dasharray:3 3}
+.lc-h{stroke:var(--ink-3);stroke-width:1}
+.lc-note{fill:var(--ink-2);font-size:11px}
+.lc-br{fill:none;stroke-width:1.8}
+.lc-br.bad{stroke:var(--bad)} .lc-br.good{stroke:var(--good)}
+.lc-brt{font-family:var(--f-mono)!important;font-size:11.5px;font-weight:600}
+.lc-brt.bad{fill:var(--bad)} .lc-brt.good{fill:var(--good)}
+.lc-band{fill:var(--slack-soft);opacity:.85}
+.lc-x{stroke:var(--ink);stroke-width:1;opacity:.5}
+.lc-hit{fill:transparent;cursor:crosshair}
+.tt{position:absolute;pointer-events:none;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:.8rem;line-height:1.5;box-shadow:var(--shadow);min-width:140px;z-index:5}
+.tt .tx{opacity:.75;font-size:.74rem}
+.tt .row2{display:flex;align-items:center;gap:7px}
+.tt .row2 i{display:inline-block;width:14px;height:2.5px;border-radius:2px}
+.tt b{font-family:var(--f-mono);font-weight:600}
+.chart-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.84rem;color:var(--ink-2);margin:0 0 6px}
+.chart-legend span{display:inline-flex;align-items:center;gap:6px}
+.chart-legend i{display:inline-block;width:18px;height:3px;border-radius:2px}
+
+.lc-boxbg{fill:var(--card);stroke:var(--line);stroke-width:1}
+.lc-line.fwd{stroke:var(--fwd)} .lc-line.bwd{stroke:var(--bwd)} .lc-line.crit{stroke:var(--crit)} .lc-line.slack{stroke:var(--slack)}
+.lc-dot.fwd{fill:var(--fwd)} .lc-dot.bwd{fill:var(--bwd)} .lc-dot.crit{fill:var(--crit)} .lc-dot.slack{fill:var(--slack)}
+/* metric tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}
+.tile{background:var(--card-2);border-radius:8px;padding:8px 10px;min-width:0}
+.tile .k{font-size:.74rem;color:var(--ink-2);display:flex;justify-content:space-between;gap:6px}
+.tile .k b{font-family:var(--f-mono);color:var(--ink);font-weight:600}
+.tile .val{font-size:1.15rem;font-weight:600;margin-top:2px}
+.tile .st{font-size:.74rem;font-weight:600}
+.tile .st.good{color:var(--good)} .tile .st.bad{color:var(--bad)} .tile .st.neu{color:var(--ink-2)}
+@media (max-width:700px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.simgrid{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:16px;align-items:start}
+@media (max-width:760px){.simgrid{grid-template-columns:1fr}}
+.quad text{font-size:10.5px}
+.q-lab{fill:var(--ink-3)}
+.q-axis{fill:var(--ink-2);font-size:11px!important}
+.q-dot{stroke:var(--card);stroke-width:2}
+.q-dot.ev{fill:var(--ev)} .q-dot.ink{fill:var(--ink)}
+.q-dl{fill:var(--ink);font-family:var(--f-mono)!important;font-weight:600}
+.q-quad.good{fill:var(--slack-soft)} .q-quad.bad{fill:var(--crit-soft)} .q-quad.mid{fill:var(--card-2)}
+
+
+/* ข้อความเป็นแกน: ใจความใต้หัวข้อ · ประโยคปิดหลังวิดเจ็ต · ตารางกว้างที่เลื่อนแนวนอนบนจอแคบ */
+.gist{font-family:var(--f-display);font-size:1.12rem;font-weight:600;line-height:1.55;color:var(--ink);border-left:3px solid var(--fwd);padding:2px 0 2px 12px;margin:6px 0 14px;max-width:46rem}
+.seen{font-size:.95rem;color:var(--ink-2);margin-top:10px}
+.seen b{color:var(--ink)}
+.tbl{margin-bottom:14px}
+.tbl.wide table{min-width:620px}
+.tbl td small{display:block;color:var(--ink-3);font-size:.82rem}
+
+/* ---- page.css ---- */
+/* เอกลักษณ์เดียวกับ read.html (พื้นเทาม่วง · Fraunces/Noto Serif Thai) · สีสัตว์มีความหมายเดียวทั้งหน้า */
+:root{
+  --paper:#E7E5EA; --grid:transparent; --card:#F6F5F8; --card-2:#ECEAF0;
+  --ink:#1B1822; --ink-2:#575067; --ink-3:#7D7691; --line:#C7C1D2; --line-2:#D5D0DE;
+  --bar:#575067;
+  --fwd:#5B3FBF; --fwd-soft:#E4DEF7;
+  --bwd:#845000; --bwd-soft:#F0E5CD;
+  --crit:#A3243B; --crit-soft:#F2DBE0;
+  --slack:#0B6247; --slack-soft:#D6EBE2;
+  --owl:#2E7D32; --owl-soft:#DDEFD9;
+  --wolf:#2F5F8F; --wolf-soft:#DCE6F1;
+  --hog:#8A5A2B; --hog-soft:#F0E3D3;
+  --f-display:"Fraunces","Noto Serif Thai",Georgia,serif;
+  --f-body:"IBM Plex Sans Thai","IBM Plex Sans",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --shadow:0 1px 1px rgba(27,24,34,.05),0 6px 20px rgba(27,24,34,.055);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131017; --grid:transparent; --card:#1C1824; --card-2:#231E2C;
+    --ink:#EFEBF5; --ink-2:#A79FB8; --ink-3:#847C96; --line:#332B40; --line-2:#2A2334;
+    --bar:#A79FB8;
+    --fwd:#A78BFA; --fwd-soft:#2A2140;
+    --bwd:#E5A93E; --bwd-soft:#33260D;
+    --crit:#F2778F; --crit-soft:#341620;
+    --slack:#4FDCA6; --slack-soft:#123227;
+    --owl:#7BD88A; --owl-soft:#16301B;
+    --wolf:#86B4E6; --wolf-soft:#172636;
+    --hog:#D9A56E; --hog-soft:#33240F;
+    --shadow:0 1px 1px rgba(0,0,0,.45),0 8px 26px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131017; --grid:transparent; --card:#1C1824; --card-2:#231E2C;
+  --ink:#EFEBF5; --ink-2:#A79FB8; --ink-3:#847C96; --line:#332B40; --line-2:#2A2334;
+  --bar:#A79FB8;
+  --fwd:#A78BFA; --fwd-soft:#2A2140;
+  --bwd:#E5A93E; --bwd-soft:#33260D;
+  --crit:#F2778F; --crit-soft:#341620;
+  --slack:#4FDCA6; --slack-soft:#123227;
+  --owl:#7BD88A; --owl-soft:#16301B;
+  --wolf:#86B4E6; --wolf-soft:#172636;
+  --hog:#D9A56E; --hog-soft:#33240F;
+  --shadow:0 1px 1px rgba(0,0,0,.45),0 8px 26px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+body{background-image:none}
+.hero h1{font-weight:800;max-width:20ch}
+.hero h1 .hl{color:var(--owl)}
+
+/* hero แบ่งซ้ายขวา: ข้อความซ้าย ภาพขวา · ต่ำกว่า 860px เรียงแนวตั้ง */
+.hero{padding-block:36px 8px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:36px;align-items:center}
+.hero h1{font-size:clamp(1.9rem,3.6vw,2.75rem);line-height:1.3;max-width:none}
+.hero .lede{margin:14px 0 0;max-width:40ch}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr;gap:20px}}
+
+/* สรุป 1+2: ใจความแกนเต็มแถว แล้วสองสายคู่กัน · เส้นบนสีตามสัตว์แทนกล่องการ์ด */
+.take{grid-template-columns:1fr 1fr;gap:0 28px;margin:28px 0 8px}
+.take div{background:none;border:0;border-top:2px solid var(--ink);border-radius:0;padding:12px 0 14px;font-size:.95rem}
+.take div:first-child{grid-column:1/-1;font-size:1.02rem}
+.take div.t-owl{border-top-color:var(--owl)} .take div.t-wolf{border-top-color:var(--wolf)}
+@media (max-width:700px){.take{grid-template-columns:1fr}}
+
+/* ภาพหน้าจอ */
+/* ครอปกลางภาพ Steam เป็น 4:3 ให้เหลือ Uma กับสัตว์ ตัดแถบ HUD ออก (เห็นช่วงกว้าง 29-75% สูง 16-77% ของภาพ) */
+.shot-hero{margin:0}
+.shot-hero .crop{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#0d0b10;box-shadow:var(--shadow)}
+.shot-hero img{position:absolute;left:-63%;top:-26%;width:217.4%;max-width:none;height:auto}
+.shot-hero figcaption{font-size:.84rem;color:var(--ink-2);margin-top:8px}
+.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 18px}
+.shots.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.shots figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.shots img{display:block;width:100%;height:auto;border-radius:6px;background:#0d0b10}
+.shots figcaption{font-size:.86rem;color:var(--ink-2);line-height:1.55}
+.shots figcaption b{color:var(--ink);font-weight:600}
+@media (max-width:760px){.shots,.shots.three{grid-template-columns:1fr}}
+
+/* สีสัตว์ */
+.owl{color:var(--owl)} .wolf{color:var(--wolf)} .hog{color:var(--hog)}
+.sw.owl{background:var(--owl)} .sw.wolf{background:var(--wolf)} .sw.hog{background:var(--hog)}
+.sw.must{background:var(--crit-soft);border:2px solid var(--crit)}
+.sw.calc{background:var(--fwd-soft);border:1.5px dashed var(--fwd)}
+.pill.owl{color:var(--owl);border-color:var(--owl);background:var(--owl-soft)}
+.pill.wolf{color:var(--wolf);border-color:var(--wolf);background:var(--wolf-soft)}
+tr.must td:first-child{box-shadow:inset 3px 0 0 var(--crit)}
+td .alt{display:block;color:var(--ink-3);font-size:.8rem;margin-top:2px}
+td.inf{background:var(--slack-soft);color:var(--slack);font-weight:600}
+td.boss{background:var(--crit-soft)}
+.tbl.wide table{min-width:620px}
+.jp{font-size:.78rem;color:var(--ink-3);white-space:nowrap}
+
+/* ตารางเบาลง: เส้นใต้แถวอย่างเดียว ไม่มีเส้นตั้ง ไม่มีพื้นหัวตาราง */
+table th,table td{border:0;border-bottom:1px solid var(--line-2)}
+table th{background:none;border-bottom:1.5px solid var(--ink-3);color:var(--ink-2)}
+table tbody tr:last-child td{border-bottom:0}
+tr.grp td{background:none;font-family:var(--f-display);font-weight:600;font-size:.95rem;color:var(--ink);padding-top:16px;border-bottom:1px solid var(--line)}
+tr.grp.must-grp td{color:var(--crit)}
+
+/* ประโยคใจความใช้ตัว sans หนา อ่านง่ายกว่า serif ทั้งย่อหน้า */
+.gist{font-family:var(--f-body);font-weight:600;font-size:1.06rem}
+
+/* SVG */
+.dg text{font-family:var(--f-body)}
+.dg .t{fill:var(--ink);font-size:13px}
+.dg .t2{fill:var(--ink-2);font-size:11.5px}
+.dg .tb{fill:var(--ink);font-size:14px;font-weight:600}
+.dg .tm{fill:var(--ink);font-family:var(--f-mono);font-size:12px;font-weight:600}
+.dg .box{fill:var(--card);stroke:var(--line);stroke-width:1.3}
+.dg .box.must{stroke:var(--crit);stroke-width:2.4}
+.dg .ln{stroke:var(--ink-3);stroke-width:1.4;fill:none}
+.dg .ln.owl{stroke:var(--owl)}
+.dg .gauge{fill:var(--card-2);stroke:var(--ink-2);stroke-width:1.3}
+.dg .gfill{fill:var(--fwd);opacity:.35}
+.dg .f-owl{fill:var(--owl)} .dg .f-wolf{fill:var(--wolf)} .dg .f-hog{fill:var(--hog)}
+.dg .s-owl{stroke:var(--owl)} .dg .s-wolf{stroke:var(--wolf)} .dg .s-hog{stroke:var(--hog)}
+.dg .soft-owl{fill:var(--owl-soft)}
+.dg .pets{fill:var(--ink-3);opacity:.55}
+.dg .axis{stroke:var(--line);stroke-width:1}
+.dg .tick{fill:var(--ink-3);font-family:var(--f-mono);font-size:10.5px}
+.dg .dia{fill:var(--ink)}
+
+/* ลำดับกด */
+.seq{list-style:none;margin:12px 0 16px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;counter-reset:s}
+.seq li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;position:relative;min-width:0;font-size:.92rem}
+.seq li::before{counter-increment:s;content:counter(s);font-family:var(--f-mono);font-weight:600;font-size:.8rem;display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--card);margin-right:8px}
+.seq li b{font-family:var(--f-display);font-size:1.02rem}
+.seq li .k{display:block;font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);margin:2px 0 6px}
+.seq li.hl{border-color:var(--wolf);box-shadow:inset 0 0 0 1px var(--wolf)}
+@media (max-width:700px){.seq{grid-template-columns:1fr}}
+
+/* ไทม์ไลน์แพตช์ */
+.patches{list-style:none;margin:10px 0 16px;padding:0;border-left:2px solid var(--line)}
+.patches > li{position:relative;padding:4px 0 14px 18px;font-size:.93rem}
+.patches > li::before{content:"";position:absolute;left:-6px;top:11px;width:10px;height:10px;border-radius:50%;background:var(--card);border:2px solid var(--ink-3)}
+.patches > li.now::before{background:var(--slack);border-color:var(--slack)}
+.patches .v{font-family:var(--f-mono);font-weight:600;font-size:.86rem}
+.patches .d{font-family:var(--f-mono);font-size:.8rem;color:var(--ink-3);margin-left:6px}
+.patches .chg{margin:4px 0 0;padding-left:18px;color:var(--ink-2)}
+.patches .chg li{padding:1px 0}
+footer.wrap{padding-block:26px 40px;color:var(--ink-2);font-size:.88rem;border-top:1px solid var(--line);margin-top:30px}
+footer.wrap p{max-width:none}
+.foot{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 20px;margin:0 0 14px}
+.foot dt{grid-column:1;font-weight:600;color:var(--ink)}
+.foot dd{grid-column:2;margin:0}
+@media (max-width:640px){.foot{grid-template-columns:1fr}.foot dt,.foot dd{grid-column:1}.foot dt{margin-top:8px}}
+.foot-nav a{margin-right:16px}
+/* แถบอ่านถึงไหน: ใช้ CSS scroll-driven animation แทน scroll listener ของ kit · เบราว์เซอร์ที่ไม่รองรับซ่อนแถบไป */
+#progress{width:100%;transform-origin:0 50%;transform:scaleX(0)}
+@keyframes uma-progress{to{transform:scaleX(1)}}
+@supports (animation-timeline: scroll()){#progress{animation:uma-progress linear both;animation-timeline:scroll(root)}}
+@supports not (animation-timeline: scroll()){#progress{display:none}}
+nav.top a.ext{color:var(--fwd)}
+
+/* แผนที่ 4 บท: 4 คอลัมน์บนจอกว้าง แนวตั้งบนจอแคบ (ตามกฎ .pipe ของ kit) */
+.pipe.four{grid-template-columns:repeat(4,1fr)}
+@media (max-width:760px){.pipe.four{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+<nav class="top" aria-label="สารบัญ">
+  <div class="wrap">
+    <span class="brand">Cinderia · Uma</span>
+    <a class="nl" href="#engine">เกจเรียกสัตว์</a>
+    <a class="nl" href="#owl">สายนกฮูก</a>
+    <a class="nl" href="#claw">สายกรงเล็บ</a>
+    <a class="nl" href="#pick">เลือกสาย · อัปเดต</a>
+    <a class="nl ext" href="./">แผ่น A4</a>
+    <span class="sp"></span>
+    <button class="iconbtn" id="themeBtn" type="button">สลับธีม</button>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">ตรวจถึง V0.6.11b (25 ส.ค. 2026)</p>
+      <h1>ทุกอย่างที่ Uma ทำ <span class="hl">คือการเติมเกจเรียกสัตว์</span></h1>
+      <p class="lede">สองสายของเธอใช้เกจเดียวกันคนละแบบ หน้านี้แตกให้เห็นว่าแต่ละสายต้องเก็บทาเลนต์ การ์ด และของอะไร</p>
+    </div>
+    <figure class="shot-hero">
+      <div class="crop"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3214610/e63929fdbc88fe7a004cf9bef83d7fe3a29d2028/ss_e63929fdbc88fe7a004cf9bef83d7fe3a29d2028.1920x1080.jpg" alt="ภาพในเกม: Uma ผมเขียวสวมหน้ากากกะโหลก มีนกฮูกเกาะหัว เม่นอยู่ข้างตัว และลูกหมาป่าสองตัว ยืนในป่าข้าง Rivet" width="1920" height="1080" fetchpriority="high"></div>
+      <figcaption>Uma (กลาง ผมเขียว) กับ<span class="owl">นกฮูก</span>บนหัว <span class="hog">เม่น</span>ทางขวา และ<span class="wolf">ลูกหมาป่า</span>สองตัว ภาพจากหน้าร้าน Steam</figcaption>
+    </figure>
+  </div>
+  <div class="take">
+    <div><b>ทุกการกระทำเติม <i class="term" data-t="sv">ค่าเรียก</i></b>ตีโดน +10 ยิง Nature's Breath +30 พอเกจเต็มได้สัตว์ 1 ตัว สุ่มเป็นหมาป่า 50% เม่น 35% หรือนกฮูก 15% อยู่ตัวละ 7 วิ</div>
+    <div class="t-owl"><b>สายนกฮูก ดันนกฮูกให้เกินผลสุ่ม 15%</b>ทาเลนต์บังคับ Wind Burial (ฆ่า → 50% ได้นกฮูก) กับ Response (ใช้การ์ด → นกฮูก 1 ตัว ทุก 7 วิ) แล้วกด Wind Guidance ทุก 4 วิ</div>
+    <div class="t-wolf"><b>สายกรงเล็บ ให้ Uma ลงไปตบเอง</b>Wild Howl เปลี่ยนหมัดเป็นกรงเล็บ 35 ดาเมจ 5 วิ ที่ Lv.4 กรงเล็บโดน 10 ครั้งได้เวลาคืน 1 วิ ตีกลุ่มมอบเปิดค้างได้ยาว ตีบอสตัวเดียวยืดได้แค่ไม่กี่วินาที</div>
+  </div>
+</header>
+
+<section class="block wrap" id="map">
+  <h2 class="sec">แผนที่หน้านี้</h2>
+  <ol class="pipe four">
+    <li><a href="#engine"><strong>เกจเรียกสัตว์</strong><span class="pd">เติมจากอะไร เต็มแล้วได้อะไร</span><span class="po">ได้: เข้าใจว่าทำไมมีสองสาย</span></a></li>
+    <li><a href="#owl"><strong>สายนกฮูก</strong><span class="pd">นกฮูกเกิดจาก 6 ทาง รอบหมุน 8 วิ</span><span class="po">ได้: ลำดับเก็บทาเลนต์ การ์ด ของ</span></a></li>
+    <li><a href="#claw"><strong>สายกรงเล็บ</strong><span class="pd">Wild Howl ยืดได้นานแค่ไหน</span><span class="po">ได้: ลำดับกดการ์ด 3 ใบ</span></a></li>
+    <li><a href="#pick"><strong>เลือกสาย · อัปเดต</strong><span class="pd">เทียบสองสาย แพตช์ที่แตะ Uma</span><span class="po">ได้: รู้ว่าข้อมูลสดแค่ไหน</span></a></li>
+  </ol>
+  <div class="legend" role="note">
+    <span class="lt">สีในหน้านี้มีความหมายเดียวเสมอ</span>
+    <span class="lg"><i class="sw owl"></i>นกฮูก</span>
+    <span class="lg"><i class="sw wolf"></i>หมาป่า / สายกรงเล็บ</span>
+    <span class="lg"><i class="sw hog"></i>เม่น</span>
+    <span class="lg"><i class="sw must"></i>ต้องมี ขาดแล้วสายพัง</span>
+    <span class="lg"><b>◆</b>&nbsp;ทางอัปที่ ペロ เลือกในภาพ (ตัวอักษรสีทอง)</span>
+  </div>
+</section>
+
+<!-- ================= บท 1 ================= -->
+<section class="chapter" id="engine">
+<div class="wrap">
+  <header class="ch-head"><span class="ch-no">1</span><div><h2>เครื่องยนต์ของ Uma: เกจเรียกสัตว์</h2><p class="meta">ตัวเลขจาก patch notes V0.6.7 (16 พ.ค. 2026) ที่รื้อ Uma ทั้งตัว</p></div></header>
+  <p class="ch-q">คำถามของบทนี้: ทำไมสายที่ยืนห่างกดการ์ด กับสายที่เข้าไปตบติดตัว ถึงใช้ตัวละครเดียวกันได้?</p>
+
+  <h3 class="step"><span class="n">1.1</span>เกจเติมจากทุกอย่างที่ Uma ทำ</h3>
+  <p class="gist">ตีประชิดโดน 1 ครั้งได้ค่าเรียก 10 ยิง Nature's Breath 1 นัดได้ 30 การ์ดบางใบเติมก้อนใหญ่กว่านั้น และส่วนที่ล้นเกจไม่หาย ทบไปรอบถัดไป</p>
+  <p>Nature's Breath คือท่ายิงลูกพลังงานของ Uma ยิง 1 นัดเท่ากับตีโดน 3 หมัด patch notes ไม่ได้บอกว่าเกจเต็มที่เท่าไร ตารางนี้จึงใช้เทียบกันเองว่าแหล่งไหนเติมเร็วกว่า</p>
+  <div class="tbl"><table>
+    <thead><tr><th>ทำอะไร</th><th class="num">ค่าเรียก</th><th>เงื่อนไข</th></tr></thead>
+    <tbody>
+      <tr><td>ตีประชิดโดน</td><td class="num">+10</td><td>ทุกหมัด · กรงเล็บตอนเปิด Wild Howl ก็เติมด้วย</td></tr>
+      <tr><td>Nature's Breath (ยิงลูกพลังงาน)</td><td class="num">+30</td><td>ต่อนัด</td></tr>
+      <tr><td>การ์ด Wind Guidance อัป Lv.3 ฝั่งเร่งเรียก</td><td class="num">+40</td><td>ต่อนัดที่โดน</td></tr>
+      <tr><td>การ์ด Nature Flow</td><td class="num">+80</td><td>ร่าย 1.2 วิ · ใช้ได้เฉพาะ 3 วิหลังฆ่าศัตรู</td></tr>
+      <tr><td>การ์ด Kingdom of Moonlight อัป Lv.4 ฝั่งเร่งเรียก</td><td class="num">+7 / วิ</td><td>ยืนในวงแสงจันทร์</td></tr>
+      <tr><td>Spiky Barrage (สั่งเม่นยิงหนาม)</td><td class="num">−25</td><td>ใช้เกจแทนเติม</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="step"><span class="n">1.2</span>เกจเต็ม = สุ่มสัตว์ 1 ตัว</h3>
+  <p class="gist">ผลสุ่มได้หมาป่า 50% เม่น 35% นกฮูก 15% อยู่ตัวละ 7 วิ นกฮูกตีแรงสุด (25) แต่ออกน้อยสุด</p>
+  <p>สัตว์ทุกตัวคริตตามค่าคริตของ Uma ตั้งแต่ V0.6.7 ของที่เพิ่มคริตให้ Uma จึงเพิ่มให้ทั้งฝูงไปด้วย</p>
+  <div class="scroll-x"><svg class="dg" viewBox="0 0 760 244" style="min-width:600px" role="img" aria-label="แผนผัง: การกระทำของ Uma เติมเกจค่าเรียก เกจเต็มแล้วสุ่มหมาป่า 50 เปอร์เซ็นต์ เม่น 35 เปอร์เซ็นต์ นกฮูก 15 เปอร์เซ็นต์">
+    <defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--ink-3)"/></marker></defs>
+    <rect class="box" x="8" y="22" width="196" height="38" rx="8"/><text class="t" x="20" y="46">ตีประชิดโดน</text><text class="tm" x="194" y="46" text-anchor="end">+10</text>
+    <rect class="box" x="8" y="72" width="196" height="38" rx="8"/><text class="t" x="20" y="96">Nature's Breath</text><text class="tm" x="194" y="96" text-anchor="end">+30</text>
+    <rect class="box" x="8" y="122" width="196" height="38" rx="8"/><text class="t" x="20" y="146">การ์ดบางใบ</text><text class="tm" x="194" y="146" text-anchor="end">+40 / +80</text>
+    <rect class="box" x="8" y="172" width="196" height="38" rx="8"/><text class="t" x="20" y="196">Spiky Barrage</text><text class="tm" x="194" y="196" text-anchor="end">−25</text>
+    <path class="ln" d="M204,41 C224,41 222,112 238,116" marker-end="url(#ar1)"/>
+    <path class="ln" d="M204,91 C222,91 222,114 238,116" marker-end="url(#ar1)"/>
+    <path class="ln" d="M204,141 C222,141 222,118 238,116" marker-end="url(#ar1)"/>
+    <path class="ln" d="M238,120 C222,124 222,191 204,191" marker-end="url(#ar1)" stroke-dasharray="4 3"/>
+    <text class="tb" x="340" y="88" text-anchor="middle">เกจค่าเรียก</text>
+    <rect class="gauge" x="242" y="98" width="196" height="38" rx="8"/>
+    <rect class="gfill" x="242" y="98" width="150" height="38" rx="8"/>
+    <text class="t2" x="340" y="158" text-anchor="middle">เต็ม = สุ่มสัตว์ 1 ตัว</text>
+    <text class="t2" x="340" y="176" text-anchor="middle">ส่วนที่ล้นทบไปรอบหน้า</text>
+    <path class="ln" d="M438,117 L478,117"/>
+    <path class="ln" d="M478,117 C490,117 488,50 500,50" marker-end="url(#ar1)"/>
+    <path class="ln" d="M478,117 L500,117" marker-end="url(#ar1)"/>
+    <path class="ln" d="M478,117 C490,117 488,184 500,184" marker-end="url(#ar1)"/>
+    <rect class="box" x="502" y="22" width="250" height="56" rx="8"/><rect class="f-wolf" x="502" y="22" width="6" height="56" rx="2"/>
+    <text class="tb wolf" x="518" y="44" style="fill:var(--wolf)">หมาป่า</text><text class="tm" x="742" y="44" text-anchor="end">50%</text>
+    <text class="t2" x="518" y="66">ตี 16 · อยู่ 7 วิ</text><rect class="f-wolf" x="616" y="58" width="63" height="8" rx="4"/>
+    <rect class="box" x="502" y="89" width="250" height="56" rx="8"/><rect class="f-hog" x="502" y="89" width="6" height="56" rx="2"/>
+    <text class="tb" x="518" y="111" style="fill:var(--hog)">เม่น</text><text class="tm" x="742" y="111" text-anchor="end">35%</text>
+    <text class="t2" x="518" y="133">ตี 12 · อยู่ 7 วิ</text><rect class="f-hog" x="616" y="125" width="44.1" height="8" rx="4"/>
+    <rect class="box" x="502" y="156" width="250" height="56" rx="8"/><rect class="f-owl" x="502" y="156" width="6" height="56" rx="2"/>
+    <text class="tb" x="518" y="178" style="fill:var(--owl)">นกฮูก</text><text class="tm" x="742" y="178" text-anchor="end">15%</text>
+    <text class="t2" x="518" y="200">ตี 25 · อยู่ 7 วิ</text><rect class="f-owl" x="616" y="192" width="18.9" height="8" rx="4"/>
+    <text class="t2" x="627" y="234" text-anchor="middle">ทุกตัวคริตตาม Uma (ตั้งแต่ V0.6.7)</text>
+  </svg></div>
+  <p class="hint-x">แถบสีในกล่องสัตว์ยาวตามโอกาสสุ่ม · ตัวเลข "ตี" คือพลังโจมตีพื้นฐานของสัตว์</p>
+
+  <h3 class="step"><span class="n">1.3</span>สองสายคือสองวิธีใช้เกจเดียวกัน</h3>
+  <p class="gist">สายนกฮูกพยายามให้ผลสุ่มออกนกฮูกและหาทางเรียกนกฮูกนอกเกจ ส่วนสายกรงเล็บไม่ต้องแก้ผลสุ่ม เพราะตบรัวจนเกจเต็มบ่อย และหมาป่าออก 50% อยู่แล้ว</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th class="owl">สายนกฮูก</th><th class="wolf">สายกรงเล็บ</th></tr></thead>
+    <tbody>
+      <tr><td>ใครทำดาเมจหลัก</td><td>ฝูงนกฮูก</td><td>กรงเล็บของ Uma + หมาป่า</td></tr>
+      <tr><td>เติมเกจจาก</td><td>การ์ด Wind Guidance และการยิง</td><td>ตบประชิดระหว่างเปิด Wild Howl</td></tr>
+      <tr><td>สัตว์ที่ต้องการ</td><td>นกฮูก (15% ต้องดันขึ้น)</td><td>หมาป่า (50% อยู่แล้ว)</td></tr>
+      <tr><td>ยืนตรงไหน</td><td>ห่างศัตรู หลบ แล้วกดการ์ด</td><td>ติดตัวศัตรูตลอด</td></tr>
+    </tbody>
+  </table></div>
+</div>
+</section>
+
+<!-- ================= บท 2 ================= -->
+<section class="chapter" id="owl">
+<div class="wrap">
+  <header class="ch-head"><span class="ch-no">2</span><div><h2>สายนกฮูก</h2><p class="meta">โครงจากไกด์ Trial 8 ของ ペロ (ver0.6.10) · ตัวเลขทาเลนต์จากภาพหน้าจอในไกด์และ patch notes V0.6.7</p></div></header>
+  <p class="ch-q">คำถามของบทนี้: นกฮูกเกิดได้จากช่องไหนบ้าง และอะไรทำให้มันตีถี่?</p>
+
+  <h3 class="step"><span class="n">2.1</span>นกฮูกเกิดได้ 6 ทาง</h3>
+  <p class="gist">อย่าฝากไว้กับผลสุ่ม 15% สายนี้เปิดช่องให้นกฮูกเกิดจากการฆ่า การใช้การ์ด ตัวการ์ดเอง ผลไม้ และไอเทม สองช่องที่ขอบแดงคือทาเลนต์ที่ขาดไม่ได้</p>
+  <p>มี Nest Takeover แล้ว ผลสุ่มที่ออกหมาป่าหรือเม่นมีโอกาส 30% กลายเป็นนกฮูก โอกาสได้นกฮูกต่อการเต็มเกจหนึ่งครั้งจึงขยับจาก 15% เป็น 40.5%</p>
+  <div class="scroll-x"><svg class="dg" viewBox="0 0 760 372" style="min-width:600px" role="img" aria-label="แผนผัง: หกช่องทางที่นกฮูกเกิด ได้แก่ เกจเต็ม ฆ่าศัตรู ใช้การ์ด การ์ดที่เรียกนกฮูกเอง ผลไม้สุก และไอเทม Moonlight Branch ทั้งหมดชี้เข้าหานกฮูก">
+    <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--owl)"/></marker></defs>
+    <rect class="box" x="8" y="8" width="372" height="50" rx="8"/><text class="tb" x="22" y="29">เกจเต็ม (ผลสุ่ม)</text><text class="t2" x="22" y="48">15% · มี Nest Takeover แล้ว 40.5% และนกฮูกตัวนั้นอยู่ +5 วิ</text>
+    <rect class="box must" x="8" y="68" width="372" height="50" rx="8"/><text class="tb" x="22" y="89">ฆ่าศัตรู · Wind Burial</text><text class="t" x="366" y="89" text-anchor="end" style="fill:var(--crit);font-weight:600">ต้องมี</text><text class="t2" x="22" y="108">50% ต่อศพ · ใช้ได้กับมอบ บอสไม่มีศพให้ฆ่า</text>
+    <rect class="box must" x="8" y="128" width="372" height="50" rx="8"/><text class="tb" x="22" y="149">ใช้การ์ด · Response</text><text class="t" x="366" y="149" text-anchor="end" style="fill:var(--crit);font-weight:600">ต้องมี</text><text class="t2" x="22" y="168">นกฮูก 1 ตัว ทุก 7 วิ · ทำงานตอนสู้บอสด้วย</text>
+    <rect class="box" x="8" y="188" width="372" height="50" rx="8"/><text class="tb" x="22" y="209">การ์ดที่เรียกนกฮูกเอง</text><text class="t2" x="22" y="228">Kingdom of Moonlight · Howling Hurricane</text>
+    <rect class="box" x="8" y="248" width="372" height="50" rx="8"/><text class="tb" x="22" y="269">ผลไม้สุก · Steal Fruit</text><text class="t2" x="22" y="288">50% กลายเป็นนกฮูก · ตัวนี้อยู่ +7 วิ</text>
+    <rect class="box" x="8" y="308" width="372" height="50" rx="8"/><text class="tb" x="22" y="329">ไอเทม Moonlight Branch</text><text class="t2" x="22" y="348">ตีประชิด 5-10% · ใช้การ์ด 30% (รุ่นตำนาน)</text>
+    <path class="ln owl" d="M380,33 C470,33 470,170 520,178" marker-end="url(#ar2)"/>
+    <path class="ln owl" d="M380,93 C460,93 470,176 520,182" marker-end="url(#ar2)"/>
+    <path class="ln owl" d="M380,153 C450,153 480,184 520,186" marker-end="url(#ar2)"/>
+    <path class="ln owl" d="M380,213 C450,213 480,190 520,190" marker-end="url(#ar2)"/>
+    <path class="ln owl" d="M380,273 C460,273 470,198 520,194" marker-end="url(#ar2)"/>
+    <path class="ln owl" d="M380,333 C470,333 470,204 520,198" marker-end="url(#ar2)"/>
+    <circle cx="602" cy="188" r="80" class="soft-owl" style="stroke:var(--owl);stroke-width:2"/>
+    <text x="602" y="172" text-anchor="middle" style="fill:var(--owl);font-size:22px;font-weight:700">นกฮูก</text>
+    <text class="t" x="602" y="198" text-anchor="middle">ตี 25 · อยู่ 7 วิ</text>
+    <text class="t2" x="602" y="218" text-anchor="middle">Roll Up: คริต +16%</text>
+    <text class="tb" x="602" y="300" text-anchor="middle">ตัวเร่งความเร็วตี</text>
+    <text class="t2" x="602" y="320" text-anchor="middle">Wind Resonance: +200% นาน 2 วิ</text>
+    <text class="t2" x="602" y="338" text-anchor="middle">Wind Guidance Lv.4: สัตว์ทุกตัว +35%</text>
+  </svg></div>
+
+  <h3 class="step"><span class="n">2.2</span>ทาเลนต์: บังคับ 2 ใบ เสริม 6 ใบ ประกันเลือด 2 ใบ</h3>
+  <p class="gist">Wind Burial กับ Response คุมจำนวนนกฮูกตรง ๆ จึงขาดไม่ได้ แต่ Wind Burial ไม่ทำงานกับบอส ช่วงสู้บอสจึงต้องพึ่ง Response ซึ่งต้องมีการ์ดคูลดาวน์สั้นให้กดถี่</p>
+  <div class="tbl wide"><table class="grouped">
+    <thead><tr><th>ทาเลนต์</th><th>ทำอะไร</th><th>หมายเหตุ</th></tr></thead>
+    <tbody>
+      <tr class="grp must-grp"><td colspan="3">ต้องมี ขาดแล้วสายพัง</td></tr>
+      <tr class="must"><td>Wind Burial <span class="jp">風葬</span></td><td>ฆ่าศัตรู 1 ตัว มีโอกาส 50% เรียกนกฮูก</td><td>ใช้ได้กับมอบเท่านั้น</td></tr>
+      <tr class="must"><td>Response <span class="jp">応答</span></td><td>ใช้การ์ด 1 ครั้ง เรียกนกฮูก 1 ตัว (คูลดาวน์ 7 วิ)</td><td>ตัวหลักตอนสู้บอส</td></tr>
+      <tr class="grp"><td colspan="3">เสริม เก็บตามที่ออก</td></tr>
+      <tr><td>Roll Up <span class="jp">ロールアップ</span></td><td>นกฮูกคริต +16% คริตแล้วศัตรูกระเด็น</td><td>ไกด์บอกว่าแรงมาก <span class="src">patch notes: Whirl</span></td></tr>
+      <tr><td>Nest Takeover <span class="jp">巣の乗っ取り</span></td><td>เรียกหมาป่าหรือเม่น มีโอกาส 30% ได้นกฮูกแทน และอยู่ +5 วิ</td><td><span class="src">patch notes: Rogue's Nest</span></td></tr>
+      <tr><td>Wind Resonance <span class="jp">風の共鳴</span></td><td>นกฮูกเกิดใหม่ตีเร็ว +200% นาน 2 วิ ได้ <i class="term" data-t="wf">Wind Fury</i> เมื่อไร นกฮูกทุกตัวได้บัฟนี้อีกรอบ</td><td><b>เก็บก่อน Wind Infusion</b></td></tr>
+      <tr><td>Wind Infusion <span class="jp">風の注入</span></td><td>ใช้การ์ดแล้วได้ Wind Fury (คูลดาวน์ 2.5 วิ)</td><td>คู่ของ Wind Resonance</td></tr>
+      <tr><td>Storm Takeoff <span class="jp">嵐の羽ばたき</span></td><td>นกฮูกเกิดหรือหาย ปล่อยพายุ 45 ดาเมจ ผลักศัตรูออก</td><td></td></tr>
+      <tr><td>Hunting Ground Expansion <span class="jp">狩猟領域の拡大</span></td><td>สัตว์ไล่ตีได้ไกลขึ้น 35% ตีเร็ว +8%</td><td></td></tr>
+      <tr class="grp"><td colspan="3">ประกันเลือด เก็บสายเมล็ดไว้ 1 ใบ</td></tr>
+      <tr><td>Sprouting Cluster <span class="jp">萌芽の群生</span></td><td>ปลูกเมล็ดทุก ~12 วิ เก็บเมล็ดแล้วฟื้นเลือด</td><td></td></tr>
+      <tr><td>Steal Fruit <span class="jp">フルーツを盗む</span></td><td>ผลไม้สุก มีโอกาส 50% กลายเป็นนกฮูก อยู่ +7 วิ</td><td>ต่อยอดจากเมล็ดในสายนกฮูก</td></tr>
+    </tbody>
+  </table></div>
+  <p class="hint-x">ชื่ออังกฤษเป็นชื่อที่ใช้ในแผ่น A4 ชื่อในเกมภาษาอังกฤษอาจต่างกันเล็กน้อย ดูชื่อญี่ปุ่นเทียบกับภาพได้</p>
+  <ul class="mist">
+    <li><span class="x">เก็บ Wind Infusion ก่อน แล้วค่อยหวังว่า Wind Resonance จะออก</span><span class="o">เก็บ Wind Resonance ก่อนเสมอ เพราะ Wind Infusion เดี่ยว ๆ ให้แค่ Wind Fury ซึ่งเพิ่มฮิตให้หมัดของ Uma ไม่ช่วยนกฮูกเลย</span></li>
+    <li><span class="x">Wind Burial ถือไว้ใบเดียวพอ ใช้ได้ทุกห้อง</span><span class="o">ห้องบอสไม่มีศพให้ฆ่า ต้องมี Response คู่กับการ์ดที่กดได้ถี่ เช่น Wind Guidance</span></li>
+  </ul>
+  <div class="shots">
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780918407-NpIH2GSVkDb14yjemiAscvWt.png" alt="ภาพหน้าจอทาเลนต์ 風葬 และ 応答" width="446" height="310"><figcaption><b>ทาเลนต์บังคับ 2 ใบ</b> ซ้าย Wind Burial: ฆ่าแล้ว 50% เรียกนกฮูก · ขวา Response: ใช้การ์ดแล้วเรียกนกฮูก 1 ตัว (คูลดาวน์ 7 วิ)</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780919055-NSO2Hjc8s0zGVaq6R7AYTw5b.png" alt="ภาพหน้าจอทาเลนต์เสริม 6 ใบของสายนกฮูก" width="642" height="641"><figcaption><b>ทาเลนต์เสริม 6 ใบ</b> แถวบน Roll Up, Nest Takeover, Hunting Ground Expansion แถวล่าง Wind Resonance, Wind Infusion, Storm Takeoff</figcaption></figure>
+  </div>
+
+  <h3 class="step"><span class="n">2.3</span>รอบหมุน 8 วินาที: ทำไม Wind Guidance เป็นการ์ดคู่บุญ</h3>
+  <p class="gist">Wind Guidance อัป Lv.2 เหลือคูลดาวน์ 4 วิ กดทุกครั้งได้ Wind Fury ให้นกฮูกทั้งฝูงตีเร็ว +200% และทุกครั้งที่สองได้นกฮูกตัวใหม่จาก Response จึงมีนกฮูกจาก Response อยู่ 87.5% ของเวลา</p>
+  <p>Response ติดคูลดาวน์ 7 วิ ครั้งที่กดวินาทีที่ 4 จึงยังไม่ได้นกฮูก ต้องรอวินาทีที่ 8 ส่วน Wind Infusion คูลดาวน์ 2.5 วิ สั้นกว่า 4 วิ จึงให้ Wind Fury ทุกครั้งที่กด ภาพนี้นับเฉพาะนกฮูกจาก Response นกฮูกจากช่องอื่นมาเพิ่มบนนี้</p>
+  <div class="scroll-x"><svg class="dg" viewBox="0 0 760 200" style="min-width:620px" role="img" aria-label="ไทม์ไลน์ 16 วินาที: กด Wind Guidance ทุก 4 วินาที นกฮูกจาก Response เกิดวินาทีที่ 0 และ 8 อยู่ตัวละ 7 วินาที นกฮูกตีเร็ว 200 เปอร์เซ็นต์ช่วง 0 ถึง 2, 4 ถึง 6, 8 ถึง 10, 12 ถึง 14 สัตว์ทุกตัวตีเร็ว 35 เปอร์เซ็นต์ช่วง 0 ถึง 2.5 และทุก 4 วินาที">
+    <g class="axis">
+      <line x1="190" y1="12" x2="190" y2="170"/><line x1="259" y1="12" x2="259" y2="170" style="stroke:var(--line-2)"/><line x1="328" y1="12" x2="328" y2="170"/><line x1="397" y1="12" x2="397" y2="170" style="stroke:var(--line-2)"/><line x1="466" y1="12" x2="466" y2="170"/><line x1="535" y1="12" x2="535" y2="170" style="stroke:var(--line-2)"/><line x1="604" y1="12" x2="604" y2="170"/><line x1="673" y1="12" x2="673" y2="170" style="stroke:var(--line-2)"/><line x1="742" y1="12" x2="742" y2="170"/>
+    </g>
+    <text class="tick" x="190" y="188" text-anchor="middle">0</text><text class="tick" x="259" y="188" text-anchor="middle">2</text><text class="tick" x="328" y="188" text-anchor="middle">4</text><text class="tick" x="397" y="188" text-anchor="middle">6</text><text class="tick" x="466" y="188" text-anchor="middle">8</text><text class="tick" x="535" y="188" text-anchor="middle">10</text><text class="tick" x="604" y="188" text-anchor="middle">12</text><text class="tick" x="673" y="188" text-anchor="middle">14</text><text class="tick" x="742" y="188" text-anchor="end">16 วิ</text>
+    <text class="t" x="8" y="34">กด Wind Guidance</text>
+    <path class="dia" d="M190,22 l8,8 l-8,8 l-8,-8z"/><path class="dia" d="M328,22 l8,8 l-8,8 l-8,-8z"/><path class="dia" d="M466,22 l8,8 l-8,8 l-8,-8z"/><path class="dia" d="M604,22 l8,8 l-8,8 l-8,-8z"/><path class="dia" d="M742,22 l8,8 l-8,8 l-8,-8z"/>
+    <text class="t" x="8" y="74">นกฮูกจาก Response</text>
+    <rect x="190" y="61" width="241.5" height="20" rx="4" class="soft-owl" style="stroke:var(--owl);stroke-width:1.5"/><text class="t2" x="200" y="75">นกฮูก 7 วิ</text>
+    <rect x="466" y="61" width="241.5" height="20" rx="4" class="soft-owl" style="stroke:var(--owl);stroke-width:1.5"/><text class="t2" x="476" y="75">นกฮูก 7 วิ</text>
+    <text class="t2" x="334" y="99" style="fill:var(--ink-3)">↑ วิที่ 4: Response ยังติดคูลดาวน์</text>
+    <text class="t" x="8" y="122">นกฮูกตีเร็ว +200%</text>
+    <rect class="f-owl" x="190" y="110" width="69" height="18" rx="3"/><rect class="f-owl" x="328" y="110" width="69" height="18" rx="3"/><rect class="f-owl" x="466" y="110" width="69" height="18" rx="3"/><rect class="f-owl" x="604" y="110" width="69" height="18" rx="3"/>
+    <text class="t" x="8" y="156">สัตว์ทุกตัว +35% (Lv.4)</text>
+    <rect class="pets" x="190" y="144" width="86.25" height="18" rx="3"/><rect class="pets" x="328" y="144" width="86.25" height="18" rx="3"/><rect class="pets" x="466" y="144" width="86.25" height="18" rx="3"/><rect class="pets" x="604" y="144" width="86.25" height="18" rx="3"/>
+  </svg></div>
+  <p class="cap">สมมติกดทันทีที่คูลดาวน์หมดและยิงโดนทุกนัด ช่วงนกฮูกตีเร็ว +200% กินเวลา 50% บัฟ +35% ของ Lv.4 กินเวลา 62.5% และเกจได้อีก 40 ทุก 4 วิ จาก Lv.3</p>
+
+  <h3 class="step"><span class="n">2.4</span>การ์ด 4 ใบ เรียงตามที่ไกด์ให้ความสำคัญ</h3>
+  <p class="gist">ได้ Kingdom of Moonlight ให้ปั้นก่อนใบอื่น ถ้าไม่ได้ Wind Guidance แบกคนเดียวจนผ่าน Trial 8 ได้ Howling Hurricane ไว้ล้างมอบ ส่วน Nature Flow เป็นแผนสำรองที่ใช้กับบอสไม่ได้</p>
+  <p>ไกด์ให้ Kingdom of Moonlight มาก่อนเพราะคงบัฟสัตว์ไว้ได้นานและลดคูลดาวน์ได้ แต่ตัวอย่างบิลด์ของไกด์เองก็ไม่ได้ใบนี้ และยังทำดาเมจพอด้วย Wind Guidance ที่เรียกนกฮูกต่อเนื่อง ตัวเทาใต้แต่ละช่องคืออีกทางที่ไม่ได้เลือก</p>
+  <div class="tbl wide"><table>
+    <thead><tr><th>การ์ด</th><th>พื้นฐาน</th><th>Lv.2 ◆</th><th>Lv.3 ◆</th><th>Lv.4 ◆</th></tr></thead>
+    <tbody>
+      <tr><td><b>Kingdom of Moonlight</b> <span class="jp">月光の王国</span><span class="alt">ปุ่ม Y คูลดาวน์ 12 วิ ชาร์จ 3 ครั้ง</span></td><td>เรียกนกฮูก + วงแสงจันทร์ 3 วิ สัตว์ในวง ดาเมจ +45%</td><td>สัตว์ ดาเมจ +30%<span class="alt">อีกทาง: ระเบิดกลางวง 45 + เกราะแตก 3 วิ</span></td><td>แสงจันทร์ +2.5 วิ<span class="alt">อีกทาง: นกฮูกจากการ์ดนี้อยู่นานขึ้น 75%</span></td><td>คูลดาวน์ −4 วิ (เหลือ 8)<span class="alt">อีกทาง: ในวงแสงจันทร์ เกจ +7 ต่อวิ</span></td></tr>
+      <tr><td><b>Wind Guidance</b> <span class="jp">風の導き</span><span class="alt">ปุ่ม RT คูลดาวน์ 6.5 วิ</span></td><td>กระสุนลม 110 ใส่ตัวแรก ติด<i class="term" data-t="mark">ตราล่า</i> แตกเป็นวง 55</td><td>คูลดาวน์ −2.5 วิ (เหลือ 4)<span class="alt">อีกทาง: ตัวแรก ดาเมจ +35</span></td><td>โดนแล้วเกจ +40<span class="alt">อีกทาง: วง +10 และน็อคอัพทุกตัว</span></td><td>สัตว์ทุกตัวตีเร็ว +35% นาน 2.5 วิ<span class="alt">อีกทาง: ตัวติดตราโดน 225%</span></td></tr>
+      <tr><td><b>Howling Hurricane</b> <span class="jp">吠えるハリケーン</span><span class="alt">ปุ่ม Y คูลดาวน์ 17 วิ ไว้ล้างมอบ</span></td><td>นกฮูกชาร์จพายุ สูงสุด 240 น็อคอัพ 0.9 วิ ทุกตัวในทาง</td><td>นกฮูกอยู่ต่อหลังใช้การ์ด<span class="alt">อีกทาง: คูลดาวน์ −5 วิ</span></td><td>ดาเมจ +15 ชาร์จไว 2 เท่า<span class="alt">อีกทาง: ชาร์จเต็มแล้วคริต +50%</span></td><td>พายุ 1 → 3 ลูก<span class="alt">อีกทาง: ภาพโดนบัง อ่านไม่ได้</span></td></tr>
+      <tr><td><b>Nature Flow</b> <span class="jp">自然の循環</span><span class="alt">ปุ่ม RB คูลดาวน์ 5 วิ แผนสำรอง</span></td><td>ร่าย 1.2 วิ เกจ +80 ใช้ได้เฉพาะ 3 วิหลังฆ่า</td><td>ชีลด์ระหว่างร่าย 5 ต่อวิ<span class="alt">อีกทาง: Nature's Breath คูลดาวน์เร็วขึ้น 150% ระหว่างร่าย</span></td><td>คูลดาวน์ −3 วิ (เหลือ 2)<span class="alt">อีกทาง: ร่ายนานขึ้น 50% เกจได้มากขึ้น 50%</span></td><td>ร่ายจบ 35% เรียกสัตว์ทันที<span class="alt">อีกทาง: ปลูกพุ่มหญ้าใต้เท้า 4 วิ</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="hint-x">เลื่อนตารางไปทางขวาได้ · ปุ่มเป็นของจอยตามภาพในไกด์ ตำแหน่งการ์ดสลับได้ในแต่ละรัน</p>
+  <div class="shots">
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780917972-lG43D2YaqsZKCzVMtOHPvpE6.png" alt="หน้าจออัปเกรดการ์ด 月光の王国" width="791" height="507"><figcaption><b>Kingdom of Moonlight</b> ช่องสีทองคือทางที่เลือก: สัตว์ +30% → แสงจันทร์ +2.5 วิ → คูลดาวน์ −4 วิ</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780917495-Fe3OCtqKJQju8hrTfIkNxLZU.png" alt="หน้าจออัปเกรดการ์ด 風の導き" width="894" height="572"><figcaption><b>Wind Guidance</b> คูลดาวน์ −2.5 วิ → โดนแล้วเกจ +40 → สัตว์ทุกตัวตีเร็ว +35%</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780917899-4jQFCcu0if9AZv3lENoXr1pM.png" alt="หน้าจออัปเกรดการ์ด 吠えるハリケーン" width="792" height="508"><figcaption><b>Howling Hurricane</b> นกฮูกอยู่ต่อ → ดาเมจ +15 ชาร์จไว → พายุ 3 ลูก</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780917519-cpt1kAinYPRaFj7dHM8BgZXr.png" alt="หน้าจออัปเกรดการ์ด 自然の循環" width="792" height="510"><figcaption><b>Nature Flow</b> ชีลด์ระหว่างร่าย → คูลดาวน์ −3 วิ → 35% เรียกสัตว์ทันที</figcaption></figure>
+  </div>
+
+  <h3 class="step"><span class="n">2.5</span>ของที่ต้องเก็บ</h3>
+  <p class="gist">Moonlight Branch เป็นชิ้นที่แทนไม่ได้ เพราะรุ่นตำนานเรียกนกฮูกได้ทั้งตอนตีและตอนใช้การ์ด ของที่เหลือไล่ Spirit กับลดคูลดาวน์การ์ด</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Moonlight Branch <span class="jp">月光の枝</span></th><th class="num">หายาก</th><th class="num">ตำนาน</th></tr></thead>
+    <tbody>
+      <tr><td>Agility / Spirit</td><td class="num">+2 / +4</td><td class="num">+4 / +6</td></tr>
+      <tr><td>ตีประชิด → เรียกนกฮูก</td><td class="num">5%</td><td class="num">10%</td></tr>
+      <tr><td>ใช้การ์ด → เรียกนกฮูก</td><td class="num">ไม่มี</td><td class="num">30%</td></tr>
+      <tr><td>นกฮูกบนสนาม 1 ตัว → คริต</td><td class="num">ไม่มี</td><td class="num">+1.2%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">ถ้าไม่เคยเห็นชิ้นนี้ดรอป อาจยังไม่ได้ปลดล็อก patch notes V0.6.4 ระบุว่ามันปลดจากการเจอ Uma ในป่า และตั้งแต่ V0.6.11 พ่อค้ามีชั้นแยกที่ขายเฉพาะเครื่องประดับที่ยังไม่ปลดล็อก</p>
+  <div class="tbl wide"><table>
+    <thead><tr><th class="num">ลำดับ</th><th>ของ</th><th>ทำอะไร (ระดับ IV หลัง V0.6.11)</th></tr></thead>
+    <tbody>
+      <tr class="must"><td class="num">1</td><td>Moonlight Branch</td><td>ตามตารางด้านบน</td></tr>
+      <tr><td class="num">2</td><td>Drum of Courage</td><td>ทุก 11 วิ ซัมมอนดาเมจ +50% นาน 6 วิ · ซัมมอนอยู่นานขึ้น 3 วิ</td></tr>
+      <tr><td class="num">3</td><td>Drowsy Flower Crown</td><td>Spirit +14 (เดิม +7)</td></tr>
+      <tr><td class="num">4</td><td>Frost Core</td><td>คูลดาวน์การ์ด −10%</td></tr>
+      <tr><td class="num">5</td><td>Cast-Iron Gear</td><td>ดาเมจการ์ด +15%</td></tr>
+      <tr><td class="num">6</td><td>Gingerbread House</td><td>ฆ่า 4 ตัว เรียกทหารขนมปังขิง อยู่ได้ถึง 24 วิ</td></tr>
+    </tbody>
+  </table></div>
+  <p>เจมใส่ Sapphire (ลดคูลดาวน์) ทุกช่อง ของ Spirit ตัวอื่นที่ V0.6.11 บัฟคือ Witch's Perfume (IV: +11) ส่วนที่โดนหั่น Spirit คือ Magic Lamp (+6 → 0), Infernal Jack-o'-Lantern (IV: +12 → +6) และ Sunstone (IV: +6 → +3)</p>
+  <div class="shots">
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780924754-zevlxMH1rQyIBo6W7bpCZDqf.png" alt="Moonlight Branch รุ่นหายากและรุ่นตำนาน" width="449" height="250"><figcaption><b>Moonlight Branch</b> ซ้ายรุ่นหายาก ขวารุ่นตำนาน ที่เพิ่มการเรียกนกฮูกตอนใช้การ์ดและคริตต่อนกฮูก</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1778056418-jAuYoSsT9yhDJ6kZt2WF5BKP.png" alt="ตัวอย่างบิลด์นกฮูกของ ペロ" width="322" height="380"><figcaption><b>บิลด์จริงที่ผ่าน Trial 8</b> ไม่มี Kingdom of Moonlight แต่เรียกนกฮูกต่อเนื่องด้วย Wind Guidance จนทำดาเมจพอ</figcaption></figure>
+  </div>
+</div>
+</section>
+
+<!-- ================= บท 3 ================= -->
+<section class="chapter" id="claw">
+<div class="wrap">
+  <header class="ch-head"><span class="ch-no">3</span><div><h2>สายกรงเล็บ (Wolf Claw)</h2><p class="meta">โครงจากไกด์ Trial 8 ของ ペロ (ver0.6.10) · ตัวเลขการ์ดจากภาพหน้าจอในไกด์</p></div></header>
+  <p class="ch-q">คำถามของบทนี้: ถ้า Wild Howl ปิดการ์ดทุกใบตอนเปิดอยู่ ทำไมสายนี้ยังต้องมีการ์ดอีกสองใบ?</p>
+
+  <h3 class="step"><span class="n">3.1</span>Wild Howl คือทั้งสาย</h3>
+  <p class="gist">กดแล้ว 5 วิ หมัดกลายเป็นกรงเล็บ 35 ดาเมจ ระหว่างนั้นใช้การ์ดกับ Nature's Breath ไม่ได้ ทางอัปไล่ความเร็ว → ดาเมจ → ยืดเวลา</p>
+  <p>ก่อนถึง Lv.4 กด Wild Howl แล้วการ์ดใบอื่นใช้ไม่ได้ 5 วิ ไกด์จึงเตือนให้ระวังจังหวะกด Lv.4 มีสองทาง ไกด์เลือกฝั่งยืดเวลา เพราะกรงเล็บที่โดนแต่ละครั้งต่ออายุให้เอง ไม่ต้องลงทุนกับคอมโบหมัดพื้นฐาน</p>
+  <div class="tbl wide"><table>
+    <thead><tr><th>การ์ด</th><th>พื้นฐาน</th><th>Lv.2 ◆</th><th>Lv.3 ◆</th><th>Lv.4 ◆</th></tr></thead>
+    <tbody>
+      <tr class="must"><td><b>Wild Howl</b> <span class="jp">ワイルドハウル</span><span class="alt">ปุ่ม RB คูลดาวน์ 28 วิ</span></td><td>5 วิ หมัดเป็นกรงเล็บ 35 ระหว่างนั้นห้ามใช้การ์ดและ Nature's Breath</td><td>เดินและตีเร็ว +16%<span class="alt">อีกทาง: คูลดาวน์ −5 วิ</span></td><td>กรงเล็บ +10 (เป็น 45)<span class="alt">อีกทาง: สัตว์รอบตัว ดาเมจและความเร็ว +25%</span></td><td>กรงเล็บทำดาเมจ 1 ครั้ง เวลา +0.1 วิ<span class="alt">อีกทาง: เลิกปิดการ์ด ดาเมจรวม +8%</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="shots">
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780918050-OQ0zuoF5Vm49xnwPZ7qSbsL2.png" alt="หน้าจออัปเกรดการ์ด ワイルドハウル" width="889" height="569"><figcaption><b>Wild Howl</b> ช่องสีทอง: ความเร็ว +16% → กรงเล็บ +10 → ยืดเวลา 0.1 วิ ต่อครั้งที่โดน · ช่องขวาล่างคือทาง "เลิกปิดการ์ด" ที่ไม่ได้เลือก</figcaption></figure>
+  </div>
+
+  <h3 class="step"><span class="n">3.2</span>Lv.4 ยืดเวลาได้นานแค่ไหน</h3>
+  <p class="gist">กรงเล็บโดน 10 ครั้งได้เวลาคืน 1 วิ ตีบอสตัวเดียว 3 หมัดต่อวิ Wild Howl อยู่ได้ราว 7 วิ แต่ตีกลุ่ม 3-4 ตัวพร้อมกัน เวลาเพิ่มเร็วกว่าที่ลด จนแทบไม่หมด</p>
+  <p>การ์ดเขียนว่ายืดเวลา "ทุกครั้งที่กรงเล็บทำดาเมจ" ตารางนี้จึงนับหมัดเดียวที่โดนศัตรู 3 ตัวเป็น 3 ครั้ง สูตรคือ เวลาทั้งหมด = 5 ÷ (1 − 0.1 × หมัดต่อวิ × จำนวนศัตรูที่โดน) ถ้าผลคูณถึง 10 เวลาจะไม่ลดลงเลยตราบที่ยังตีโดน</p>
+  <div class="tbl"><table>
+    <thead><tr><th>ศัตรูที่โดนต่อหมัด</th><th class="num">2 หมัด/วิ</th><th class="num">3 หมัด/วิ</th><th class="num">4 หมัด/วิ</th></tr></thead>
+    <tbody>
+      <tr><td>1 ตัว (บอส)</td><td class="num boss">6.2 วิ</td><td class="num boss">7.1 วิ</td><td class="num boss">8.3 วิ</td></tr>
+      <tr><td>2 ตัว</td><td class="num">8.3 วิ</td><td class="num">12.5 วิ</td><td class="num">25 วิ</td></tr>
+      <tr><td>3 ตัว</td><td class="num">12.5 วิ</td><td class="num">50 วิ</td><td class="num inf">ไม่หมด</td></tr>
+      <tr><td>4 ตัว</td><td class="num">25 วิ</td><td class="num inf">ไม่หมด</td><td class="num inf">ไม่หมด</td></tr>
+    </tbody>
+  </table></div>
+  <p class="hint-x">หน้านี้ไม่รู้ว่า Uma ตีได้กี่หมัดต่อวิจริง ตารางจึงวางไว้ 3 ค่าให้เทียบ · ช่องแดงคือกรณีบอส ช่องเขียวคือเปิดค้างได้</p>
+
+  <h3 class="step"><span class="n">3.3</span>ทาเลนต์: บังคับ 2 ใบ ฝูงหมาป่า 4 ใบ</h3>
+  <p class="gist">Evasive Instinct กับ Feral Claws ขาดไม่ได้ เพราะสายนี้ยืนแลกหมัดตลอด ส่วนทาเลนต์ฝูงหมาป่าทำงานได้แม้ไม่มี Fighting Spirit เพราะกรงเล็บเติมเกจจนหมาป่าออกเองอยู่แล้ว</p>
+  <div class="tbl wide"><table class="grouped">
+    <thead><tr><th>ทาเลนต์</th><th>ทำอะไร</th><th>หมายเหตุ</th></tr></thead>
+    <tbody>
+      <tr class="grp must-grp"><td colspan="3">ต้องมี ขาดแล้วสายพัง</td></tr>
+      <tr class="must"><td>Evasive Instinct <span class="jp">回避本能</span></td><td>ตีประชิดโดน 1 ครั้ง หลบ +3.5% นาน 8 วิ ซ้อนได้ 10 ชั้น (สูงสุด 35%)</td><td>ตัวกันตายของสายนี้</td></tr>
+      <tr class="must"><td>Feral Claws <span class="jp">獰猛な爪</span></td><td>กรงเล็บและหมาป่าคริตแล้วศัตรูเกราะแตก คริต +8%</td><td></td></tr>
+      <tr class="grp"><td colspan="3">ฝูงหมาป่า ทำงานได้แม้ไม่มี Fighting Spirit</td></tr>
+      <tr><td>Fighting Spirit <span class="jp">闘争心</span></td><td>ตีประชิด 12% เรียกหมาป่า</td><td>ตัวเปิดฝูง <span class="src">patch notes: Battle Sense</span></td></tr>
+      <tr><td>Pack Call <span class="jp">群れ呼び</span></td><td>เรียกหมาป่า 1 ตัว มีโอกาส 36% ได้อีกตัว</td><td></td></tr>
+      <tr><td>Fang Bite <span class="jp">鋭い歯で噛む</span></td><td>หมาป่าตี 21% ทำ 40 ดาเมจและสตัน ท่าหมาป่าทุกท่าสตัน</td><td>ทำบอสดื้อ CC เร็วขึ้น</td></tr>
+      <tr><td>Wolf Spirit <span class="jp">ウルフソウル</span></td><td>หมาป่าตีโดน 1 ครั้ง ดาเมจประชิด +8% นาน 2.5 วิ ซ้อน 8 ชั้น (สูงสุด +64%)</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <div class="shots">
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780919792-KZDMIdGbFYaEwQzmAp9tW3qy.png" alt="ทาเลนต์ 回避本能 และ 獰猛な爪" width="447" height="333"><figcaption><b>ทาเลนต์บังคับ</b> Evasive Instinct (หลบซ้อนชั้น) · Feral Claws (คริต + เกราะแตก)</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780919993-FDLpcdyUE0vBQxbnN9TJRr1g.png" alt="ทาเลนต์ฝูงหมาป่า 4 ใบ" width="424" height="598"><figcaption><b>ฝูงหมาป่า 4 ใบ</b> Fighting Spirit, Fang Bite, Wolf Spirit, Pack Call</figcaption></figure>
+  </div>
+
+  <h3 class="step"><span class="n">3.4</span>ลำดับกด: การ์ดก่อน Howl ทีหลัง</h3>
+  <p class="gist">Wild Howl ปิดการ์ดตอนเปิดอยู่ จึงต้องกดดูดมอบกับหลบ 100% ไว้ก่อน แล้วค่อยเปิด Howl ในช่วงที่ยังหลบได้ ลมดูดมอบมารวมยังทำให้กรงเล็บโดนหลายตัวและ Howl อยู่นานขึ้นด้วย</p>
+  <ol class="seq">
+    <li><b>Strong Wind</b><span class="k">ปุ่ม Y คูลดาวน์ 11 วิ (6.5 วิ เมื่ออัปครบ)</span>ลมหมุน 70 ดาเมจ ดูดศัตรูเข้ากลาง Lv.4 ได้ <i class="term" data-t="wf">Wind Fury</i> 1</li>
+    <li><b>Ride the Wind</b><span class="k">ปุ่ม RT คูลดาวน์ 14 วิ</span>หลบการโจมตีได้ 100% นาน 2.1 วิ (3.3 วิ เมื่ออัป Lv.3) ตีเร็ว +30% จาก Lv.2</li>
+    <li class="hl"><b>Wild Howl</b><span class="k">ปุ่ม RB คูลดาวน์ 28 วิ</span>เปิดตอนยังหลบได้ แล้วตบกลุ่มที่ดูดมา</li>
+  </ol>
+  <div class="tbl wide"><table>
+    <thead><tr><th>การ์ด</th><th>พื้นฐาน</th><th>Lv.2 ◆</th><th>Lv.3 ◆</th><th>Lv.4 ◆</th></tr></thead>
+    <tbody>
+      <tr><td><b>Strong Wind</b> <span class="jp">強い風が吹き抜けた</span><span class="alt">ปุ่ม Y คูลดาวน์ 11 วิ</span></td><td>ลมหมุน 70 ดาเมจทุกตัวในวง ดูดเข้ากลาง</td><td>ดาเมจ +15 วงกว้าง +40%<span class="alt">อีกทาง: ดาเมจ +55</span></td><td>คูลดาวน์ −1 วิ ชาร์จ 2 ครั้ง<span class="alt">อีกทาง: ดูดแล้วศัตรูสลบ 1.8 วิ</span></td><td>คูลดาวน์ −3.5 วิ ใช้แล้วได้ Wind Fury 1<span class="alt">อีกทาง: ภาพโดนบัง อ่านไม่ได้</span></td></tr>
+      <tr><td><b>Ride the Wind</b> <span class="jp">風に乗って行こう</span><span class="alt">ปุ่ม RT คูลดาวน์ 14 วิ</span></td><td>2.1 วิ หลบได้ 100% เดินเร็ว +30%</td><td>ตีเร็ว +30%<span class="alt">อีกทาง: คูลดาวน์ −1.5 วิ ชาร์จ 2 ครั้ง</span></td><td>เวลา +1.2 วิ<span class="alt">อีกทาง: ระหว่างนั้นคูลดาวน์ทุกสกิลเร็วขึ้น 50%</span></td><td>สกิลลมทำดาเมจ → คูลดาวน์ใบนี้ −1 วิ<span class="alt">อีกทาง: เดินเร็วขึ้นอีก 45% วิ่งทะลุศัตรูได้ 40 ดาเมจ</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="shots">
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780917681-p8DaKsoCcjAwfmZJHPNilWQu.png" alt="หน้าจออัปเกรดการ์ด 強い風が吹き抜けた" width="805" height="520"><figcaption><b>Strong Wind</b> วงกว้าง → ชาร์จ 2 ครั้ง → คูลดาวน์ −3.5 วิ + Wind Fury · กล่องที่บังคือคำอธิบาย Wind Fury</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780917924-5moaMu7YSE3CGcqOkfsnXDzH.png" alt="หน้าจออัปเกรดการ์ด 風に乗って行こう" width="792" height="509"><figcaption><b>Ride the Wind</b> ตีเร็ว +30% → เวลา +1.2 วิ → สกิลลมคืนคูลดาวน์</figcaption></figure>
+  </div>
+
+  <h3 class="step"><span class="n">3.5</span>ของที่ต้องเก็บ</h3>
+  <p class="gist">ของชุดเดียวกับ Rue สายตี: เพิ่มดาเมจประชิด ตีเร็ว และกันตาย ไม่มีชิ้นไหนบังคับ สายนี้จึงทนดวงดรอปได้ดีกว่าสายนกฮูก</p>
+  <p>ลำดับคว้าจากแผ่น A4: Drum of Courage › Heavy Shackles › Ghostly Veil › Necronomicon › Oak Cane › Fairy Wand</p>
+  <p>ตัวอย่างบิลด์ของไกด์ใช้ของระดับกลางที่หาได้ระหว่างทาง เช่น Cursed Iron Nail (14% ทำเกราะแตก), Frenzy Top (ตีเร็ว +1.5% ซ้อน 10 ชั้น) และ Rotten Apple (12% ลงพิษ 2 สแต็ก)</p>
+  <div class="shots">
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780924088-KNPUJba7rAXfzMTZE3LudwB2.png" alt="ของสายกรงเล็บในไกด์" width="525" height="379"><figcaption><b>ของระดับกลางในตัวอย่าง</b> Cursed Iron Nail, Frenzy Top, Rotten Apple</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1778075187-PhyK1COYpSlMwnJZGuWV2X49.png" alt="ตัวอย่างบิลด์กรงเล็บของ ペロ" width="322" height="379"><figcaption><b>บิลด์จริงที่ผ่าน Trial 8</b> ขาดทาเลนต์ Wind Traveler แต่ดันดาเมจขึ้นสุดแล้วตบผ่าน</figcaption></figure>
+  </div>
+</div>
+</section>
+
+<!-- ================= บท 4 ================= -->
+<section class="chapter" id="pick">
+<div class="wrap">
+  <header class="ch-head"><span class="ch-no">4</span><div><h2>เลือกสาย · อัปเดตล่าสุด</h2><p class="meta">เช็กประกาศบน Steam ล่าสุด 23 ต.ค. 2026</p></div></header>
+  <p class="ch-q">คำถามของบทนี้: เล่นแบบไหนเหมาะกับสายไหน และข้อมูลหน้านี้สดแค่ไหน?</p>
+
+  <h3 class="step"><span class="n">4.1</span>เทียบสองสายในตารางเดียว</h3>
+  <p class="gist">ชอบยืนห่าง หลบเก่ง และยอมเสี่ยงดวงดรอป Moonlight Branch ให้เล่นนกฮูก ชอบเข้าไปตบและอยากได้สายที่ไม่มีไอเทมบังคับ ให้เล่นกรงเล็บ</p>
+  <div class="tbl wide"><table>
+    <thead><tr><th></th><th class="owl">สายนกฮูก</th><th class="wolf">สายกรงเล็บ</th></tr></thead>
+    <tbody>
+      <tr><td>ของที่ต้องดรอป</td><td>Moonlight Branch (แทนไม่ได้)</td><td>ไม่มี</td></tr>
+      <tr><td>ตอนสู้บอส</td><td>Response + Wind Guidance เรียกนกฮูกทุก 8 วิ</td><td>Wild Howl ยืดได้น้อย อยู่ราว 6-8 วิ แล้วรอคูลดาวน์ 28 วิ</td></tr>
+      <tr><td>ตอนล้างมอบ</td><td>Wind Burial + Howling Hurricane</td><td>ดูดด้วย Strong Wind แล้วตบ Howl เปิดค้างได้</td></tr>
+      <tr><td>จุดตาย</td><td>ไม่ได้ Response หรือการ์ดคูลดาวน์สั้น นกฮูกจะน้อยตอนสู้บอส</td><td>ก่อน Lv.4 กด Howl แล้วการ์ดถูกปิด 5 วิ</td></tr>
+      <tr><td>กฎภูมิ CC ใหม่ของบอส (V0.6.11)</td><td>Roll Up ทำบอสกระเด็นบ่อย บอสจะดื้อ CC เร็วขึ้น</td><td>Fang Bite ทำให้ท่าหมาป่าทุกท่าสตัน บอสดื้อเร็วขึ้นเหมือนกัน</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="step" id="patch"><span class="n">4.2</span>แพตช์ที่แตะ Uma</h3>
+  <p class="gist">Uma โดนรื้อครั้งใหญ่ใน V0.6.7 (16 พ.ค. 2026) หลังจากนั้นมีแค่ปรับไอเทมกับแก้บั๊ก และแพตช์ล่าสุด ณ 23 ต.ค. 2026 ยังเป็น V0.6.11b (25 ส.ค. 2026)</p>
+  <p>ไกด์ของ ペロ เขียนตอน ver0.6.10 ตัวเลขการ์ดกับทาเลนต์ในหน้านี้ยังใช้ได้ เพราะ V0.6.11 ถึง V0.6.11b ไม่ได้แตะการ์ดหรือทาเลนต์ของ Uma นอกจากแก้บั๊ก</p>
+  <ul class="patches">
+    <li><span class="v">V0.6.6</span><span class="d">2 พ.ค. 2026</span><br>ผู้พัฒนาประกาศว่าจะรื้อ Uma ระดับเดียวกับที่เคยทำกับ Rue และ Rivet</li>
+    <li><span class="v">V0.6.7</span><span class="d">16 พ.ค. 2026</span> <b>รื้อทั้งตัว</b>
+      <ul class="chg">
+        <li>ตีประชิดเติมเกจ 3 → 10 และ Nature's Breath 10 → 30</li>
+        <li>เกจเต็มเรียก 2 → 1 ตัว ส่วนที่ล้นไม่หาย</li>
+        <li>สัดส่วนหมาป่า/เม่น/นกฮูก 65/25/10 → 50/35/15</li>
+        <li>สัตว์อยู่ 10 → 7 วิ และคริตตาม Uma</li>
+        <li>ทาเลนต์นกฮูกใหม่: Wind Resonance, Storm Takeoff, Roll Up, Nest Takeover</li>
+        <li>Wind Fury ใหม่: หมัดถัดไปได้ฮิตเพิ่ม</li>
+      </ul></li>
+    <li><span class="v">V0.6.9</span><span class="d">6 มิ.ย. 2026</span><br>Wild Pounce อมตะระหว่างลอยตัว และกรงเล็บทำลายกระสุนได้ตามที่ควร</li>
+    <li><span class="v">V0.6.10b</span><span class="d">27 ก.ค. 2026</span><br>แก้เกมค้างจากเถาวัลย์ (Vine Growth) และเม่น (Tiny Spiny Ball)</li>
+    <li><span class="v">V0.6.11</span><span class="d">14 ส.ค. 2026</span> <b>บัฟของสาย Uma</b>
+      <ul class="chg">
+        <li>Drum of Courage IV ซัมมอนดาเมจ +30% → +50%</li>
+        <li>Drowsy Flower Crown IV Spirit +7 → +14</li>
+        <li>Gingerbread House ฆ่า 4 ตัวเรียกได้ทุกระดับ</li>
+        <li>แก้หมี ลูกหมาป่า และเมฆฟ้าร้องของ Uma ไม่ยอมกลับมาหาผู้เล่น</li>
+        <li>บอสคิดภูมิ CC ใหม่</li>
+      </ul></li>
+    <li class="now"><span class="v">V0.6.11b</span><span class="d">25 ส.ค. 2026</span> <span class="pill slack">ล่าสุด</span><br>แก้บั๊กการ์ด Moonlight Domain ของ Uma ที่ใช้คู่ Shrinking Mirror แล้วยิงเลเซอร์ใส่หมีของตัวเอง หลังจากนี้ยังไม่มีประกาศแพตช์ใหม่บน Steam จนถึง 23 ต.ค. 2026</li>
+  </ul>
+
+  <h3 class="step"><span class="n">4.3</span>ยังไม่มี Uma? ปลดล็อกในป่า</h3>
+  <p class="gist">ผ่านบอสเมืองไปถึงป่า (ด่าน 2) แล้วเจอ Uma ในห้องอีเวนต์ให้ครบ 3 ครั้ง ครั้งที่สามให้เจมม่วงกับเธอ แล้วเล่นรันนั้นให้จบ ห้ามยอมแพ้กลางทาง</p>
+  <p>ห้องของ Uma สุ่มเกิด อาจต้องลองหลายรอบ ทุกครั้งเธอขอเจมม่วง (ได้จากการทุบของ ให้เท่าไรก็ได้) สองครั้งแรกไม่ให้ก็ได้ ครั้งที่สามเธอพยายามช่วยลิงซ์ที่บาดเจ็บ ให้เจมแล้วเธอจะไปรอที่ Shelter รอบหน้า ขั้นตอนนี้มาจากบทความเดือน เม.ย. 2026 ก่อนแพตช์รื้อ Uma อาจต่างไปบ้าง</p>
+
+  <h3 class="step"><span class="n">4.4</span>ทวน</h3>
+  <p class="gist">สามคำถามนี้ตอบได้ แปลว่าเลือกของให้ Uma กลางรันได้เองแล้ว</p>
+  <div class="thinks">
+    <details class="think"><summary><span class="qk">ทาย</span><span>มี Nest Takeover แล้ว เกจเต็มหนึ่งครั้งมีโอกาสได้นกฮูกกี่ %?</span></summary><div><p><b>40.5%</b> นกฮูกพื้นฐาน 15% บวกผลสุ่มที่ออกหมาป่าหรือเม่นอีก 85% ซึ่งแต่ละครั้งมีโอกาส 30% กลายเป็นนกฮูก: 15% + 85% × 30%</p></div></details>
+    <details class="think"><summary><span class="qk">ทาย</span><span>ตีบอสตัวเดียว 3 หมัดต่อวิ Wild Howl Lv.4 อยู่ได้นานเท่าไร?</span></summary><div><p><b>ราว 7.1 วิ</b> ทุกวินาทีเวลาลด 1 วิ แต่ได้คืน 0.3 วิ จาก 3 หมัด เหลือลดสุทธิ 0.7 วิต่อวิ: 5 ÷ 0.7 = 7.1 อยากให้อยู่นานต้องดูดมอบมาตีพร้อมกัน</p></div></details>
+    <details class="think"><summary><span class="qk">ทาย</span><span>เจอ Wind Infusion ก่อน Wind Resonance ควรเก็บไหม?</span></summary><div><p><b>รอก่อน</b> Wind Infusion เดี่ยว ๆ ให้แค่ Wind Fury ที่เพิ่มฮิตหมัดของ Uma ไกด์ย้ำว่าต้องได้ Wind Resonance ก่อน เพราะใบนั้นเปลี่ยน Wind Fury ทุกครั้งให้เป็นนกฮูกทั้งฝูงตีเร็ว +200%</p></div></details>
+  </div>
+</div>
+</section>
+
+<footer class="wrap">
+  <dl class="foot">
+    <dt>แหล่งข้อมูล</dt>
+    <dd><a href="https://store.steampowered.com/news/app/3214610">Cinderia Patch Notes บน Steam</a> ฉบับ V0.6.6 ถึง V0.6.11b ดึงผ่าน Steam Web API</dd>
+    <dd><a href="https://note.com/pero_900666/n/n842a4187dac6">CINDERIA 試練8攻略の為のビルド紹介 (ver0.6.10)</a> โดย ペロ</dd>
+    <dd><a href="https://thegameslayer.com/guides/cinderia-how-to-unlock-uma/">How to unlock Uma</a> จาก The Game Slayer</dd>
+    <dt>ภาพ</dt>
+    <dd>ภาพหัวหน้ามาจากหน้าร้าน Steam ของ Cinderia ภาพหน้าจอทาเลนต์ การ์ด และบิลด์ทั้งหมดเป็นของ ペロ ลิงก์ตรงจากบทความต้นทาง ลิขสิทธิ์เกมเป็นของผู้พัฒนา</dd>
+    <dt>ข้อจำกัด</dt>
+    <dd>ตัวเลขทุกตัวมาจาก patch notes หรือภาพหน้าจอในเกม ตัวเลขที่คำนวณต่อ (40.5%, รอบ 8 วิ, ตาราง Wild Howl) มาจากสคริปต์ที่ใช้ตัวเลขเหล่านั้น ส่วนการเลือกสายเป็นการอ่านผลจากไกด์ ยังไม่ใช่ข้อสรุปของคอมมูนิตี้</dd>
+  </dl>
+  <p class="foot-nav"><a href="./">แผ่น A4</a> <a href="read.html">ฉบับอ่านบนจอ</a></p>
+</footer>
+<div id="pop" role="tooltip" hidden></div>
+<script>
+/* visual-explainer kit.js — inline into the page (build.py does it). Two globals:
+   Kit = generic teaching widgets · PM = project-scheduling widgets (CPM, Gantt, network, calendar)
+   Every widget renders into an existing host element and never hides content waiting for an observer.
+   API reference: references/kit-api.md */
+(function(){
+'use strict';
+var D=document;
+D.documentElement.classList.add('js');
+var NS='http://www.w3.org/2000/svg';
+function S(tag,attrs,parent,text){var e=D.createElementNS(NS,tag);if(attrs)for(var k in attrs){if(attrs[k]!=null)e.setAttribute(k,attrs[k]);}if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+function H(tag,attrs,parent,html){var e=D.createElement(tag);if(attrs)for(var k in attrs){var v=attrs[k];if(v==null)continue;if(k==='class')e.className=v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);}if(html!=null)e.innerHTML=html;if(parent)parent.appendChild(e);return e;}
+var _u=0;function uid(p){return p+'-'+(++_u);}
+function $(s,r){return typeof s==='string'?(r||D).querySelector(s):s;}
+function $$(s,r){return Array.prototype.slice.call((r||D).querySelectorAll(s));}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+var NSP='page';
+var store={get:function(k,d){try{var v=localStorage.getItem(NSP+':'+k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set:function(k,v){try{localStorage.setItem(NSP+':'+k,JSON.stringify(v));}catch(e){}}};
+function safe(name,fn){try{fn();}catch(e){if(window.console)console.error('widget '+name,e);}}
+function list(a){return a.join(', ');}
+function M(cls,txt){return '<span class="mono '+cls+'">'+txt+'</span>';}
+
+/* ---------- generic stepper: you supply steps[] and render(innerEl, k, step) ---------- */
+var PH_NAME={start:'เริ่ม',fwd:'ไปข้างหน้า →',mid:'กลับหลังหัน',bwd:'← ถอยหลัง',slack:'เติม slack',crit:'เส้นทางวิกฤต'};
+var PH_COL={start:'var(--ink-3)',fwd:'var(--fwd)',mid:'var(--ink-2)',bwd:'var(--bwd)',slack:'var(--slack)',crit:'var(--crit)'};
+var PH_PILL={fwd:'fwd',bwd:'bwd',slack:'slack',crit:'crit'};
+function stepper(host,cfg){
+  host=$(host);var steps=cfg.steps,k=0,timer=null,phName=cfg.phaseNames||PH_NAME,phCol=cfg.phaseColors||PH_COL;
+  var sx=H('div',{class:'scroll-x'},host),inner=H('div',{style:cfg.minW?'min-width:'+cfg.minW+'px':null},sx);
+  if(cfg.minW)H('p',{class:'hint-x'},host,'เลื่อนซ้ายขวาเพื่อดูให้ครบ');
+  var bar=H('div',{class:'stp-bar'},host);
+  function B(txt,cls,fn,label){return H('button',{type:'button',class:'btn'+(cls?' '+cls:''),onclick:fn,'aria-label':label||null},bar,txt);}
+  var bF=B('⏮','',function(){go(0);},'ไปขั้นแรก'),bP=B('◀ ย้อน','',function(){go(k-1);}),bN=B('ถัดไป ▶','primary',function(){go(k+1);}),bL=B('⏭','',function(){go(steps.length-1);},'ไปขั้นสุดท้าย'),bA=B('เล่นอัตโนมัติ','',toggle);
+  var ph=H('span',{class:'pill'},bar),cnt=H('span',{class:'stp-count'},bar);
+  var track=H('div',{class:'stp-track','aria-hidden':'true'},host),segs=steps.map(function(){return H('i',{style:'flex:1'},track);});
+  var say=H('div',{class:'stp-say','aria-live':'polite'},host);
+  host.setAttribute('tabindex','0');
+  host.addEventListener('keydown',function(e){if(e.target!==host)return;if(e.key==='ArrowRight'){go(k+1);e.preventDefault();}else if(e.key==='ArrowLeft'){go(k-1);e.preventDefault();}});
+  function go(j){k=Math.max(0,Math.min(steps.length-1,j));render();if(k===steps.length-1)stop();}
+  function toggle(){if(timer)stop();else{if(k===steps.length-1)k=0;timer=setInterval(function(){if(k>=steps.length-1){stop();return;}go(k+1);},cfg.interval||1500);bA.textContent='หยุด';render();}}
+  function stop(){if(timer){clearInterval(timer);timer=null;}bA.textContent='เล่นอัตโนมัติ';}
+  function render(){var st=steps[k];cfg.render(inner,k,st,steps);say.innerHTML=st.text;cnt.textContent='ขั้น '+(k+1)+' / '+steps.length;
+    ph.className='pill '+(PH_PILL[st.phase]||'');ph.textContent=phName[st.phase]||st.phase||'';ph.hidden=!st.phase;
+    bF.disabled=bP.disabled=(k===0);bN.disabled=bL.disabled=(k===steps.length-1);
+    segs.forEach(function(s,j){s.style.background=j<=k?(phCol[steps[j].phase]||'var(--ink-2)'):'transparent';});}
+  render();
+  return {go:go};
+}
+
+/* ---------- fill-in table with checker and formula hints ---------- */
+function fillTable(host,c){
+  host=$(host);var saved=store.get(c.storeKey,{}),mode=store.get(c.storeKey+'Mode',c.given?'help':'self');
+  var ctl=H('div',{class:'row',style:'margin-bottom:10px'},host),mh=null,ms=null;
+  if(c.given){mh=H('button',{type:'button',class:'btn sm',onclick:function(){setMode('help');}},ctl,c.helpLabel||'มีตัวช่วย (เติมให้บางช่อง)');
+    ms=H('button',{type:'button',class:'btn sm',onclick:function(){setMode('self');}},ctl,c.selfLabel||'เติมเองทั้งหมด');}
+  H('span',{style:'flex:1'},ctl);
+  H('button',{type:'button',class:'btn sm',onclick:function(){saved={};store.set(c.storeKey,saved);paint();msg.hidden=true;}},ctl,'ล้าง');
+  H('button',{type:'button',class:'btn primary',onclick:check},ctl,'ตรวจคำตอบ');
+  var tw=H('div',{class:'tbl'},host),tb=H('table',{class:'fill'},tw),inputs={};
+  var hd='<tr><th>'+esc(c.rowHead||'')+'</th>'+(c.extra?'<th>'+esc(c.extra.label)+'</th>':'')+c.cols.map(function(col){return '<th class="'+(col.cls||'')+'">'+esc(col.label||col.key)+'</th>';}).join('')+'</tr>';
+  tb.innerHTML=hd;
+  c.rows.forEach(function(r){var tr=H('tr',{},tb);H('td',{},tr,esc(c.rowLabel?c.rowLabel(r):r));if(c.extra)H('td',{class:'num'},tr,esc(c.extra.value(r)));
+    c.cols.forEach(function(col){var td=H('td',{},tr),inp=H('input',{type:'text',inputmode:col.inputmode||'numeric',id:c.storeKey+'-'+r+'-'+col.key,'aria-label':(col.label||col.key)+' ของ '+r,autocomplete:'off',style:col.width?'width:'+col.width:null},td);inputs[r+'|'+col.key]=inp;
+      inp.addEventListener('input',function(){saved[r+'|'+col.key]=inp.value.trim();store.set(c.storeKey,saved);inp.classList.remove('ok','bad');});});});
+  var msg=H('div',{class:'fill-msg','aria-live':'polite',hidden:''},host);
+  function given(r,k){return mode==='help'&&c.given&&c.given[r]&&c.given[r].indexOf(k)>=0;}
+  function setMode(m){mode=m;store.set(c.storeKey+'Mode',m);paint();msg.hidden=true;}
+  function same(a,b){return c.compare?c.compare(a,b):String(a).trim().toLowerCase()===String(b).trim().toLowerCase()||(a!==''&&!isNaN(a)&&Number(a)===Number(b));}
+  function paint(){if(mh){mh.setAttribute('aria-pressed',String(mode==='help'));ms.setAttribute('aria-pressed',String(mode==='self'));}
+    c.rows.forEach(function(r){c.cols.forEach(function(col){var inp=inputs[r+'|'+col.key];inp.classList.remove('ok','bad','given');
+      if(given(r,col.key)){inp.value=c.answer(r,col.key);inp.readOnly=true;inp.classList.add('given');}else{inp.readOnly=false;inp.value=saved[r+'|'+col.key]||'';}});});}
+  function check(){var ok=0,bad=[],empty=0,tot=0,inv=[];
+    c.rows.forEach(function(r){var mine={};c.cols.forEach(function(col){var k=col.key,inp=inputs[r+'|'+k];if(given(r,k)){mine[k]=c.answer(r,k);return;}tot++;var t=inp.value.trim();
+      if(t===''){empty++;return;}mine[k]=isNaN(t)?t:Number(t);
+      if(same(t,c.answer(r,k))){ok++;inp.classList.add('ok');inp.classList.remove('bad');}else{bad.push([r,k]);inp.classList.add('bad');inp.classList.remove('ok');}});
+      if(c.invariants)inv=inv.concat(c.invariants(r,mine)||[]);});
+    var h;
+    if(!bad.length&&!empty)h='<b class="c-slack">ถูกครบทุกช่อง</b>'+(c.onAllCorrect?' '+c.onAllCorrect():'');
+    else{h='ถูก <b>'+ok+'</b> จาก '+tot+' ช่อง'+(bad.length?' · ผิด <b class="c-crit">'+bad.length+'</b>':'')+(empty?' · ยังว่าง '+empty:'');
+      if(bad.length&&c.hint)h+='<ul>'+bad.slice(0,4).map(function(b){return '<li><span class="mono">'+c.hint(b[0],b[1])+'</span></li>';}).join('')+(bad.length>4?'<li>และอีก '+(bad.length-4)+' ช่อง</li>':'')+'</ul>';}
+    if(inv.length)h+='<p style="margin:.5em 0 0"><b>เช็กด้วยความจริงคงที่:</b></p><ul>'+inv.slice(0,3).map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';
+    msg.innerHTML=h;msg.hidden=false;}
+  paint();
+  return {check:check};
+}
+
+/* ---------- sorter: pick the right bin for each card ---------- */
+function sorter(host,c){
+  host=$(host);var grid=H('div',{class:'sort-grid'},host),score=c.scoreEl?$(c.scoreEl):null,res={};
+  function upd(){var n=0,ok=0;for(var k in res){n++;if(res[k])ok++;}if(score)score.textContent=n?('ถูก '+ok+' / '+n+(n===c.cards.length?' · ครบแล้ว':'')):'';}
+  c.cards.forEach(function(cd,j){var el=H('div',{class:'card'},grid);H('span',{class:'w'},el,esc(cd[0]));
+    var op=H('div',{class:'opts'},el),why=H('span',{class:'why',hidden:''},el);
+    c.options.forEach(function(o){H('button',{type:'button',class:'btn sm',onclick:function(){var ok=o[0]===cd[1];res[j]=ok;el.classList.toggle('ok',ok);el.classList.toggle('bad',!ok);
+      var right=c.options.filter(function(x){return x[0]===cd[1];})[0];why.hidden=false;why.innerHTML=(ok?'ถูก · ':'ยังไม่ใช่ · คำตอบคือ <b>'+esc(right[2]||right[1])+'</b> · ')+cd[2];upd();}},op,esc(o[1]));});});
+}
+
+/* ---------- checklists ---------- */
+function checklist(host,c){
+  host=$(host);var saved=store.get(c.storeKey,{});
+  c.groups.forEach(function(g,gi){var sh=H('div',{class:'sheet'},host),h4=H('h4',{},sh,esc(g[0])),num=H('span',{class:'num'},h4),bar=H('div',{class:'clbar'},sh),bi=H('i',{},bar),ul=H('ul',{class:'chk'},sh),boxes=[];
+    g[1].forEach(function(t,ti){var id=c.storeKey+'-'+gi+'-'+ti,li=H('li',{},ul),lb=H('label',{},li),cb=H('input',{type:'checkbox',id:id},lb);H('span',{},lb,t);cb.checked=!!saved[id];boxes.push(cb);
+      cb.addEventListener('change',function(){saved[id]=cb.checked;store.set(c.storeKey,saved);upd();});});
+    function upd(){var n=boxes.filter(function(b){return b.checked;}).length;num.textContent=n+' / '+boxes.length;bi.style.width=(n/boxes.length*100)+'%';}
+    upd();});
+}
+function bindChecks(sel,key){var saved=store.get(key,{});$$(sel).forEach(function(cb){cb.checked=!!saved[cb.id];cb.addEventListener('change',function(){saved[cb.id]=cb.checked;store.set(key,saved);});});}
+
+/* ---------- tap-a-cell explainer (e.g. node anatomy) ---------- */
+function anatomy(btnSel,sayEl,dict,first){var bs=$$(btnSel),say=$(sayEl);
+  function pick(k){bs.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.k===k));});say.innerHTML=dict[k];}
+  bs.forEach(function(b){b.addEventListener('click',function(){pick(b.dataset.k);});});pick(first||bs[0].dataset.k);}
+
+/* ---------- typing demo for a mock app grid ---------- */
+function typeDemo(btn,cells,speed){btn=$(btn);var busy=false;
+  btn.addEventListener('click',function(){if(busy)return;busy=true;btn.disabled=true;cells.forEach(function(c){c[0].textContent='';});var i=0;
+    (function next(){if(i>=cells.length){busy=false;btn.disabled=false;return;}var td=cells[i][0],txt=cells[i][1],j=0;
+      (function type(){td.innerHTML=esc(txt.slice(0,j))+'<span class="caret"></span>';if(j<txt.length){j++;setTimeout(type,speed||110);}else{setTimeout(function(){td.textContent=txt;i++;next();},450);}})();})();});}
+
+/* ---------- glossary popovers: <i class="term" data-t="key">word</i> + <div id="pop" hidden> ---------- */
+function glossary(dict){
+  var pop=$('#pop');if(!pop)pop=H('div',{id:'pop',role:'tooltip',hidden:''},D.body);
+  $$('.term').forEach(function(t){t.setAttribute('tabindex','0');t.setAttribute('role','button');});
+  function show(t){var g=dict[t.getAttribute('data-t')];if(!g)return;pop.innerHTML='<b>'+esc(g[0])+'</b>'+esc(g[1]);pop.hidden=false;
+    var r=t.getBoundingClientRect();pop.style.maxWidth=Math.min(300,window.innerWidth-24)+'px';
+    pop.style.left=Math.max(8,Math.min(r.left+window.scrollX,window.scrollX+window.innerWidth-pop.offsetWidth-12))+'px';pop.style.top=(r.bottom+window.scrollY+6)+'px';}
+  D.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('.term');if(t){show(t);e.stopPropagation();}else pop.hidden=true;});
+  D.addEventListener('keydown',function(e){if(e.key==='Escape')pop.hidden=true;else if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('term')){e.preventDefault();show(e.target);}});
+  window.addEventListener('resize',function(){pop.hidden=true;});
+}
+/* ---------- reading progress + active nav link (scroll event only, no observers) ---------- */
+function nav(){
+  var bar=$('#progress'),links=$$('nav.top a.nl'),ids=links.map(function(a){return a.getAttribute('href').slice(1);});
+  function onS(){var h=D.documentElement.scrollHeight-window.innerHeight;if(bar)bar.style.width=(h>0?Math.min(100,window.scrollY/h*100):0)+'%';
+    var cur=null;ids.forEach(function(id){var el=D.getElementById(id);if(el&&el.getBoundingClientRect().top<120)cur=id;});
+    links.forEach(function(a,j){a.classList.toggle('on',ids[j]===cur);});}
+  window.addEventListener('scroll',onS,{passive:true});onS();
+}
+function theme(btnSel){
+  var root=D.documentElement,b=$(btnSel),saved=store.get('theme',null);if(saved)root.setAttribute('data-theme',saved);if(!b)return;
+  function cur(){return root.getAttribute('data-theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}
+  function label(){b.textContent=cur()==='dark'?'ธีมสว่าง':'ธีมมืด';}
+  b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';root.setAttribute('data-theme',n);store.set('theme',n);label();});label();
+}
+
+
+/* ---------- line chart with crosshair tooltip (from Ch.7 page, tested) ----------
+   c: {x0,x1,xTicks,xFmt?,xLabel?,yMax,yStep?,yFmt?,height?,left?,right?,aria,
+       series:[{cls,pts:[[x,y]],end?,endDx?,endDy?,endAnchor?,dot?}], marks:[{x,y,cls,label?,dx?,dy?,anchor?}],
+       hlines:[{y,label}], vlines:[{x,label}], bands:[{upper,lower}], brackets:[{x,y1,y2,dx,cls:'bad'|'good',label,labelY?}],
+       box:{x,y,w?,title?,rows:[[label,value,cls]]}, snap:[x...], tipTitle(x), tip(x)->[[name,value,cssColor]]} */
+function compact(n){var a=Math.abs(n);return a>=1e6?(+(n/1e6).toFixed(2))+'M':a>=1e3?(+(n/1e3).toFixed(1))+'k':String(n);}
+function niceStep(max,n){var raw=max/(n||5),p=Math.pow(10,Math.floor(Math.log10(raw))),m=raw/p;return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p;}
+function lineChart(host,c){
+  host=$(host);host.innerHTML='';host.classList.add('lc');
+  var W=c.width||760,Ht=c.height||300,L=c.left||64,R=c.right||110,T=16,B=34;
+  var X=function(v){return L+(v-c.x0)*(W-L-R)/(c.x1-c.x0);},step=c.yStep||niceStep(c.yMax,5),yMax=Math.ceil(c.yMax/step)*step;
+  var Y=function(v){return T+(1-v/yMax)*(Ht-T-B);};
+  var svg=S('svg',{viewBox:'0 0 '+W+' '+Ht,width:'100%',role:'img','aria-label':c.aria||'กราฟเส้น'},host);
+  for(var v=0;v<=yMax+1e-9;v+=step){S('line',{x1:L,x2:W-R,y1:Y(v),y2:Y(v),class:v===0?'lc-axis':'lc-grid'},svg);S('text',{x:L-8,y:Y(v)+4,'text-anchor':'end',class:'lc-tick'},svg,c.yFmt?c.yFmt(v):compact(v));}
+  (c.xTicks||[]).forEach(function(t){S('text',{x:X(t),y:Ht-B+16,'text-anchor':'middle',class:'lc-tick'},svg,c.xFmt?c.xFmt(t):String(t));});
+  if(c.xLabel)S('text',{x:W-R,y:Ht-4,'text-anchor':'end',class:'lc-tick'},svg,c.xLabel);
+  (c.bands||[]).forEach(function(b){var top=b.upper.map(function(p){return X(p[0])+','+Y(p[1]);}),bot=b.lower.slice().reverse().map(function(p){return X(p[0])+','+Y(p[1]);});S('polygon',{points:top.concat(bot).join(' '),class:'lc-band'},svg);});
+  (c.hlines||[]).forEach(function(h){S('line',{x1:L,x2:W-R,y1:Y(h.y),y2:Y(h.y),class:'lc-h'},svg);S('text',{x:W-R+6,y:Y(h.y)+4,class:'lc-end sub'},svg,h.label);});
+  (c.vlines||[]).forEach(function(h){S('line',{x1:X(h.x),x2:X(h.x),y1:T,y2:Ht-B,class:'lc-v'},svg);if(h.label)S('text',{x:X(h.x)+5,y:T+10,class:'lc-note'},svg,h.label);});
+  (c.series||[]).forEach(function(s){if(!s.pts.length)return;S('path',{d:'M'+s.pts.map(function(p){return X(p[0])+' '+Y(p[1]);}).join('L'),class:'lc-line '+s.cls},svg);
+    if(s.end){var e=s.pts[s.pts.length-1];S('circle',{cx:X(e[0]),cy:Y(e[1]),r:4.5,class:'lc-dot '+(s.dot||s.cls)},svg);S('text',{x:X(e[0])+(s.endDx!=null?s.endDx:8),y:Y(e[1])+(s.endDy||4),class:'lc-end','text-anchor':s.endAnchor||'start'},svg,s.end);}});
+  (c.brackets||[]).forEach(function(b){var x=X(b.x)+(b.dx||0),y1=Y(b.y1),y2=Y(b.y2),w=b.dx<0?-6:6;S('path',{d:'M'+x+' '+y1+'h'+w+'V'+y2+'h'+(-w),class:'lc-br '+b.cls},svg);
+    S('text',{x:x+(b.dx<0?-10:10),y:(b.labelY!=null?Y(b.labelY):(y1+y2)/2)+4,'text-anchor':b.dx<0?'end':'start',class:'lc-brt '+b.cls},svg,b.label);});
+  if(c.box&&c.box.rows.length){var bx=X(c.box.x),by=Y(c.box.y),bw=c.box.w||150,g=S('g',{},svg);S('rect',{x:bx,y:by,width:bw,height:12+c.box.rows.length*18,rx:6,class:'lc-boxbg'},g);
+    if(c.box.title)S('text',{x:bx+10,y:by-6,class:'lc-note'},g,c.box.title);
+    c.box.rows.forEach(function(r,j){var yy=by+20+j*18;S('line',{x1:bx+10,x2:bx+24,y1:yy-4,y2:yy-4,class:'lc-line '+r[2]},g);S('text',{x:bx+30,y:yy,class:'lc-end sub'},g,r[0]);S('text',{x:bx+bw-10,y:yy,'text-anchor':'end',class:'lc-brt',style:'fill:var(--ink)'},g,r[1]);});}
+  (c.marks||[]).forEach(function(m){S('circle',{cx:X(m.x),cy:Y(m.y),r:5,class:'lc-dot '+m.cls},svg);if(m.label)S('text',{x:X(m.x)+(m.dx||8),y:Y(m.y)+(m.dy||4),class:'lc-end','text-anchor':m.anchor||'start'},svg,m.label);});
+  if(c.snap&&c.tip){
+    var tt=H('div',{class:'tt',hidden:''},host),xl=S('line',{y1:T,y2:Ht-B,class:'lc-x',visibility:'hidden'},svg),hit=S('rect',{x:L,y:T,width:W-L-R,height:Ht-T-B,class:'lc-hit'},svg),idx=-1;
+    host.setAttribute('tabindex','0');
+    function show(i){idx=Math.max(0,Math.min(c.snap.length-1,i));var xv=c.snap[idx],px=X(xv);xl.setAttribute('x1',px);xl.setAttribute('x2',px);xl.setAttribute('visibility','visible');
+      tt.innerHTML='';H('div',{class:'tx'},tt).textContent=c.tipTitle(xv);
+      c.tip(xv).forEach(function(r){var row=H('div',{class:'row2'},tt);H('i',{style:'background:'+r[2]},row);var b=H('b',{},row);b.textContent=r[1];var sp=H('span',{},row);sp.textContent=r[0];});
+      tt.hidden=false;var box=svg.getBoundingClientRect(),hb=host.getBoundingClientRect(),sx=box.width/W,left=(px*sx)+(box.left-hb.left)+12;
+      if(left+tt.offsetWidth>hb.width)left=(px*sx)+(box.left-hb.left)-tt.offsetWidth-12;tt.style.left=Math.max(0,left)+'px';tt.style.top=(T*sx+6)+'px';}
+    function near(ev){var box=svg.getBoundingClientRect(),xv=c.x0+((ev.clientX-box.left)/box.width*W-L)/(W-L-R)*(c.x1-c.x0),best=0;c.snap.forEach(function(s,j){if(Math.abs(s-xv)<Math.abs(c.snap[best]-xv))best=j;});return best;}
+    hit.addEventListener('pointermove',function(e){show(near(e));});
+    hit.addEventListener('pointerdown',function(e){show(near(e));});
+    hit.addEventListener('pointerleave',function(){tt.hidden=true;xl.setAttribute('visibility','hidden');});
+    host.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){show(idx+1);e.preventDefault();}else if(e.key==='ArrowLeft'){show(idx<0?0:idx-1);e.preventDefault();}else if(e.key==='Escape'){tt.hidden=true;xl.setAttribute('visibility','hidden');}});
+    host.addEventListener('blur',function(){tt.hidden=true;xl.setAttribute('visibility','hidden');});
+  }
+  return {X:X,Y:Y,svg:svg};
+}
+
+window.Kit={S:S,H:H,$:$,$$:$$,esc:esc,uid:uid,list:list,M:M,store:store,safe:safe,
+  init:function(o){o=o||{};if(o.ns)NSP=o.ns;},
+  run:function(map,order){(order||Object.keys(map)).forEach(function(k){safe(k,map[k]);});},
+  stepper:stepper,lineChart:lineChart,compact:compact,niceStep:niceStep,fillTable:fillTable,sorter:sorter,checklist:checklist,bindChecks:bindChecks,anatomy:anatomy,typeDemo:typeDemo,glossary:glossary,nav:nav,theme:theme};
+
+/* =====================================================================
+   PM — project scheduling
+   acts = [{id:'A', dur:2, pred:[], name?:'ชื่อไทย'}]  (listed in topological order, FS links)
+   ===================================================================== */
+var DASH='‑';
+function dash(a){return a.join(DASH);}
+function cpm(acts,opt){
+  opt=opt||{};var snet=opt.snet||{},dur=opt.dur||{},r={},order=acts.map(function(a){return a.id;});
+  acts.forEach(function(a){var d=dur[a.id]!=null?dur[a.id]:a.dur,es=snet[a.id]!=null?snet[a.id]:0;
+    a.pred.forEach(function(p){if(r[p].EF>es)es=r[p].EF;});
+    r[a.id]={id:a.id,name:a.name||a.id,dur:d,pred:a.pred.slice(),succ:[],ES:es,EF:es+d};});
+  acts.forEach(function(a){a.pred.forEach(function(p){r[p].succ.push(a.id);});});
+  var fin=0;order.forEach(function(i){if(r[i].EF>fin)fin=r[i].EF;});
+  for(var k=order.length-1;k>=0;k--){var v=r[order[k]];
+    v.LF=v.succ.length?Math.min.apply(null,v.succ.map(function(s){return r[s].LS;})):fin;
+    v.LS=v.LF-v.dur;v.TS=v.LS-v.ES;
+    v.FS=(v.succ.length?Math.min.apply(null,v.succ.map(function(s){return r[s].ES;})):fin)-v.EF;v.crit=v.TS===0;}
+  return {r:r,order:order,finish:fin};
+}
+function critPaths(res){
+  var r=res.r,out=[];function drv(a,b){return r[a].crit&&r[b].crit&&r[a].EF===r[b].ES;}
+  var starts=res.order.filter(function(i){return r[i].crit&&!r[i].pred.some(function(p){return drv(p,i);});});
+  function walk(i,path){var nx=r[i].succ.filter(function(s){return drv(i,s);});if(!nx.length){if(r[i].EF===res.finish)out.push(path);return;}nx.forEach(function(s){walk(s,path.concat(s));});}
+  starts.forEach(function(s){walk(s,[s]);});return out;
+}
+function allPaths(acts){
+  var m={};acts.forEach(function(a){m[a.id]={succ:[]};});acts.forEach(function(a){a.pred.forEach(function(p){m[p].succ.push(a.id);});});
+  var out=[];function walk(i,p){if(!m[i].succ.length){out.push(p);return;}m[i].succ.forEach(function(s){walk(s,p.concat(s));});}
+  acts.filter(function(a){return !a.pred.length;}).forEach(function(a){walk(a.id,[a.id]);});return out;
+}
+
+/* Gantt: rows=[{label,ES,EF,TS?,FS?,crit?,milestone?,summary?,level?,code?,base?:{ES,EF},moved?,pre?,mute?}] (continuous x: a task on days s..e is ES=s-1, EF=e) */
+function gantt(host,c){
+  host=$(host);host.innerHTML='';
+  var W=c.width||760,lw=c.labelW||90,rh=c.rowH||26,top=c.top||28,pr=c.padR||16,mn=c.min||0,mx=c.max;
+  var rows=c.rows,n=rows.length,bottom=c.bottom!=null?c.bottom:(c.finishLabel?20:8),Ht=top+n*rh+bottom;
+  function X(v){return lw+(v-mn)*(W-pr-lw)/(mx-mn);}
+  var svg=S('svg',{viewBox:'0 0 '+W+' '+Ht,width:'100%',role:'img','aria-label':c.aria||'แผนภูมิแกนต์'},host);
+  var pid=uid('ht'),defs=S('defs',{},svg),pat=S('pattern',{id:pid,width:5,height:5,patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'},defs);
+  S('rect',{width:5,height:5,class:'hatch-bg'},pat);S('line',{x1:0,y1:0,x2:0,y2:5,class:'hatch-ln'},pat);
+  rows.forEach(function(w,i){if(i%2)S('rect',{x:0,y:top+i*rh,width:W,height:rh,class:'g-zebra'},svg);});
+  var d;if(c.shade)for(d=mn;d<mx;d++){if(c.shade(d))S('rect',{x:X(d),y:top,width:X(d+1)-X(d),height:n*rh,class:'g-shade'},svg);}
+  for(d=mn;d<=mx;d+=(c.gridStep||1))S('line',{x1:X(d),x2:X(d),y1:top-4,y2:top+n*rh,class:(c.major&&c.major(d))?'g-major':'g-minor'},svg);
+  for(d=mn;d<=mx;d++){if(c.centerTicks&&d>=mx)continue;var t=c.tick?c.tick(d):(d%(c.tickEvery||1)===0?String(d):null);if(t==null)continue;
+    S('text',{x:c.centerTicks?X(d+.5):X(d),y:top-9,class:'g-tick','text-anchor':'middle'},svg,t);}
+  if(c.weeks)c.weeks.forEach(function(wk){S('text',{x:X(wk.at)+3,y:top-25,class:'g-week'},svg,wk.text);});
+  if(c.baseFinish!=null&&c.baseFinish!==c.finish){var xb=X(c.baseFinish);S('line',{x1:xb,x2:xb,y1:top-2,y2:top+n*rh,class:'finish was'},svg);}
+  if(c.finish!=null){var xf=X(c.finish),late=c.baseFinish!=null&&c.finish>c.baseFinish;S('line',{x1:xf,x2:xf,y1:top-2,y2:top+n*rh+3,class:'finish'+(late?' late':'')},svg);
+    if(c.finishLabel){var right=xf>W-150;S('text',{x:right?xf-5:xf+5,y:top+n*rh+bottom-4,class:'finish-t'+(late?' late':''),'text-anchor':right?'end':'start'},svg,c.finishLabel);}}
+  rows.forEach(function(w,i){var y=top+i*rh,cy=y+rh/2,endX,a,b;
+    S('text',{x:8+(w.level||0)*12,y:cy+4.5,class:'g-label'+(w.summary?' sum':'')+(w.crit&&!w.summary?' crit':'')+(w.mute?' mute':'')},svg,w.label);
+    if(w.base&&(w.base.ES!==w.ES||w.base.EF!==w.EF))S('rect',{x:X(w.base.ES),y:cy-8.5,width:Math.max(2,X(w.base.EF)-X(w.base.ES)),height:17,rx:2,class:'base'},svg);
+    if(c.showSlack&&w.TS>0&&!w.summary&&!w.milestone){var fs=Math.max(0,Math.min(w.FS,w.TS));
+      if(fs>0)S('rect',{x:X(w.EF),y:cy-6,width:X(w.EF+fs)-X(w.EF),height:12,class:'slack-own'},svg);
+      if(w.TS-fs>0)S('rect',{x:X(w.EF+fs),y:cy-6,width:X(w.EF+w.TS)-X(w.EF+fs),height:12,class:'slack-shared',fill:'url(#'+pid+')'},svg);}
+    if(w.milestone){var x=X(w.EF);S('path',{d:'M'+x+' '+(cy-7)+'L'+(x+7)+' '+cy+'L'+x+' '+(cy+7)+'L'+(x-7)+' '+cy+'Z',class:'dia'+(w.crit?' crit':'')},svg);endX=x+9;}
+    else if(w.summary){a=X(w.ES);b=X(w.EF);S('path',{d:'M'+a+' '+(cy-5)+'H'+b+'V'+(cy+4)+'L'+(b-5)+' '+cy+'H'+(a+5)+'L'+a+' '+(cy+4)+'Z',class:'bar-sum'},svg);endX=b;}
+    else{a=X(w.ES);b=X(w.EF);S('rect',{x:a,y:cy-7,width:Math.max(2,b-a),height:14,rx:2.5,class:'bar'+(w.crit?' crit':'')+(w.pre?' pre':'')+(w.moved?' moved':'')},svg);
+      if(c.barText&&b-a>15)S('text',{x:(a+b)/2,y:cy+3.8,'text-anchor':'middle',class:'bar-txt'},svg,c.barText(w));
+      endX=(c.showSlack&&w.TS>0)?X(w.EF+w.TS):b;}
+    if(w.code){var tl=w.code.length*6.5+8;
+      if(endX+tl<W-4)S('text',{x:endX+5,y:cy+4,class:'g-code'},svg,w.code);
+      else S('text',{x:(w.milestone?X(w.EF)-10:X(w.ES)-5),y:cy+4,class:'g-code','text-anchor':'end'},svg,w.code);}});
+  if(c.lagMarks)c.lagMarks.forEach(function(m){var yy=top+m.row*rh+rh/2;S('path',{d:'M'+X(m.from)+' '+yy+'H'+X(m.to),class:'lagmark'},svg);if(m.text)S('text',{x:(X(m.from)+X(m.to))/2,y:yy-9,'text-anchor':'middle',class:'g-code'},svg,m.text);});
+  return {svg:svg,X:X};
+}
+function cpmRows(res,withTS){return res.order.map(function(i){var v=res.r[i];return {label:withTS?(v.name+'  TS '+v.TS+' · FS '+v.FS):v.name,ES:v.ES,EF:v.EF,TS:v.TS,FS:v.FS,crit:v.crit};});}
+
+/* AON network: pos={id:[col,row]} (row may be fractional) */
+function network(host,c){
+  host=$(host);host.innerHTML='';
+  var NW=124,NH=78,colW=c.colW||166,rowH=c.rowH||104,m=16,r=c.res.r,ids=c.res.order,maxC=0,maxR=0;
+  ids.forEach(function(i){maxC=Math.max(maxC,c.pos[i][0]);maxR=Math.max(maxR,c.pos[i][1]);});
+  var W=m*2+maxC*colW+NW,Ht=m*2+maxR*rowH+NH;
+  var svg=S('svg',{viewBox:'0 0 '+W+' '+Ht,width:'100%',role:'img','aria-label':c.aria||'แผนภาพเครือข่ายงาน'},host);
+  var defs=S('defs',{},svg),mk={};
+  ['n','f','b','crit'].forEach(function(k){var id=uid('ah');mk[k]=id;var mm=S('marker',{id:id,viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:6.5,markerHeight:6.5,orient:'auto-start-reverse'},defs);S('path',{d:'M0 0L10 5L0 10z',class:'ah'+(k!=='n'?' '+k:'')},mm);});
+  function P(i){return {x:m+c.pos[i][0]*colW,y:m+c.pos[i][1]*rowH};}
+  var hl={};(c.edgesHL||[]).forEach(function(e){hl[e[0]+'>'+e[1]]=e[2];});var drawn=[];
+  ids.forEach(function(i){r[i].pred.forEach(function(p){var a=P(p),b=P(i),x1=a.x+NW,y1=a.y+NH/2,x2=b.x-1,y2=b.y+NH/2,mx=(x1+x2)/2,cls=hl[p+'>'+i]||'';
+    if(!cls&&c.showCrit&&r[p].crit&&r[i].crit&&r[p].EF===r[i].ES)cls='crit';drawn.push({d:'M'+x1+' '+y1+'C'+mx+' '+y1+' '+mx+' '+y2+' '+x2+' '+y2,cls:cls});});});
+  drawn.sort(function(a,b){return (a.cls?1:0)-(b.cls?1:0);});
+  drawn.forEach(function(e){S('path',{d:e.d,class:'edge'+(e.cls?' '+e.cls:''),'marker-end':'url(#'+mk[e.cls||'n']+')'},svg);});
+  var t=24,mid=28,cx=[NW/6,NW/2,NW*5/6],cell={ES:[0,0],EF:[2*NW/3,0],LS:[0,t+mid],LF:[2*NW/3,t+mid]};
+  ids.forEach(function(i){var v=r[i],p=P(i),rv=(c.reveal&&c.reveal[i])||(c.revealAll?{ES:1,EF:1,LS:1,LF:1,SL:1}:{}),cls='nd';
+    if(c.showCrit&&v.crit)cls+=' crit';if(c.focus===i)cls+=' focus';if((c.src||[]).indexOf(i)>=0)cls+=' src'+(c.srcCls==='b'?' b':'');
+    var g=S('g',{class:cls,transform:'translate('+p.x+' '+p.y+')'},svg);S('rect',{width:NW,height:NH,rx:6,class:'nd-frame'},g);
+    ((c.cellHL&&c.cellHL[i])||[]).forEach(function(k){var q=cell[k];S('rect',{x:q[0]+2,y:q[1]+2,width:NW/3-4,height:(k==='LS'||k==='LF'?NH-t-mid:t)-4,rx:3,class:'nd-cell-hl '+((k==='ES'||k==='EF')?'f':'b')},g);});
+    S('line',{x1:0,x2:NW,y1:t,y2:t,class:'nd-div'},g);S('line',{x1:0,x2:NW,y1:t+mid,y2:t+mid,class:'nd-div'},g);
+    [1,2].forEach(function(k){S('line',{x1:NW*k/3,x2:NW*k/3,y1:0,y2:t,class:'nd-div'},g);S('line',{x1:NW*k/3,x2:NW*k/3,y1:t+mid,y2:NH,class:'nd-div'},g);});
+    var q='·';
+    S('text',{x:cx[0],y:17,'text-anchor':'middle',class:'nd-v '+(rv.ES?'f':'q')},g,rv.ES?v.ES:q);
+    S('text',{x:cx[1],y:17,'text-anchor':'middle',class:'nd-v dur'},g,v.dur);
+    S('text',{x:cx[2],y:17,'text-anchor':'middle',class:'nd-v '+(rv.EF?'f':'q')},g,rv.EF?v.EF:q);
+    S('text',{x:NW/2,y:t+mid/2+5.5,'text-anchor':'middle',class:'nd-name'},g,v.name);
+    S('text',{x:cx[0],y:NH-8,'text-anchor':'middle',class:'nd-v '+(rv.LS?'b':'q')},g,rv.LS?v.LS:q);
+    S('text',{x:cx[1],y:NH-8,'text-anchor':'middle',class:'nd-v '+(rv.SL?'s':'q')},g,rv.SL?(v.TS+'/'+v.FS):q);
+    S('text',{x:cx[2],y:NH-8,'text-anchor':'middle',class:'nd-v '+(rv.LF?'b':'q')},g,rv.LF?v.LF:q);});
+  return svg;
+}
+/* steps with Thai reasons for every forward / backward move */
+function networkSteps(res){
+  var r=res.r,o=res.order,F=res.finish,st=[];
+  st.push({phase:'start',text:'ตอนเริ่ม ทุกกล่องรู้แค่ระยะเวลา (ช่องกลางแถวบน) กด <b>ถัดไป ▶</b> เพื่อคำนวณไปข้างหน้าทีละงาน ไล่จากงานที่ไม่ต้องรอใคร'});
+  o.forEach(function(i){var v=r[i],p=v.pred,t,hlc={};p.forEach(function(x){hlc[x]=['EF'];});
+    if(!p.length)t='<b>'+i+'</b> ไม่มีงานก่อนหน้า เริ่มได้ทันที → '+M('c-fwd','ES = 0')+' · ใช้ '+v.dur+' วัน → '+M('c-fwd','EF = 0 + '+v.dur+' = '+v.EF);
+    else if(p.length===1)t='<b>'+i+'</b> รอ '+p[0]+' อย่างเดียว '+p[0]+' เสร็จวันที่ '+r[p[0]].EF+' → '+M('c-fwd','ES = '+v.ES)+' · '+M('c-fwd','EF = '+v.ES+' + '+v.dur+' = '+v.EF);
+    else{var mxp=p.filter(function(x){return r[x].EF===v.ES;}),vals=list(p.map(function(x){return r[x].EF;}));
+      t='<b>'+i+'</b> เป็นจุดรวม ต้องรอ '+list(p)+' เสร็จ<b>ทุกตัว</b> (เสร็จวันที่ '+vals+') จึงต้องรอตัวที่เสร็จช้าสุดคือ '+list(mxp)+' → '+M('c-fwd','ES = max('+vals+') = '+v.ES)+' · '+M('c-fwd','EF = '+v.ES+' + '+v.dur+' = '+v.EF);}
+    st.push({phase:'fwd',id:i,text:t,add:[[i,'ES'],[i,'EF']],src:p,edges:p.map(function(x){return [x,i,'f'];}),cellHL:hlc});});
+  var last=o.filter(function(i){return !r[i].succ.length;});
+  st.push({phase:'mid',id:last[0],text:'ไปข้างหน้าครบแล้ว งานสุดท้าย ('+list(last)+') เสร็จวันที่ <b>'+F+'</b> แปลว่าโปรเจกต์เสร็จเร็วสุด '+F+' วัน ต่อไปกลับหลังหัน เริ่มจากท้ายสุดแล้วถามทีละงานว่า “ช้าได้ถึงวันไหน โดยยังจบวันที่ '+F+'”'});
+  for(var k=o.length-1;k>=0;k--){var i=o[k],v=r[i],s=v.succ,t,hlc={};s.forEach(function(x){hlc[x]=['LS'];});
+    if(!s.length)t='<b>'+i+'</b> เป็นงานสุดท้าย ต้องเสร็จทันวันจบโปรเจกต์ → '+M('c-bwd','LF = '+F)+' · '+M('c-bwd','LS = '+F+' − '+v.dur+' = '+v.LS);
+    else if(s.length===1)t='<b>'+i+'</b> มีงานถัดไปคือ '+s[0]+' ซึ่งเริ่มช้าสุดได้วันที่ '+r[s[0]].LS+' ดังนั้น '+i+' ต้องเสร็จภายในวันนั้น → '+M('c-bwd','LF = '+v.LF)+' · '+M('c-bwd','LS = '+v.LF+' − '+v.dur+' = '+v.LS);
+    else{var mn=s.filter(function(x){return r[x].LS===v.LF;}),vals=list(s.map(function(x){return r[x].LS;}));
+      t='<b>'+i+'</b> เป็นจุดแยก งานถัดไป '+list(s)+' เริ่มช้าสุดได้วันที่ '+vals+' ถ้า '+i+' เสร็จช้ากว่า '+v.LF+' ตัวที่รีบที่สุด ('+list(mn)+') จะเริ่มไม่ทัน → '+M('c-bwd','LF = min('+vals+') = '+v.LF)+' · '+M('c-bwd','LS = '+v.LF+' − '+v.dur+' = '+v.LS);}
+    st.push({phase:'bwd',id:i,text:t,add:[[i,'LF'],[i,'LS']],src:s,edges:s.map(function(x){return [i,x,'b'];}),cellHL:hlc});}
+  var sl=o.filter(function(i){return r[i].TS>0;});
+  st.push({phase:'slack',text:'เติมช่อง slack ทุกกล่อง '+M('c-slack','TS = LS − ES')+' และ '+M('c-slack','FS = min(ES งานถัดไป) − EF')+' · งานที่เลื่อนได้: '+(sl.length?sl.map(function(i){return i+' (TS '+r[i].TS+', FS '+r[i].FS+')';}).join(' · '):'ไม่มี'),add:o.map(function(i){return [i,'SL'];})});
+  var cps=critPaths(res);
+  st.push({phase:'crit',crit:true,text:'งานที่ TS = 0 เลื่อนไม่ได้เลย เรียงต่อกันเป็นเส้นทางวิกฤต <b class="c-crit">'+cps.map(dash).join(' และ ')+'</b> ยาว '+F+' วัน เท่ากับ EF ของงานสุดท้ายพอดี'+(cps.length>1?' (มีมากกว่าหนึ่งเส้นเพราะยาวเท่ากัน)':'')});
+  return st;
+}
+function networkStepper(host,cfg){
+  var res=cpm(cfg.acts),steps=networkSteps(res);
+  return stepper(host,{steps:steps,minW:cfg.minW,render:function(inner,k,st){var rev={};
+    for(var j=0;j<=k;j++)(steps[j].add||[]).forEach(function(a){(rev[a[0]]=rev[a[0]]||{})[a[1]]=true;});
+    network(inner,{res:res,pos:cfg.pos,reveal:rev,focus:st.id,src:st.src||[],srcCls:st.phase==='bwd'?'b':'f',edgesHL:st.edges||[],showCrit:!!st.crit,cellHL:st.cellHL,aria:cfg.aria,colW:cfg.colW,rowH:cfg.rowH});}});
+}
+
+/* what-if simulator: pick an activity, push its start (SNET) or change its duration; presets show worked answers */
+function simulator(host,cfg){
+  host=$(host);var base=cpm(cfg.acts),st={snet:{},dur:{},sel:cfg.sel||cfg.acts[0].id,interp:false,preset:null},unit=cfg.unit||'วัน';
+  function nm(i){return base.r[i].name;}
+  var chipRow=H('div',{class:'row',role:'group','aria-label':'เลือกงาน'},host);H('span',{class:'c-mute',style:'font-size:.86rem'},chipRow,'เลือกงาน:');
+  var chips={};cfg.acts.forEach(function(a){chips[a.id]=H('button',{type:'button',class:'chip'+(base.r[a.id].crit?' crit':''),style:a.name?'font-family:var(--f-body)':null,'aria-pressed':'false',onclick:function(){st.sel=a.id;syncCtl();}},chipRow,esc(a.name||a.id));});
+  var ctl=H('div',{class:'sim-ctl'},host),c1=H('div',{},ctl),l1=H('label',{for:cfg.id+'-start'},c1),l1t=H('span',{},l1),o1=H('output',{},l1),inS=H('input',{type:'range',id:cfg.id+'-start',step:1},c1),inD=null,l2t=null,o2=null;
+  if(cfg.allowDur){var c2=H('div',{},ctl),l2=H('label',{for:cfg.id+'-dur'},c2);l2t=H('span',{},l2);o2=H('output',{},l2);inD=H('input',{type:'range',id:cfg.id+'-dur',step:1},c2);}
+  var consRow=H('div',{class:'row',style:'margin:2px 0 4px'},host),cons=H('div',{class:'sim-cons'},consRow);
+  H('button',{type:'button',class:'btn sm',style:'margin-left:auto',onclick:function(){st.snet={};st.dur={};st.preset=null;ans.hidden=true;markPreset();syncCtl();}},consRow,'ล้างทั้งหมด');
+  var out=H('div',{class:'sim-out','aria-live':'polite'},host),big=H('div',{class:'sim-big'},out),ln1=H('div',{class:'sim-line'},out),ln2=H('div',{class:'sim-line'},out),ln3=H('div',{class:'sim-line'},out);
+  var sx=H('div',{class:'scroll-x'},host),gh=H('div',{style:'min-width:'+(cfg.minW||560)+'px'},sx);
+  var ans=H('div',{class:'sim-ans',hidden:''},D.createElement('div')),pbtn={};
+  if(cfg.presets){var pr=H('div',{class:'sim-presets'},host),prow=H('div',{class:'row'},pr);H('span',{class:'c-mute',style:'font-size:.86rem'},prow,cfg.presetLabel||'เฉลย:');
+    cfg.presets.forEach(function(p,j){pbtn[j]=H('button',{type:'button',class:'btn','aria-pressed':'false',onclick:function(){applyPreset(j);}},prow,esc(p.label));});
+    if(cfg.presets.some(function(p){return p.alt;})){var ib=H('button',{type:'button',class:'btn sm','aria-pressed':'false',style:'margin-left:auto',onclick:function(){st.interp=!st.interp;ib.setAttribute('aria-pressed',String(st.interp));if(st.preset!=null)applyPreset(st.preset);}},prow,cfg.altLabel||'ตีความแบบที่ 2');}
+    pr.appendChild(ans);}
+  function markPreset(){for(var j in pbtn)pbtn[j].setAttribute('aria-pressed',String(+j===st.preset));}
+  function applyPreset(j){var p=cfg.presets[j],useAlt=st.interp&&p.alt,src=useAlt?p.alt:(p.snet||{});st.snet=JSON.parse(JSON.stringify(src));st.dur=JSON.parse(JSON.stringify(p.dur||{}));st.preset=j;st.sel=Object.keys(src)[0]||Object.keys(st.dur)[0]||st.sel;
+    ans.innerHTML=(p.tick?'<div class="tick">'+p.tick+'</div>':'')+'<p style="margin:.4em 0 0">'+(useAlt&&p.altText?p.altText:p.text)+'</p>'+(!useAlt&&p.altText?'<p class="c-mute" style="margin:.4em 0 0;font-size:.88rem">ถ้าตีความอีกแบบ: '+p.altText+'</p>':'');
+    ans.hidden=false;markPreset();syncCtl();}
+  inS.addEventListener('input',function(){var b=base.r[st.sel].ES,v=+inS.value;if(v===b)delete st.snet[st.sel];else st.snet[st.sel]=v;st.preset=null;markPreset();ans.hidden=true;draw();});
+  if(inD)inD.addEventListener('input',function(){var b=base.r[st.sel].dur,v=+inD.value;if(v===b)delete st.dur[st.sel];else st.dur[st.sel]=v;st.preset=null;markPreset();ans.hidden=true;draw();});
+  function syncCtl(){var i=st.sel,b=base.r[i];for(var c in chips)chips[c].setAttribute('aria-pressed',String(c===i));
+    inS.min=b.ES;inS.max=b.ES+(cfg.maxShift||6);inS.value=st.snet[i]!=null?st.snet[i]:b.ES;if(inD){inD.min=1;inD.max=b.dur+4;inD.value=st.dur[i]!=null?st.dur[i]:b.dur;}draw();}
+  function draw(){var i=st.sel,b=base.r[i],res=cpm(cfg.acts,{snet:st.snet,dur:st.dur}),r=res.r;
+    l1t.textContent=(cfg.startWord||'เริ่มวันที่')+' ('+nm(i)+')';o1.textContent=inS.value+(inS.value==b.ES?' · เร็วสุดเดิม':' · ช้ากว่าเดิม '+(inS.value-b.ES));
+    if(inD){l2t.textContent='ใช้เวลา ('+nm(i)+')';o2.textContent=inD.value+' '+unit+(inD.value==b.dur?' · เท่าเดิม':'');}
+    cons.innerHTML='';
+    Object.keys(st.snet).forEach(function(k){H('button',{type:'button','aria-label':'เอาเงื่อนไขนี้ออก',onclick:function(){delete st.snet[k];st.preset=null;markPreset();syncCtl();}},cons,esc(nm(k))+' เริ่ม '+st.snet[k]+' ✕');});
+    Object.keys(st.dur).forEach(function(k){H('button',{type:'button','aria-label':'เอาเงื่อนไขนี้ออก',onclick:function(){delete st.dur[k];st.preset=null;markPreset();syncCtl();}},cons,esc(nm(k))+' ใช้ '+st.dur[k]+' ✕');});
+    var moved=res.order.filter(function(k){return r[k].ES!==base.r[k].ES||r[k].EF!==base.r[k].EF;}),late=res.finish>base.finish;
+    big.className='sim-big'+(late?' late':'');big.innerHTML=(cfg.bigWord||'จบวันที่')+' '+res.finish+'<small>เดิม '+base.finish+' '+unit+'</small>';
+    ln1.innerHTML=res.finish>base.finish?'<b class="c-crit">ช้ากว่าเดิม '+(res.finish-base.finish)+' '+unit+'</b>':res.finish<base.finish?'<b class="c-slack">เร็วขึ้น '+(base.finish-res.finish)+' '+unit+'</b>':'<b>วันจบไม่เปลี่ยน</b>';
+    ln2.innerHTML=moved.length?'งานที่ขยับจากเดิม: <b>'+moved.map(function(k){return esc(nm(k));}).join(', ')+'</b>':'ยังไม่มีงานไหนขยับ';
+    var cps=critPaths(res),lock=cps.map(function(p){return p[0];}).filter(function(k,j,a){return st.snet[k]!=null&&r[k].pred.length&&a.indexOf(k)===j;});
+    ln3.innerHTML='เส้นทางวิกฤตตอนนี้: <b class="c-crit">'+cps.map(function(p){return p.map(function(k){return esc(nm(k));}).join(cfg.acts[0].name?' → ':DASH);}).join(' และ ')+'</b>'+(lock.length?' <span class="c-mute">('+lock.map(function(k){return esc(nm(k));}).join(', ')+' ถูกกำหนดวันเริ่ม เส้นจึงนับจากงานนี้)</span>':'');
+    var rows=res.order.map(function(k){var v=r[k];return {label:nm(k),ES:v.ES,EF:v.EF,TS:v.TS,FS:v.FS,crit:v.crit,moved:moved.indexOf(k)>=0,base:{ES:base.r[k].ES,EF:base.r[k].EF}};});
+    gantt(gh,{rows:rows,max:Math.max(cfg.max||base.finish+4,res.finish+1),labelW:cfg.labelW||44,rowH:cfg.rowH||25,showSlack:true,finish:res.finish,baseFinish:base.finish,finishLabel:(cfg.finishWord||'จบวันที่')+' '+res.finish,tickEvery:cfg.tickEvery||1,gridStep:cfg.gridStep||1,barText:function(w){return w.EF-w.ES;},aria:cfg.aria});}
+  syncCtl();
+  return {set:function(o){st.snet=o.snet||{};st.dur=o.dur||{};st.preset=null;ans.hidden=true;markPreset();st.sel=Object.keys(o.snet||{})[0]||Object.keys(o.dur||{})[0]||st.sel;syncCtl();}};
+}
+
+/* path race: every path as a bar, longest = critical; chips compute TS = finish − longest path through the activity */
+function race(host,cfg){
+  host=$(host);var res=cpm(cfg.acts),r=res.r,F=res.finish;
+  var paths=allPaths(cfg.acts).map(function(p){return {p:p,len:p.reduce(function(s,i){return s+r[i].dur;},0)};}),mx=Math.max.apply(null,paths.map(function(x){return x.len;}));
+  var box=H('div',{class:'race'},host),fills=[],gaps=[],rowsEl=[];
+  paths.forEach(function(x,j){var row=H('div',{class:'race-row'+(x.len===mx?' crit':'')},box);rowsEl.push(row);H('div',{class:'race-name'},row,'#'+(j+1)+' '+dash(x.p));
+    var tr=H('div',{class:'race-track'},row),fill=H('div',{class:'race-fill',style:'width:'+(x.len/F*100)+'%'},tr);fills.push([fill,x.len/F*100]);
+    x.p.forEach(function(i){H('div',{class:'race-seg',style:'flex:'+r[i].dur+' 1 0',title:i+' '+r[i].dur},fill,esc(i)+(r[i].dur>=3?' '+r[i].dur:''));});
+    if(F-x.len>0)gaps.push(H('div',{class:'race-gap',style:'width:'+((F-x.len)/F*100)+'%'},tr,'<span>ว่าง '+(F-x.len)+'</span>'));H('div',{class:'race-len'},row,String(x.len));});
+  var ctl=H('div',{class:'row',style:'margin-top:12px'},host);H('button',{type:'button',class:'btn primary',onclick:replay},ctl,'▶ ปล่อยตัวใหม่');
+  H('span',{class:'c-mute',style:'font-size:.86rem;margin-left:8px'},ctl,'เลือกงานเพื่อหา TS จากเส้นทาง:');
+  var chips={},sel=null;res.order.forEach(function(i){chips[i]=H('button',{type:'button',class:'chip'+(r[i].crit?' crit':''),'aria-pressed':'false',onclick:function(){pick(sel===i?null:i);}},ctl,esc(i));});
+  var say=H('div',{class:'race-say','aria-live':'polite'},host),best0=paths.filter(function(x){return x.len===mx;})[0];
+  var DEF='เส้น '+dash(best0.p)+' ยาวที่สุด '+mx+' วัน จึงเป็น <b class="c-crit">critical path</b> และโปรเจกต์เสร็จเร็วสุด <b>'+mx+' วัน</b> ช่องลายเขียวท้ายแต่ละเส้นคือเวลาที่เส้นนั้นว่าง';
+  function pick(i){sel=i;for(var c in chips)chips[c].setAttribute('aria-pressed',String(c===i));
+    if(!i){rowsEl.forEach(function(el){el.classList.remove('dim','best');});say.innerHTML=DEF;return;}
+    var inc=paths.map(function(x){return x.p.indexOf(i)>=0;}),best=-1,bl=-1;paths.forEach(function(x,j){if(inc[j]&&x.len>bl){bl=x.len;best=j;}});
+    rowsEl.forEach(function(el,j){el.classList.toggle('dim',!inc[j]);el.classList.toggle('best',j===best);});var ts=F-bl;
+    say.innerHTML='เส้นที่ผ่าน <b>'+i+'</b> มี '+inc.filter(Boolean).length+' เส้น เส้นที่ยาวที่สุดคือ '+dash(paths[best].p)+' = '+bl+' วัน → '+M('c-slack','TS('+i+') = '+F+' − '+bl+' = '+ts)+(ts===0?' งานนี้จึงเป็นงานวิกฤต':'');}
+  function replay(){fills.forEach(function(f){f[0].style.transition='none';f[0].style.width='0';});gaps.forEach(function(g){g.style.opacity='0';});void box.offsetWidth;
+    fills.forEach(function(f){f[0].style.transition='';f[0].style.width=f[1]+'%';});setTimeout(function(){gaps.forEach(function(g){g.style.transition='opacity .4s';g.style.opacity='1';});},1500);}
+  pick(null);
+}
+
+/* working-day calendar (Mon–Fri) */
+var THD=['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'],THM=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'],THMF=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+function thDate(d){return THD[d.getDay()]+' '+d.getDate()+' '+THM[d.getMonth()]+' '+d.getFullYear();}
+function workdays(start,n,holidays){var a=[],d=new Date(start.getTime()),hol=(holidays||[]).map(function(h){return h.toDateString();});
+  while(a.length<n){var g=d.getDay();if(g!==0&&g!==6&&hol.indexOf(d.toDateString())<0)a.push(new Date(d.getTime()));d.setDate(d.getDate()+1);}return a;}
+function workCalendar(host,c){
+  host=$(host);var WD=workdays(c.start,c.days+20,c.holidays),N=c.days;
+  function idx(d){for(var i=0;i<WD.length;i++)if(WD[i].getTime()===d.getTime())return i+1;return 0;}
+  var ctl=H('div',{class:'row',style:'margin-bottom:10px'},host),lab=H('label',{for:c.id||'calN',style:'font-size:.88rem;color:var(--ink-2)'},ctl,'วันทำงานที่ '),on=H('output',{class:'num',style:'font-weight:600;color:var(--ink)'},lab,'1');
+  var inp=H('input',{type:'range',id:c.id||'calN',min:1,max:N,value:c.initial||N,style:'flex:1;min-width:160px'},ctl),sb={},spanSel=null,spans=c.spans||{};
+  if(Object.keys(spans).length){var srow=H('div',{class:'row',style:'margin-bottom:12px'},host);H('span',{class:'c-mute',style:'font-size:.86rem'},srow,'ระบายช่วง:');
+    Object.keys(spans).forEach(function(k){sb[k]=H('button',{type:'button',class:'btn sm','aria-pressed':'false',onclick:function(){spanSel=spanSel===k?null:k;paint();}},srow,esc(spans[k][3]||k));});}
+  var cal=H('div',{class:'cal'},host),cells={},first=WD[0],lastD=WD[N-1],months=[];
+  for(var y=first.getFullYear(),m=first.getMonth();y<lastD.getFullYear()||(y===lastD.getFullYear()&&m<=lastD.getMonth());m++){if(m>11){m=0;y++;}months.push([y,m]);}
+  months.forEach(function(ym){var mm=H('div',{class:'cal-m'},cal);H('h5',{},mm,THMF[ym[1]]+' '+ym[0]);var g=H('div',{class:'cal-g'},mm);['จ','อ','พ','พฤ','ศ','ส','อา'].forEach(function(x){H('div',{class:'dh'},g,x);});
+    var f=new Date(ym[0],ym[1],1),lead=(f.getDay()+6)%7;for(var i=0;i<lead;i++)H('div',{class:'cal-d out'},g);
+    for(var d=1,days=new Date(ym[0],ym[1]+1,0).getDate();d<=days;d++){var dt=new Date(ym[0],ym[1],d),n=idx(dt),we=dt.getDay()===0||dt.getDay()===6,mark=(c.marks||{})[n];
+      var extra=(c.dotted&&c.dotted.some(function(x){return x.getTime()===dt.getTime();}))?' cal13':'';
+      var cl=H('div',{class:'cal-d'+(we?' we':'')+(mark&&n<=N?' ms':'')+extra,title:thDate(dt)},g,'<span class="dn">'+d+'</span><span class="wn">'+(n&&n<=N?n:'')+'</span>');if(n&&n<=N)cells[n]=cl;}});
+  var say=H('div',{class:'cal-say','aria-live':'polite'},host);
+  function paint(){var n=+inp.value,s=spanSel&&spans[spanSel];on.textContent=n;
+    for(var k in cells){cells[k].classList.toggle('sel',+k===n);cells[k].classList.toggle('span',!!s&&+k>=s[0]&&+k<=s[1]&&+k!==n);}
+    for(var b in sb)sb[b].setAttribute('aria-pressed',String(b===spanSel));
+    say.innerHTML='วันทำงานที่ <b>'+n+'</b> = <b>'+thDate(WD[n-1])+'</b>'+((c.marks||{})[n]?' · '+c.marks[n]:'')+((c.events||{})[n]?' · '+c.events[n]:'')+(s?'<br><span class="c-fwd">ระบาย: '+s[2]+'</span>':'')+(c.note?'<br><span class="c-mute" style="font-size:.86rem">'+c.note+'</span>':'');}
+  inp.addEventListener('input',paint);paint();
+  return {workdays:WD};
+}
+
+/* dependency types 2×2 + lag/lead slider; ex = {FS:{an:3,a:'#3 ชื่อ',b:'#4 ชื่อ',ex:'html'},SS:…,FF:…,SF:…} */
+function depTypes(host,c){
+  host=$(host);var T=c.examples,cur=c.initial||'FS';
+  var wrap=H('div',{class:'dep'},host),left=H('div',{},wrap),right=H('div',{style:'min-width:0'},wrap),mx=H('div',{class:'dep-mx',role:'group','aria-label':'เลือกชนิดความสัมพันธ์'},left);
+  H('div',{},mx,'');H('div',{class:'hd'},mx,'→ B <b>เริ่ม</b>');H('div',{class:'hd'},mx,'→ B <b>เสร็จ</b>');var btn={};
+  [['A เริ่ม',['SS','SF']],['A เสร็จ',['FS','FF']]].forEach(function(rw){H('div',{class:'rh'},mx,rw[0]);rw[1].forEach(function(k){btn[k]=H('button',{type:'button','aria-pressed':'false',onclick:function(){cur=k;paint();}},mx,k+'<small>'+({FS:'Finish → Start',SS:'Start → Start',FF:'Finish → Finish',SF:'Start → Finish'}[k])+'</small>');});});
+  H('p',{class:'cap'},left,'A = งานก่อนหน้า (predecessor) · B = งานที่พิมพ์รหัสลงในแถวของมัน');
+  var code=H('div',{class:'dep-code','aria-live':'polite'},right),ex=H('p',{class:'dep-ex'},right),svgHost=H('div',{},right);
+  var lr=H('div',{style:'margin-top:8px'},right),ll=H('label',{for:(c.id||'depLag'),style:'font-size:.86rem;color:var(--ink-2);display:flex;justify-content:space-between'},lr);H('span',{},ll,'ระยะห่าง');var llo=H('output',{style:'font-family:var(--f-mono);color:var(--ink);font-weight:600'},ll);
+  var lag=H('input',{type:'range',id:(c.id||'depLag'),min:-2,max:3,value:0,step:1},lr);
+  function paint(){for(var k in btn)btn[k].setAttribute('aria-pressed',String(k===cur));
+    var t=T[cur],L=+lag.value,aS=4,aE=8,bD=2,bS=cur==='FS'?aE+L:cur==='SS'?aS+L:cur==='FF'?aE+L-bD:aS+L-bD,bE=bS+bD;
+    code.textContent=t.an+cur.toLowerCase()+(L>0?'+'+L+'d':L<0?L+'d':'');ex.innerHTML=t.ex;llo.textContent=L>0?'รอ '+L+' วัน (lag)':L<0?'ซ้อน '+(-L)+' วัน (lead)':'ไม่มีระยะห่าง';
+    svgHost.innerHTML='';var W=470,lw=128,Ht=118,x=function(v){return lw+v*(W-lw-12)/13;},svg=S('svg',{viewBox:'0 0 '+W+' '+Ht,width:'100%',role:'img','aria-label':'ภาพความสัมพันธ์แบบ '+cur},svgHost);
+    for(var d=0;d<=13;d++){S('line',{x1:x(d),x2:x(d),y1:14,y2:Ht-18,class:'g-minor'},svg);S('text',{x:x(d),y:Ht-4,class:'g-tick','text-anchor':'middle'},svg,d);}
+    var yA=32,yB=78,sp=function(s){var i=s.indexOf(' ');return i<0?[s,'']:[s.slice(0,i),s.slice(i+1)];},A=sp(t.a),Bn=sp(t.b);
+    S('text',{x:6,y:yA+4,class:'g-label'},svg,'A '+A[0]);S('text',{x:6,y:yB+4,class:'g-label'},svg,'B '+Bn[0]);S('text',{x:6,y:yA+17,class:'g-code'},svg,A[1]);S('text',{x:6,y:yB+17,class:'g-code'},svg,Bn[1]);
+    S('rect',{x:x(aS),y:yA-8,width:x(aE)-x(aS),height:16,rx:3,class:'bar'},svg);S('rect',{x:x(bS),y:yB-8,width:x(bE)-x(bS),height:16,rx:3,class:'bar crit'},svg);
+    var ax=(cur==='FS'||cur==='FF')?aE:aS,bx=(cur==='FS'||cur==='SS')?bS:bE,id=uid('dp'),defs=S('defs',{},svg),mm=S('marker',{id:id,viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);S('path',{d:'M0 0L10 5L0 10z',class:'ah'},mm);
+    S('circle',{cx:x(ax),cy:yA,r:4,class:'dia'},svg);var mid=(yA+yB)/2;S('path',{d:'M'+x(ax)+' '+(yA+4)+'V'+mid,class:'edge'},svg);
+    if(L!==0)S('path',{d:'M'+x(ax)+' '+mid+'H'+x(bx),class:'lagmark'},svg);S('path',{d:'M'+x(bx)+' '+mid+'V'+(yB-9),class:'edge','marker-end':'url(#'+id+')'},svg);}
+  lag.addEventListener('input',paint);paint();
+}
+
+
+/* ---------- earned value ---------- */
+function evm(bac,pv,ev,ac){var cpi=ev/ac,spi=ev/pv,eac=bac/cpi;return {CV:ev-ac,SV:ev-pv,CPI:cpi,SPI:spi,EAC:eac,ETC:eac-ac,VAC:bac-eac,TCPI:(bac-ev)/(bac-ac)};}
+function f2(x){return (Math.round(x*100)/100).toFixed(2);}
+/* CPI–SPI quadrant: pts=[{cpi,spi,label?,cls?:'ev'|'ink'}], opt={size?} */
+function quad(host,pts,opt){host=$(host);host.innerHTML='';opt=opt||{};
+  var W=opt.size||250,Hh=W,m=34,lo=0.5,hi=1.5,cl=function(v){return Math.max(lo+0.03,Math.min(hi-0.03,v));},X=function(v){return m+(v-lo)/(hi-lo)*(W-m-16);},Y=function(v){return 10+(1-(v-lo)/(hi-lo))*(Hh-m-10);};
+  var svg=S('svg',{viewBox:'0 0 '+W+' '+Hh,width:'100%',class:'quad',role:'img','aria-label':'กราฟ CPI แนวนอน SPI แนวตั้ง เส้นกลางที่ 1'},host);
+  S('rect',{x:X(1),y:Y(hi),width:X(hi)-X(1),height:Y(1)-Y(hi),class:'q-quad good'},svg);S('rect',{x:X(lo),y:Y(1),width:X(1)-X(lo),height:Y(lo)-Y(1),class:'q-quad bad'},svg);
+  S('rect',{x:X(lo),y:Y(hi),width:X(1)-X(lo),height:Y(1)-Y(hi),class:'q-quad mid'},svg);S('rect',{x:X(1),y:Y(1),width:X(hi)-X(1),height:Y(lo)-Y(1),class:'q-quad mid'},svg);
+  S('line',{x1:X(1),x2:X(1),y1:Y(hi),y2:Y(lo),class:'lc-axis'},svg);S('line',{x1:X(lo),x2:X(hi),y1:Y(1),y2:Y(1),class:'lc-axis'},svg);
+  S('text',{x:X(hi)-4,y:Y(1)-6,'text-anchor':'end',class:'q-lab'},svg,'เร็ว · ประหยัด');S('text',{x:X(lo)+4,y:Y(1)+14,class:'q-lab'},svg,'ช้า · เกินงบ');
+  S('text',{x:X(lo)+4,y:Y(1)-6,class:'q-lab'},svg,'เร็ว · เกินงบ');S('text',{x:X(hi)-4,y:Y(1)+14,'text-anchor':'end',class:'q-lab'},svg,'ช้า · ประหยัด');
+  S('text',{x:(X(lo)+X(hi))/2,y:Hh-4,'text-anchor':'middle',class:'q-axis'},svg,'CPI (คุ้มเงิน) →');S('text',{x:10,y:(Y(lo)+Y(hi))/2,'text-anchor':'middle',class:'q-axis',transform:'rotate(-90 10 '+((Y(lo)+Y(hi))/2)+')'},svg,'SPI (ทันเวลา) →');
+  [0.5,1,1.5].forEach(function(v){S('text',{x:X(v),y:Hh-m+14,'text-anchor':'middle',class:'lc-tick'},svg,v.toFixed(1));});
+  pts.forEach(function(p){var g=S('g',{},svg),px=X(cl(p.cpi)),py=Y(cl(p.spi));S('circle',{cx:px,cy:py,r:12,fill:'transparent'},g);S('circle',{cx:px,cy:py,r:5.5,class:'q-dot '+(p.cls||'ev')},g);
+    if(p.label){var lft=p.cpi>1.3,out=p.cpi>hi||p.spi>hi||p.cpi<lo||p.spi<lo;if(out)p.label+=' (นอกกรอบ)';S('text',{x:px+(lft?-9:9),y:py+(p.spi>1.35?16:-7),'text-anchor':lft?'end':'start',class:'q-dl'},g,p.label);}S('title',{},g,(p.label||'')+' CPI '+f2(p.cpi)+' · SPI '+f2(p.spi));});
+}
+
+window.PM={cpm:cpm,evm:evm,quad:quad,f2:f2,critPaths:critPaths,allPaths:allPaths,dash:dash,gantt:gantt,cpmRows:cpmRows,network:network,networkSteps:networkSteps,networkStepper:networkStepper,
+  simulator:simulator,race:race,thDate:thDate,workdays:workdays,workCalendar:workCalendar,depTypes:depTypes,THD:THD,THM:THM};
+})();
+
+</script>
+<script>
+/* หน้านี้ไม่มีวิดเจ็ตกดได้ ตัวเลขทุกตัวมาจาก uma_check.py */
+(function(){
+Kit.init({ns:'cinderia-uma'});
+Kit.run({
+  theme:function(){Kit.theme('#themeBtn');},
+  // ไม่เรียก Kit.nav() เพราะใช้ scroll listener · ไฮไลต์ลิงก์บทด้วย IntersectionObserver แทน ถ้า observer ไม่ทำงานก็แค่ไม่มีไฮไลต์
+  nav:function(){
+    var links=[].slice.call(document.querySelectorAll('nav.top a.nl[href^="#"]'));
+    if(!('IntersectionObserver' in window)||!links.length)return;
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;
+      links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);});});},{rootMargin:'-120px 0px -65% 0px'});
+    links.forEach(function(a){var el=document.getElementById(a.getAttribute('href').slice(1));if(el)io.observe(el);});
+  },
+  glossary:function(){Kit.glossary({
+    sv:['ค่าเรียก · summon value','ค่าที่สะสมจากการตีและยิงของ Uma เกจเต็มแล้วเรียกสัตว์ 1 ตัว ส่วนที่ล้นทบไปรอบหน้า'],
+    wf:['Wind Fury','หมัดประชิดถัดไปของ Uma ได้ฮิตเพิ่ม 1 ครั้ง แรง 150% ของพลังโจมตีพื้นฐาน · มีทาเลนต์ Wind Resonance แล้ว ทุกครั้งที่ได้ Wind Fury นกฮูกทั้งฝูงตีเร็ว +200% 2 วิ'],
+    mark:['ตราล่า · 匂いの印','ตราที่กระสุน Wind Guidance ติดให้ศัตรูตัวแรกที่โดน · อัป Lv.4 อีกทางทำดาเมจ 225% ใส่ตัวที่ติดตรา']
+  });}
+});
+})();
+
+</script>
+</body>
+</html>
