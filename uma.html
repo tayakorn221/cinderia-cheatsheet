@@ -666,6 +666,10 @@ nav.top a.ext{color:var(--fwd)}
 .pipe.four{grid-template-columns:repeat(4,1fr)}
 @media (max-width:760px){.pipe.four{grid-template-columns:1fr}}
 
+/* ทางอัปที่แนะนำในตาราง Natural Flow (สีนกฮูก เพราะแนะนำสำหรับสายนกฮูก) */
+tr.pick td:nth-child(2){background:var(--owl-soft)}
+table.lvt td:first-child{white-space:nowrap}
+
 </style>
 </head>
 <body>
@@ -735,7 +739,8 @@ nav.top a.ext{color:var(--fwd)}
       <tr><td>ตีประชิดโดน</td><td class="num">+10</td><td>ทุกหมัด · กรงเล็บตอนเปิด Wild Howl ก็เติมด้วย</td></tr>
       <tr><td>Nature's Breath (ยิงลูกพลังงาน)</td><td class="num">+30</td><td>ต่อนัด</td></tr>
       <tr><td>การ์ด Wind Guidance อัป Lv.3 ฝั่งเร่งเรียก</td><td class="num">+40</td><td>ต่อนัดที่โดน</td></tr>
-      <tr><td>การ์ด Nature Flow</td><td class="num">+80</td><td>ร่าย 1.2 วิ · ใช้ได้เฉพาะ 3 วิหลังฆ่าศัตรู</td></tr>
+      <tr><td>การ์ด Natural Flow อัป Lv.4 ฝั่ง Accelerated Summoning</td><td class="num">+25</td><td>ต่อลูกที่โดน · เก็บได้ถึง 8 ลูก ยิงรัวได้</td></tr>
+      <tr><td>การ์ด Nature's Cycle <span class="jp">自然の循環</span></td><td class="num">+80</td><td>ร่าย 1.2 วิ · ใช้ได้เฉพาะ 3 วิหลังฆ่าศัตรู</td></tr>
       <tr><td>การ์ด Kingdom of Moonlight อัป Lv.4 ฝั่งเร่งเรียก</td><td class="num">+7 / วิ</td><td>ยืนในวงแสงจันทร์</td></tr>
       <tr><td>Spiky Barrage (สั่งเม่นยิงหนาม)</td><td class="num">−25</td><td>ใช้เกจแทนเติม</td></tr>
     </tbody>
@@ -874,15 +879,15 @@ nav.top a.ext{color:var(--fwd)}
   <p class="cap">สมมติกดทันทีที่คูลดาวน์หมดและยิงโดนทุกนัด ช่วงนกฮูกตีเร็ว +200% กินเวลา 50% บัฟ +35% ของ Lv.4 กินเวลา 62.5% และเกจได้อีก 40 ทุก 4 วิ จาก Lv.3</p>
 
   <h3 class="step"><span class="n">2.4</span>การ์ด 4 ใบ เรียงตามที่ไกด์ให้ความสำคัญ</h3>
-  <p class="gist">ได้ Kingdom of Moonlight ให้ปั้นก่อนใบอื่น ถ้าไม่ได้ Wind Guidance แบกคนเดียวจนผ่าน Trial 8 ได้ Howling Hurricane ไว้ล้างมอบ ส่วน Nature Flow เป็นแผนสำรองที่ใช้กับบอสไม่ได้</p>
+  <p class="gist">ได้ Kingdom of Moonlight ให้ปั้นก่อนใบอื่น ถ้าไม่ได้ Wind Guidance แบกคนเดียวจนผ่าน Trial 8 ได้ Howling Hurricane ไว้ล้างมอบ ส่วน Nature's Cycle เป็นแผนสำรองที่ใช้กับบอสไม่ได้</p>
   <p>ไกด์ให้ Kingdom of Moonlight มาก่อนเพราะคงบัฟสัตว์ไว้ได้นานและลดคูลดาวน์ได้ แต่ตัวอย่างบิลด์ของไกด์เองก็ไม่ได้ใบนี้ และยังทำดาเมจพอด้วย Wind Guidance ที่เรียกนกฮูกต่อเนื่อง ตัวเทาใต้แต่ละช่องคืออีกทางที่ไม่ได้เลือก</p>
   <div class="tbl wide"><table>
     <thead><tr><th>การ์ด</th><th>พื้นฐาน</th><th>Lv.2 ◆</th><th>Lv.3 ◆</th><th>Lv.4 ◆</th></tr></thead>
     <tbody>
       <tr><td><b>Kingdom of Moonlight</b> <span class="jp">月光の王国</span><span class="alt">ปุ่ม Y คูลดาวน์ 12 วิ ชาร์จ 3 ครั้ง</span></td><td>เรียกนกฮูก + วงแสงจันทร์ 3 วิ สัตว์ในวง ดาเมจ +45%</td><td>สัตว์ ดาเมจ +30%<span class="alt">อีกทาง: ระเบิดกลางวง 45 + เกราะแตก 3 วิ</span></td><td>แสงจันทร์ +2.5 วิ<span class="alt">อีกทาง: นกฮูกจากการ์ดนี้อยู่นานขึ้น 75%</span></td><td>คูลดาวน์ −4 วิ (เหลือ 8)<span class="alt">อีกทาง: ในวงแสงจันทร์ เกจ +7 ต่อวิ</span></td></tr>
-      <tr><td><b>Wind Guidance</b> <span class="jp">風の導き</span><span class="alt">ปุ่ม RT คูลดาวน์ 6.5 วิ</span></td><td>กระสุนลม 110 ใส่ตัวแรก ติด<i class="term" data-t="mark">ตราล่า</i> แตกเป็นวง 55</td><td>คูลดาวน์ −2.5 วิ (เหลือ 4)<span class="alt">อีกทาง: ตัวแรก ดาเมจ +35</span></td><td>โดนแล้วเกจ +40<span class="alt">อีกทาง: วง +10 และน็อคอัพทุกตัว</span></td><td>สัตว์ทุกตัวตีเร็ว +35% นาน 2.5 วิ<span class="alt">อีกทาง: ตัวติดตราโดน 225%</span></td></tr>
+      <tr><td><b>Wind Guidance</b> <span class="jp">風の導き</span><span class="alt">ปุ่ม RT คูลดาวน์ 6.5 วิ</span></td><td>กระสุนลม 110 ใส่ตัวแรก ติด <i class="term" data-t="mark">Scent Mark</i> แตกเป็นวง 55</td><td>คูลดาวน์ −2.5 วิ (เหลือ 4)<span class="alt">อีกทาง: ตัวแรก ดาเมจ +35</span></td><td>โดนแล้วเกจ +40<span class="alt">อีกทาง: วง +10 และน็อคอัพทุกตัว</span></td><td>สัตว์ทุกตัวตีเร็ว +35% นาน 2.5 วิ<span class="alt">อีกทาง: ตัวติดตราโดน 225%</span></td></tr>
       <tr><td><b>Howling Hurricane</b> <span class="jp">吠えるハリケーン</span><span class="alt">ปุ่ม Y คูลดาวน์ 17 วิ ไว้ล้างมอบ</span></td><td>นกฮูกชาร์จพายุ สูงสุด 240 น็อคอัพ 0.9 วิ ทุกตัวในทาง</td><td>นกฮูกอยู่ต่อหลังใช้การ์ด<span class="alt">อีกทาง: คูลดาวน์ −5 วิ</span></td><td>ดาเมจ +15 ชาร์จไว 2 เท่า<span class="alt">อีกทาง: ชาร์จเต็มแล้วคริต +50%</span></td><td>พายุ 1 → 3 ลูก<span class="alt">อีกทาง: ภาพโดนบัง อ่านไม่ได้</span></td></tr>
-      <tr><td><b>Nature Flow</b> <span class="jp">自然の循環</span><span class="alt">ปุ่ม RB คูลดาวน์ 5 วิ แผนสำรอง</span></td><td>ร่าย 1.2 วิ เกจ +80 ใช้ได้เฉพาะ 3 วิหลังฆ่า</td><td>ชีลด์ระหว่างร่าย 5 ต่อวิ<span class="alt">อีกทาง: Nature's Breath คูลดาวน์เร็วขึ้น 150% ระหว่างร่าย</span></td><td>คูลดาวน์ −3 วิ (เหลือ 2)<span class="alt">อีกทาง: ร่ายนานขึ้น 50% เกจได้มากขึ้น 50%</span></td><td>ร่ายจบ 35% เรียกสัตว์ทันที<span class="alt">อีกทาง: ปลูกพุ่มหญ้าใต้เท้า 4 วิ</span></td></tr>
+      <tr><td><b>Nature's Cycle</b> <span class="jp">自然の循環</span><span class="alt">ปุ่ม RB คูลดาวน์ 5 วิ แผนสำรอง · ชื่ออังกฤษแปลจากญี่ปุ่น</span></td><td>ร่าย 1.2 วิ เกจ +80 ใช้ได้เฉพาะ 3 วิหลังฆ่า</td><td>ชีลด์ระหว่างร่าย 5 ต่อวิ<span class="alt">อีกทาง: Nature's Breath คูลดาวน์เร็วขึ้น 150% ระหว่างร่าย</span></td><td>คูลดาวน์ −3 วิ (เหลือ 2)<span class="alt">อีกทาง: ร่ายนานขึ้น 50% เกจได้มากขึ้น 50%</span></td><td>ร่ายจบ 35% เรียกสัตว์ทันที<span class="alt">อีกทาง: ปลูกพุ่มหญ้าใต้เท้า 4 วิ</span></td></tr>
     </tbody>
   </table></div>
   <p class="hint-x">เลื่อนตารางไปทางขวาได้ · ปุ่มเป็นของจอยตามภาพในไกด์ ตำแหน่งการ์ดสลับได้ในแต่ละรัน</p>
@@ -890,10 +895,24 @@ nav.top a.ext{color:var(--fwd)}
     <figure><img loading="lazy" src="https://assets.st-note.com/img/1780917972-lG43D2YaqsZKCzVMtOHPvpE6.png" alt="หน้าจออัปเกรดการ์ด 月光の王国" width="791" height="507"><figcaption><b>Kingdom of Moonlight</b> ช่องสีทองคือทางที่เลือก: สัตว์ +30% → แสงจันทร์ +2.5 วิ → คูลดาวน์ −4 วิ</figcaption></figure>
     <figure><img loading="lazy" src="https://assets.st-note.com/img/1780917495-Fe3OCtqKJQju8hrTfIkNxLZU.png" alt="หน้าจออัปเกรดการ์ด 風の導き" width="894" height="572"><figcaption><b>Wind Guidance</b> คูลดาวน์ −2.5 วิ → โดนแล้วเกจ +40 → สัตว์ทุกตัวตีเร็ว +35%</figcaption></figure>
     <figure><img loading="lazy" src="https://assets.st-note.com/img/1780917899-4jQFCcu0if9AZv3lENoXr1pM.png" alt="หน้าจออัปเกรดการ์ด 吠えるハリケーン" width="792" height="508"><figcaption><b>Howling Hurricane</b> นกฮูกอยู่ต่อ → ดาเมจ +15 ชาร์จไว → พายุ 3 ลูก</figcaption></figure>
-    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780917519-cpt1kAinYPRaFj7dHM8BgZXr.png" alt="หน้าจออัปเกรดการ์ด 自然の循環" width="792" height="510"><figcaption><b>Nature Flow</b> ชีลด์ระหว่างร่าย → คูลดาวน์ −3 วิ → 35% เรียกสัตว์ทันที</figcaption></figure>
+    <figure><img loading="lazy" src="https://assets.st-note.com/img/1780917519-cpt1kAinYPRaFj7dHM8BgZXr.png" alt="หน้าจออัปเกรดการ์ด 自然の循環" width="792" height="510"><figcaption><b>Nature's Cycle</b> ชีลด์ระหว่างร่าย → คูลดาวน์ −3 วิ → 35% เรียกสัตว์ทันที</figcaption></figure>
   </div>
 
-  <h3 class="step"><span class="n">2.5</span>ของที่ต้องเก็บ</h3>
+  <h3 class="step"><span class="n">2.5</span>Natural Flow: การ์ดที่ไกด์ไม่ได้พูดถึง</h3>
+  <p class="gist">Natural Flow ยิงลูกพลังงานได้รัว ๆ ถึง 8 ลูก ถ้าเล่นสายนกฮูกให้อัป Lv.4 ฝั่ง Accelerated Summoning เพราะยิงหมดชุดเติมเกจได้ 200 เท่ากับตีประชิด 20 หมัด</p>
+  <p>ฝั่ง Additional Mark ให้คริตแค่ +3% และติด Scent Mark 40% ซึ่งคุ้มเฉพาะเมื่อมีของที่แรงขึ้นกับศัตรูติดตรา เช่น Instant Burst ของการ์ดใบนี้เอง หรือ Wind Guidance Lv.4 อีกทาง (225%) ตัวเลขชุดนี้อ่านจากหน้าจออัปเกรดภาษาอังกฤษในเกม ชื่อในเกมใกล้กับ Nature's Cycle มาก อย่าสับสน คนละใบกัน</p>
+  <div class="tbl wide"><table class="lvt">
+    <thead><tr><th>Lv.</th><th>ทางซ้าย</th><th>ทางขวา</th></tr></thead>
+    <tbody>
+      <tr><td>พื้นฐาน</td><td colspan="2">ปุ่ม Q คูลดาวน์ 6 วิ · ชาร์จสั้น ๆ แล้วยิงลูกพลังงานไปจุดเป้า 70 ดาเมจรอบตัว เก็บได้ 5 ลูก ยิงรัวต่อกันได้</td></tr>
+      <tr><td>Lv.2</td><td>Extra Charge: เก็บลูกได้ +3 (เป็น 8)</td><td>Damage Boost: ดาเมจพื้นฐาน +8</td></tr>
+      <tr><td>Lv.3</td><td>Cooldown Reduction: คูลดาวน์ −1.5 วิ (เหลือ 4.5)</td><td>Instant Burst: ศัตรูติดตราโดนแรงขึ้น 60%</td></tr>
+      <tr class="pick"><td>Lv.4</td><td><b>Accelerated Summoning: ลูกที่โดนศัตรูเติมเกจ 25</b></td><td>Additional Mark: คริต +3% · โดนแล้ว 40% ติด Scent Mark</td></tr>
+    </tbody>
+  </table></div>
+  <p class="hint-x">ยิงหมด 8 ลูกแล้ว ลูกจะกลับมาทีละลูกทุก 4.5 วิ (สมมติว่าคืนลูกละหนึ่งรอบคูลดาวน์) ช่วงนั้นเติมเกจได้ราว 5.6 ต่อวิ ยังไม่รู้ว่าลูกเดียวที่โดนศัตรูหลายตัวนับ 25 ครั้งเดียวหรือนับทุกตัว</p>
+
+  <h3 class="step"><span class="n">2.6</span>ของที่ต้องเก็บ</h3>
   <p class="gist">Moonlight Branch เป็นชิ้นที่แทนไม่ได้ เพราะรุ่นตำนานเรียกนกฮูกได้ทั้งตอนตีและตอนใช้การ์ด ของที่เหลือไล่ Spirit กับลดคูลดาวน์การ์ด</p>
   <div class="tbl"><table>
     <thead><tr><th>Moonlight Branch <span class="jp">月光の枝</span></th><th class="num">หายาก</th><th class="num">ตำนาน</th></tr></thead>
@@ -1073,6 +1092,7 @@ nav.top a.ext{color:var(--fwd)}
     <dd><a href="https://store.steampowered.com/news/app/3214610">Cinderia Patch Notes บน Steam</a> ฉบับ V0.6.6 ถึง V0.6.11b ดึงผ่าน Steam Web API</dd>
     <dd><a href="https://note.com/pero_900666/n/n842a4187dac6">CINDERIA 試練8攻略の為のビルド紹介 (ver0.6.10)</a> โดย ペロ</dd>
     <dd><a href="https://thegameslayer.com/guides/cinderia-how-to-unlock-uma/">How to unlock Uma</a> จาก The Game Slayer</dd>
+    <dd>หน้าจออัปเกรดการ์ด Natural Flow ภาษาอังกฤษในเกม (V0.6.11b)</dd>
     <dt>ภาพ</dt>
     <dd>ภาพหัวหน้ามาจากหน้าร้าน Steam ของ Cinderia ภาพหน้าจอทาเลนต์ การ์ด และบิลด์ทั้งหมดเป็นของ ペロ ลิงก์ตรงจากบทความต้นทาง ลิขสิทธิ์เกมเป็นของผู้พัฒนา</dd>
     <dt>ข้อจำกัด</dt>
@@ -1567,7 +1587,7 @@ Kit.run({
   glossary:function(){Kit.glossary({
     sv:['ค่าเรียก · summon value','ค่าที่สะสมจากการตีและยิงของ Uma เกจเต็มแล้วเรียกสัตว์ 1 ตัว ส่วนที่ล้นทบไปรอบหน้า'],
     wf:['Wind Fury','หมัดประชิดถัดไปของ Uma ได้ฮิตเพิ่ม 1 ครั้ง แรง 150% ของพลังโจมตีพื้นฐาน · มีทาเลนต์ Wind Resonance แล้ว ทุกครั้งที่ได้ Wind Fury นกฮูกทั้งฝูงตีเร็ว +200% 2 วิ'],
-    mark:['ตราล่า · 匂いの印','ตราที่กระสุน Wind Guidance ติดให้ศัตรูตัวแรกที่โดน · อัป Lv.4 อีกทางทำดาเมจ 225% ใส่ตัวที่ติดตรา']
+    mark:['Scent Mark · 匂いの印','ตราที่ Wind Guidance ติดให้ศัตรูตัวแรกที่โดน และ Natural Flow Lv.4 ฝั่ง Additional Mark ติดได้ 40% · ของบางชิ้นแรงขึ้นกับตัวที่ติดตรา เช่น Wind Guidance Lv.4 อีกทาง 225%']
   });}
 });
 })();
