@@ -61,7 +61,7 @@ Cinderia อัปเดตถี่มาก — 11 เวอร์ชันย
 
 - **[Cinderia Patch Notes บน Steam](https://store.steampowered.com/news/app/3214610)** (app 3214610) — ตัวเลขทุกตัวในแผ่นนี้ดึงจาก V0.6.7 ถึง V0.6.11 โดยตรง
 - **[CINDERIA Trial 8 Strategy Build Guide](https://note.com/pero_900666/n/n842a4187dac6?hl=en)** โดย ペロ — ลำดับความสำคัญของสกิล การ์ด และคำเตือนจากคนที่ผ่าน Trial 8 จริง
-- **Steam Web API** `ISteamNews/GetNewsForApp` (appid 3214610) — ดึง patch notes ทุกฉบับเป็นข้อความเต็ม ใช้หาแพตช์ที่แตะ Uma (V0.6.4 ถึง V0.6.11b)
+- **Steam Web API** `ISteamNews/GetNewsForApp` (appid 3214610) — ดึง patch notes ทุกฉบับเป็นข้อความเต็ม ใช้หาแพตช์ที่แตะ Uma (V0.6.4 ถึง V0.6.12)
 - **[How to unlock Uma — The Game Slayer](https://thegameslayer.com/guides/cinderia-how-to-unlock-uma/)** — ขั้นตอนปลดล็อก Uma (บทความ เม.ย. 2026)
 - **[Inven Global — Isdra Rework Update](https://www.invenglobal.com/articles/24131/cinderia-receives-isdra-rework-update-20-steam-discount-now-live)** — รายละเอียดการรื้อระบบ Frost → Guard ของ Isdra
 
@@ -71,14 +71,15 @@ Cinderia อัปเดตถี่มาก — 11 เวอร์ชันย
 
 ตัวเลขบาลานซ์ทั้งหมดมาจาก **V0.6.11** (14 ส.ค. 2026) ซึ่งเป็นแพตช์ล่าสุดที่แตะบาลานซ์
 
-หลังจากนั้นมีอีก 2 แพตช์ **แต่เป็นแก้บั๊กล้วน ไม่กระทบตัวเลขบนแผ่น**
+หลังจากนั้นมีอีก 3 แพตช์ **แต่ไม่มีฉบับไหนแตะบาลานซ์ ไม่กระทบตัวเลขบนแผ่น**
 
 | เวอร์ชัน | วันที่ | สาระ |
 |---|---|---|
 | `V0.6.11a` | 16 ส.ค. 2026 | แก้ Reclaiming Knives คืน Energy ไม่ถูก · Bone-Eater's Claw ให้ Max HP เกิน · ถอดคำสาปด้วยจอยไม่ได้ |
 | `V0.6.11b` | 25 ส.ค. 2026 | แก้ **Carrot Snowman** ทริกเกอร์ผิด · **Toy Cannon** ใช้ไม่ได้หลังโหลดเซฟ · Mad Hatter บัฟค้าง · นำทาง Magic Mirror ด้วยจอย |
+| `V0.6.12` | 27 ต.ค. 2026 | เพิ่มอีเวนต์ มินิเกม แผนที่ Chapter 3 และภาพ NPC · **Carrot Snowman** คู่ Time Bomb ของ Rivet ได้เอฟเฟกต์เครื่องประดับแล้ว · ปิดช่องโหว่ Blessed Anvil อัป Thief's Gloves / Ashen Flask · แก้บั๊กเซฟแล้วโหลด 11 ข้อ |
 
-> 💡 Carrot Snowman กับ Toy Cannon ที่แผ่นนี้แนะนำให้เก็บ **เพิ่งหายบั๊กใน V0.6.11b** ถ้าเคยลองแล้วรู้สึกว่าไม่แรงอย่างที่เขียน ลองใหม่ได้
+> 💡 Carrot Snowman กับ Toy Cannon ที่แผ่นนี้แนะนำให้เก็บ **เพิ่งหายบั๊กใน V0.6.11b** ถ้าเคยลองแล้วรู้สึกว่าไม่แรงอย่างที่เขียน ลองใหม่ได้ · Rivet ที่ใช้ Time Bomb คู่ Carrot Snowman ได้ผลเต็มตั้งแต่ V0.6.12
 
 ---
 
@@ -93,4 +94,4 @@ Cinderia อัปเดตถี่มาก — 11 เวอร์ชันย
 
 ---
 
-Last updated: 2026-10-23 · ตรวจถึง V0.6.11b (ยังเป็นแพตช์ล่าสุด ณ 23 ต.ค. 2026 ตามประกาศบน Steam)
+Last updated: 2026-10-28 · ตรวจถึง V0.6.12 (ยังเป็นแพตช์ล่าสุด ณ 28 ต.ค. 2026 ตามประกาศบน Steam)
