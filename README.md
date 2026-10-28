@@ -26,6 +26,7 @@ Cinderia อัปเดตถี่มาก — 11 เวอร์ชันย
 | พิมพ์ / เซฟ PDF | กด **Ctrl + P** → Destination = *Save as PDF* → Save (ขนาดกระดาษถูกตั้งเป็น A4 landscape ใน CSS แล้ว ไม่ต้องตั้งเอง) |
 | อ่านฉบับเต็มบนจอ | เปิด **[read.html](https://tayakorn221.github.io/cinderia-cheatsheet/read.html)** — ตัวหนังสือขนาดปกติ มีคำอธิบายละเอียดกว่า |
 | เจาะลึก Uma | เปิด **[uma.html](https://tayakorn221.github.io/cinderia-cheatsheet/uma.html)** — เกจเรียกสัตว์ · สายนกฮูก · สายกรงเล็บ พร้อมแผนผังและภาพหน้าจอ |
+| เจาะลึก Rivet | เปิด **[rivet.html](https://tayakorn221.github.io/cinderia-cheatsheet/rivet.html)** — สายฟ้าจากนัดยิง · สายยิง (Lightning Rod) · สายป้อม (ตีขึ้นรูปด้วยค้อน) พร้อมแผนผังและภาพหน้าจอ |
 | เปิดออฟไลน์ | โหลด `index.html` ไฟล์เดียว เปิดได้เลย (ต้องต่อเน็ตครั้งแรกเพื่อโหลดฟอนต์) |
 
 ---
@@ -52,8 +53,9 @@ Cinderia อัปเดตถี่มาก — 11 เวอร์ชันย
 | `index.html` | แผ่น A4 แนวนอน หน้าเดียวจบ — ไฟล์หลัก |
 | `read.html` | ฉบับอ่านบนจอ เลื่อนได้ ตัวหนังสือขนาดปกติ มีคำอธิบายเต็ม · มีตารางทางอัป Lv.1–4 ของ Poison Coating (Rue สายตี) และ Throwing Knife Barrage (Rue สายมีด) |
 | `uma.html` | เจาะลึก Uma: เกจเรียกสัตว์ทำงานยังไง · นกฮูกเกิดได้ 6 ทาง · รอบหมุน Wind Guidance 8 วิ · Wild Howl Lv.4 ยืดได้นานแค่ไหน · ทาเลนต์/การ์ด/ทางอัป Lv.2–4 ของทั้งสองสาย · แพตช์ที่แตะ Uma · ภาพหน้าจอลิงก์ตรงจากไกด์ ペロ และหน้าร้าน Steam (ไม่ได้เก็บสำเนาไว้ใน repo) |
+| `rivet.html` | เจาะลึก Rivet: สายฟ้ามาจากไหน · รอบ Lightning Rod 15 วิ ทำไม Lv.4 ไม่มีช่องว่าง · ตีขึ้นรูปป้อมได้กี่ครั้ง ยิงได้กี่นัด · ทาเลนต์/การ์ด/ทางอัป Lv.2–4 ของสายยิงและสายป้อม · แพตช์ที่แตะ Rivet (V0.6.2 ถึง V0.6.12) · โครงเดียวกับ `uma.html` |
 
-ไม่มี build step ไม่มี dependency — HTML + CSS ล้วน ไฟล์ละไฟล์เดียวจบ (`uma.html` มี CSS/JS ของ visual-explainer kit inline อยู่ในไฟล์ แก้ตรงได้เลย)
+ไม่มี build step ไม่มี dependency — HTML + CSS ล้วน ไฟล์ละไฟล์เดียวจบ (`uma.html` กับ `rivet.html` มี CSS/JS ของ visual-explainer kit inline อยู่ในไฟล์ แก้ตรงได้เลย)
 
 ---
 
@@ -61,7 +63,7 @@ Cinderia อัปเดตถี่มาก — 11 เวอร์ชันย
 
 - **[Cinderia Patch Notes บน Steam](https://store.steampowered.com/news/app/3214610)** (app 3214610) — ตัวเลขทุกตัวในแผ่นนี้ดึงจาก V0.6.7 ถึง V0.6.11 โดยตรง
 - **[CINDERIA Trial 8 Strategy Build Guide](https://note.com/pero_900666/n/n842a4187dac6?hl=en)** โดย ペロ — ลำดับความสำคัญของสกิล การ์ด และคำเตือนจากคนที่ผ่าน Trial 8 จริง
-- **Steam Web API** `ISteamNews/GetNewsForApp` (appid 3214610) — ดึง patch notes ทุกฉบับเป็นข้อความเต็ม ใช้หาแพตช์ที่แตะ Uma (V0.6.4 ถึง V0.6.12)
+- **Steam Web API** `ISteamNews/GetNewsForApp` (appid 3214610) — ดึง patch notes ทุกฉบับเป็นข้อความเต็ม ใช้หาแพตช์ที่แตะ Uma (V0.6.4 ถึง V0.6.12) และ Rivet (V0.6.2 ถึง V0.6.12)
 - **[How to unlock Uma — The Game Slayer](https://thegameslayer.com/guides/cinderia-how-to-unlock-uma/)** — ขั้นตอนปลดล็อก Uma (บทความ เม.ย. 2026)
 - **[Inven Global — Isdra Rework Update](https://www.invenglobal.com/articles/24131/cinderia-receives-isdra-rework-update-20-steam-discount-now-live)** — รายละเอียดการรื้อระบบ Frost → Guard ของ Isdra
 
